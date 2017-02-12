@@ -58,8 +58,10 @@ class NutritionIx
   private
   def parse_foods
     @foods = data[:foods].collect do |food|
-      new_hash = {tag_id:  food[:tags][:tag_id]}
+      tag_id = food[:tags][:tag_id]
+
       new_hash = self.class.filter_keys(food, ALLOWED_KEYS)
+      new_hash[:tag_id] = tag_id
 
       OpenStruct.new(new_hash)
     end
@@ -97,6 +99,14 @@ class NutritionIx
 
     hash.keep_if do |key, value|
       allow.include?(key)
+    end
+
+    hash.transform_keys do |key|
+      if key.to_s.start_with?("nf_")
+        key.to_s.sub("nf_", "").to_sym
+      else
+        key
+      end
     end
   end
 end
