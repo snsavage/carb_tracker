@@ -55,10 +55,6 @@ class NutritionIx
     @foods = nil
   end
 
-  def data
-    @data ||= call_api
-  end
-
   private
   def parse_foods
     @foods = data[:foods].collect do |food|
@@ -67,6 +63,10 @@ class NutritionIx
 
       OpenStruct.new(new_hash)
     end
+  end
+
+  def data
+    @data ||= call_api
   end
 
   def call_api
