@@ -1,0 +1,19 @@
+<%= form_tag search_foods_path do %>
+  <%= label_tag "search" %>
+  <%= text_area_tag "search", nil, rows: 5, cols: 25 %>
+
+  <%= label_tag "Each food is listed on a separate line?" %>
+  <%= check_box_tag "line_delimited", true, true %>
+
+  <%= submit_tag "Search" %>
+<% end %>
+
+<% if @foods %>
+  <ul>
+    <% @foods.each do |food| %>
+      <li><%= food.display %></li>
+    <% end %>
+  </ul>
+<% else %>
+  No search available.
+<% end %>
