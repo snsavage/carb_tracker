@@ -19,6 +19,7 @@ class NutritionIx
     :nf_protein,
     :nf_potassium,
     :ndb_no,
+    :tag_id
   ]
 
   base_uri "https://trackapi.nutritionix.com"
@@ -39,7 +40,7 @@ class NutritionIx
   def foods
     return [] if errors?
 
-    @foods ||= parse_foods
+    parse_foods
   end
 
   def search=(search)
@@ -52,23 +53,24 @@ class NutritionIx
 
   def reload!
     @data = call_api
-    @foods = nil
-  end
-
-  private
-  def parse_foods
-    @foods = data[:foods].collect do |food|
-      tag_id = food[:tags][:tag_id]
-
-      new_hash = self.class.filter_keys(food, ALLOWED_KEYS)
-      new_hash[:tag_id] = tag_id
-
-      OpenStruct.new(new_hash)
-    end
   end
 
   def data
     @data ||= call_api
+  end
+
+  private
+  def parse_foods
+    parse = data[:foods].deep_dup
+
+    @foods = parse.collect do |food|
+      food[:tag_id] = food[:tags][:tag_id]
+
+      self.class.filter_keys!(food, ALLOWED_KEYS)
+      self.class.remove_nf_from_keys!(food)
+
+      food
+    end
   end
 
   def call_api
@@ -94,19 +96,15 @@ class NutritionIx
     }.to_json
   end
 
-  def self.filter_keys(hash, allow = [])
-    hash ||= {}
-
+  def self.filter_keys!(hash, allow = [])
     hash.keep_if do |key, value|
       allow.include?(key)
     end
+  end
 
-    hash.transform_keys do |key|
-      if key.to_s.start_with?("nf_")
-        key.to_s.sub("nf_", "").to_sym
-      else
-        key
-      end
+  def self.remove_nf_from_keys!(hash)
+    hash.transform_keys! do |key|
+      key.to_s.start_with?("nf_") ? key.to_s.sub("nf_", "").to_sym : key
     end
   end
 end

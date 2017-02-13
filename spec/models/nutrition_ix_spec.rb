@@ -25,11 +25,11 @@ RSpec.describe NutritionIx, type: :model do
 
   describe "#reload!" do
     it "refreshes data with new api call" do
-      first_food = nutrition_ix.foods.first.food_name
+      first_food = nutrition_ix.foods.first[:food_name]
 
       nutrition_ix.search = "carrot"
       nutrition_ix.reload!
-      second_food = nutrition_ix.foods.first.food_name
+      second_food = nutrition_ix.foods.first[:food_name]
 
       expect(second_food).not_to eq(first_food)
       expect(second_food).to eq("carrot")
@@ -63,7 +63,7 @@ RSpec.describe NutritionIx, type: :model do
     context "with one food" do
       it "returns one food" do
         expect(nutrition_ix.foods.count).to eq(1)
-        expect(nutrition_ix.foods.first.food_name).to eq("apple")
+        expect(nutrition_ix.foods.first[:food_name]).to eq("apple")
       end
     end
 
@@ -73,8 +73,8 @@ RSpec.describe NutritionIx, type: :model do
         nutrition_ix.reload!
 
         expect(nutrition_ix.foods.count).to eq(2)
-        expect(nutrition_ix.foods.first.food_name).to eq("apple")
-        expect(nutrition_ix.foods.last.food_name).to eq("banana")
+        expect(nutrition_ix.foods.first[:food_name]).to eq("apple")
+        expect(nutrition_ix.foods.last[:food_name]).to eq("banana")
       end
     end
 
@@ -85,8 +85,8 @@ RSpec.describe NutritionIx, type: :model do
         nutrition_ix.reload!
 
         expect(nutrition_ix.foods.count).to eq(2)
-        expect(nutrition_ix.foods.first.food_name).to eq("apple")
-        expect(nutrition_ix.foods.last.food_name).to eq("banana")
+        expect(nutrition_ix.foods.first[:food_name]).to eq("apple")
+        expect(nutrition_ix.foods.last[:food_name]).to eq("banana")
       end
     end
   end
