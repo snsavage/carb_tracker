@@ -1,14 +1,15 @@
 class RecipesController < ApplicationController
   def index
-    @recipes = Recipe.includes(:foods).all
+    @recipes = Recipe.all
   end
 
   def show
-    @recipe = Recipe.includes(:foods).find(params[:id])
+    @recipe = Recipe.find(params[:id])
   end
 
   def new
     @recipe = Recipe.new
+    @foods = Food.all
     @search_foods = []
   end
 
@@ -25,6 +26,7 @@ class RecipesController < ApplicationController
         flash[:success] = "Your food search was successful!  Please choose the foods to include with this recipe."
       end
 
+      @foods = Food.all
       render :new
     elsif params[:commit] == "Create Recipe"
       @recipe = Recipe.create(recipe_params)

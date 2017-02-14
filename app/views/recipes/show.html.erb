@@ -1,0 +1,10 @@
+<h2><%= @recipe.name %></h2>
+
+<p>Privacy Setting: <%= @recipe.privacy_setting %>
+
+<ul>
+  <% @recipe.foods.each do |food| %>
+    <li><%= food.display %></li>
+  <% end %>
+</ul>
+
