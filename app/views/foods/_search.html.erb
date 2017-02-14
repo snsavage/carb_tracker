@@ -1,10 +1,16 @@
-<%= form_tag search_foods_path do %>
-  <%= label_tag "search" %>
-  <%= text_area_tag "search", nil, rows: 5, cols: 25 %>
+<%= form_tag foods_search_path do %>
+  <p>
+    <%= label_tag "search" %>
+    <%= text_area_tag "search", nil, rows: 5, cols: 25 %>
+  </p>
 
-  <%= label_tag "Each food is listed on a separate line?" %>
-  <%= check_box_tag "line_delimited", true, true %>
+  <p>
+    <%= label_tag "Each food is listed on a separate line?" %>
+    <%= check_box_tag "line_delimited", true, true %>
+  </p>
 
-  <%= submit_tag "Search" %>
+  <p>
+    <%= submit_tag "Search" %>
+  </p>
 <% end %>
 

@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 20170213221112) do
 
   create_table "recipes", force: :cascade do |t|
     t.string   "name"
-    t.float    "quantity",   default: 1.0
     t.boolean  "public",     default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
@@ -44,8 +43,9 @@ ActiveRecord::Schema.define(version: 20170213221112) do
   create_table "recipes_foods", force: :cascade do |t|
     t.integer  "recipe_id"
     t.integer  "food_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.float    "quantity",   default: 1.0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.index ["food_id", "recipe_id"], name: "index_recipes_foods_on_food_id_and_recipe_id"
     t.index ["recipe_id", "food_id"], name: "index_recipes_foods_on_recipe_id_and_food_id"
   end

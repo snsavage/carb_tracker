@@ -7,12 +7,12 @@ class Food < ApplicationRecord
   end
 
   def self.search_form(search, line_delimited = false)
-    foods = NutritionIx.new(search, line_delimited)
+    klass = NutritionIx.new(search, line_delimited)
 
-    foods.foods.each do |food|
+    foods = klass.foods.collect do |food|
       Food.create(food)
     end
 
-    return foods
+    return [klass, foods]
   end
 end
