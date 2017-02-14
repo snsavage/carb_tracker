@@ -8,12 +8,3 @@
   <%= submit_tag "Search" %>
 <% end %>
 
-<% if @foods %>
-  <ul>
-    <% @foods.each do |food| %>
-      <li><%= food.display %></li>
-    <% end %>
-  </ul>
-<% else %>
-  No search available.
-<% end %>
