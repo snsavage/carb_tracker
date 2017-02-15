@@ -3,8 +3,8 @@
   $dark-gray: #333 !default;
   $large-screen: 53.75em !default;
   $base-font-color: $dark-gray !default;
-  $centered-navigation-padding: 1em;
-  $centered-navigation-logo-height: 2em;
+  $centered-navigation-padding: 0.1em;
+  $centered-navigation-logo-height: 3em;
   $centered-navigation-background: #E7F1EC;
   $centered-navigation-color: transparentize($base-font-color, 0.3);
   $centered-navigation-color-hover: $base-font-color;
@@ -32,7 +32,7 @@
     img {
       max-height: $centered-navigation-height;
       opacity: 0.6;
-      padding: 0.8em 0;
+      padding: 0.1em 0;
     }
 
     @include media($horizontal-bar-mode) {
