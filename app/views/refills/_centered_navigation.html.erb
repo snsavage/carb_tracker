@@ -18,7 +18,7 @@
             <%= link_to current_user.email, user_path(current_user) %>
             <ul class="submenu">
               <li>
-                <% link_to t("nav.users.signout"),
+                <%= link_to t("nav.users.signout"),
                   destroy_user_session_path, method: "delete" %>
             </li>
             </ul>

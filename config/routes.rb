@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   post 'foods/search', to: 'foods#search'
 
   resources :recipes
+  resources :users, only: [:show]
 end
