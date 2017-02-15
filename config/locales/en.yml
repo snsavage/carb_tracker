@@ -2,7 +2,9 @@ en:
   title: "Carb Tracker"
   nav:
     home: "Home"
-    recipes: "Recipes"
+    recipes:
+      recipes: "Recipes"
+      new: "New Recipe"
     users:
       signin: "Sign In"
       signup: "Sign Up"

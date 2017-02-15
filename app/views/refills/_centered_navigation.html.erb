@@ -12,7 +12,12 @@
             <%= image_tag "logo", alt: t("title") %>
           <% end %>
         </li>
-        <li class="nav-link"><%= link_to t("nav.recipes"), recipes_path %></li>
+        <li id="js-centered-more" class="nav-link more">
+          <%= link_to t("nav.recipes.recipes"), recipes_path %>
+          <ul class="submenu">
+            <li><%= link_to t("nav.recipes.new"), new_recipe_path %></li>
+          </ul>
+        </li>
         <% if user_signed_in? %>
           <li id="js-centered-more" class="nav-link more">
             <%= link_to current_user.email, user_path(current_user) %>
