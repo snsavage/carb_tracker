@@ -20,14 +20,16 @@ class RecipesController < ApplicationController
       api = NutritionIx.new(params[:recipe][:search])
 
       if api.errors?
-        flash[:error] = klass.errors
+        flash[:error] = api.messages
+        @foods = Food.all
+        @search_foods = []
       else
         @search_foods = Food.find_or_create_from_api(api.foods)
         @recipe.foods << @search_foods
         flash[:success] = t ".search.success"
+        @foods = Food.all - @search_foods
       end
 
-      @foods = Food.all - @search_foods
       render :new
 
     elsif params[:commit] == "Create Recipe"
