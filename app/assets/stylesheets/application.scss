@@ -9,7 +9,42 @@
 @import "recipes";
 @import "static";
 
+@mixin section-bottom-margin() {
+  margin-bottom: 1em;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
+  @include outer-container;
+
+  header {
+    @include section-bottom-margin
+  }
+
+  main {
+    @include span-columns(10);
+    @include shift(1);
+    @include section-bottom-margin
+  }
+
+  .flash {
+    @include span-columns(8);
+    @include shift(2);
+    @include section-bottom-margin
+  }
+
+  section {
+    @include span-columns(10);
+    @include section-bottom-margin
+  }
 }
+
+form label {
+  display: inline;
+}
+
+
+
+
+
 
