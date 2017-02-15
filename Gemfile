@@ -36,7 +36,6 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'httparty'
-
 gem 'devise'
 
 group :development, :test do
@@ -61,6 +60,9 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'bullet'
+  gem "bourbon"
+  gem "neat"
+  gem "bitters"
   gem "refills"
 end
 
