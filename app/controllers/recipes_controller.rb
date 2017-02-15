@@ -17,20 +17,21 @@ class RecipesController < ApplicationController
     @recipe = Recipe.new(recipe_params)
 
     if params[:commit] == "Search"
-      klass, @search_foods = Food.search_form(params[:recipe][:search])
+      api = NutritionIx.new(params[:recipe][:search])
 
-      if klass.errors?
+      if api.errors?
         flash[:error] = klass.errors
       else
+        @search_foods = Food.find_or_create_from_api(api.foods)
         @recipe.foods << @search_foods
-        flash[:success] = "Your food search was successful!  Please choose the foods to include with this recipe."
+        flash[:success] = t ".search.success"
       end
 
-      @foods = Food.all
+      @foods = Food.all - @search_foods
       render :new
+
     elsif params[:commit] == "Create Recipe"
       @recipe = Recipe.create(recipe_params)
-
       redirect_to recipe_path(@recipe)
     end
   end

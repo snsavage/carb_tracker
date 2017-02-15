@@ -21,3 +21,7 @@
 
 en:
   hello: "Hello world"
+  recipe:
+    create:
+      search:
+        success: "Your search was successful!"

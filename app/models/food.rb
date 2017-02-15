@@ -6,21 +6,28 @@ class Food < ApplicationRecord
 
   before_validation :set_unique_name
 
-  def set_unique_name
-    self.unique_name = "#{food_name} - #{serving_qty} - #{serving_unit}"
+  def get_unique_name
+    "#{food_name} - #{serving_qty} - #{serving_unit}"
   end
 
   def display
     "#{food_name.titleize} - #{serving_qty} - #{serving_unit}"
   end
 
-  def self.search_form(search, line_delimited = false)
-    klass = NutritionIx.new(search, line_delimited)
+  def self.find_or_create_from_api(foods)
+    foods.collect do |food|
+      new_food = create(food)
 
-    foods = klass.foods.collect do |food|
-      Food.create(food)
+      if new_food.invalid?
+        find_by_unique_name(new_food.get_unique_name)
+      else
+        new_food
+      end
     end
+  end
 
-    return [klass, foods]
+  private
+  def set_unique_name
+    self.unique_name = get_unique_name
   end
 end

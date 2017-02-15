@@ -14,23 +14,27 @@ RSpec.describe Food, type: :model do
   describe "#display" do
   end
 
-  describe ".search_form" do
+  describe ".find_or_create_from_api" do
     context "with valid arguments" do
+      let(:foods) { NutritionIx.new("1 apple").foods }
+
       it "creates a new food" do
         expect{
-          Food.search_form("1 apple")
+          Food.find_or_create_from_api(foods)
         }.to change{Food.all.count}.by(1)
       end
 
-      it "returns an array with a NutritionIx class and AR Food objects" do
-        raise
+      it "returns an array of Food instances" do
+        food = Food.find_or_create_from_api(foods).first
+        expect(food).to be_an_instance_of(Food)
       end
-    end
 
-    context "with line_delimited set to true and invalid input" do
-      it "returns errors" do
-        foods = Food.search_form("1 apple 1 banana", "true")
-        expect(foods.errors?).to be true
+      it "does not create duplicate foods" do
+        first = Food.find_or_create_from_api(foods).first
+        second = Food.find_or_create_from_api(foods).first
+
+        expect(second.id).to eq(first.id)
+        expect(Food.all.count).to eq(1)
       end
     end
   end

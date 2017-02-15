@@ -24,7 +24,7 @@ class NutritionIx
 
   base_uri "https://trackapi.nutritionix.com"
 
-  def initialize(search = "", line_delimited = false)
+  def initialize(search = "", line_delimited = true)
     @search = search
     @line_delimited = line_delimited
   end
