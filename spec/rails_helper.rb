@@ -58,6 +58,17 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+
+  # Adds i18n methods to specs
+  config.include AbstractController::Translation
+
+  # Setup for sign in with using sign in form
+  config.include Warden::Test::Helpers
+
+  config.after :each do
+    Warden.test_reset!
+  end
 end
 
 Shoulda::Matchers.configure do |config|
