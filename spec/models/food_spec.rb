@@ -12,6 +12,19 @@ RSpec.describe Food, type: :model do
   end
 
   describe "#display" do
+    it "creates a concatenated title for food" do
+      food = create(:food)
+
+      expect(food.display).to eq("Apple - 1.0 - medium (3\" dia)")
+    end
+  end
+
+  describe "#get_unique_name" do
+    it "creates unique name for db storage" do
+      food = create(:food)
+
+      expect(food.get_unique_name).to eq(food.unique_name)
+    end
   end
 
   describe ".find_or_create_from_api" do
