@@ -9,7 +9,8 @@ en:
       signin: "Sign In"
       signup: "Sign Up"
       signout: "Sign Out"
-  recipe:
+  recipes:
     create:
       search:
         success: "Your search was successful!"
+
