@@ -1,0 +1,15 @@
+<%= form_for @log do |f| %>
+
+  <%= f.fields_for :entries do |entries| %>
+    <%= entries.label :quantity %>
+    <%= entries.number_field :quantity %>
+
+    <%= entries.label :recipe_id, "Recipe" %>
+    <%= entries.collection_select :recipe_id, Recipe.all, :id, :name %>
+
+    <%= entries.label :category %>
+    <%= entries.collection_select :category, Entry.categories, :first, :first %>
+  <% end %>
+
+  <%= f.submit %>
+<% end %>

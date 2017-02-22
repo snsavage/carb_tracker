@@ -7,4 +7,5 @@ Rails.application.routes.draw do
 
   resources :recipes
   resources :users, only: [:show]
+  resources :logs, only: [:new, :create, :edit, :update]
 end

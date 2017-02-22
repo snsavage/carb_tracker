@@ -4,6 +4,11 @@ FactoryGirl.define do
     password "password"
   end
 
+  factory :recipe do
+    name "apple"
+  end
+
+
   factory :food do
     food_name "apple"
     serving_qty 1

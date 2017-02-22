@@ -7,6 +7,7 @@
     <nav role="navigation">
       <ul id="js-centered-navigation-menu" class="centered-navigation-menu show">
         <li class="nav-link"><%= link_to t("nav.home"), root_path %></li>
+        <li class="nav-link"><%= link_to t("nav.log"), new_log_path %></li>
         <li class="nav-link logo">
           <%= link_to root_path, class: "logo" do %>
             <%= image_tag "logo", alt: t("title") %>

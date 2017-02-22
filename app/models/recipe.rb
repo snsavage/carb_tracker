@@ -4,6 +4,9 @@ class Recipe < ApplicationRecord
   has_many :recipes_foods
   has_many :foods, through: :recipes_foods
 
+  has_many :entries
+  has_many :logs, through: :entries
+
   def privacy_setting
     public? ? "Public" : "Private"
   end

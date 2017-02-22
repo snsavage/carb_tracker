@@ -1,1 +1,8 @@
 <h2><%= current_user.email %></h2>
+
+<% current_user.logs.each do |log| %>
+  <% log.entries.each do |entry| %>
+    <%= entry.recipe.name %>
+    <%= entry.category %>
+  <% end %>
+<% end %>
