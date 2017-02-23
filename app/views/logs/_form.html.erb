@@ -1,15 +1,17 @@
 <%= form_for @log do |f| %>
 
-  <%= f.fields_for :entries do |entries| %>
-    <%= entries.label :quantity %>
-    <%= entries.number_field :quantity %>
+  <div>
+    <div id="entries">
+      <%= f.fields_for :entries do |entries| %>
+        <%= render "entry_fields", f: entries %>
+      <% end %>
 
-    <%= entries.label :recipe_id, "Recipe" %>
-    <%= entries.collection_select :recipe_id, Recipe.all, :id, :name %>
-
-    <%= entries.label :category %>
-    <%= entries.collection_select :category, Entry.categories, :first, :first %>
-  <% end %>
+      <div class="links">
+        <%= link_to_add_association "Add Entry", f, :entries,
+          {"data-association-insertion-method": "before"} %>
+    </div>
+    </div>
+  </div>
 
   <%= f.submit %>
 <% end %>

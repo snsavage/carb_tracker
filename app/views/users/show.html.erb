@@ -1,8 +1,16 @@
-<h2><%= current_user.email %></h2>
+<h2>User: <%= current_user.email %></h2>
 
-<% current_user.logs.each do |log| %>
-  <% log.entries.each do |entry| %>
-    <%= entry.recipe.name %>
-    <%= entry.category %>
+<h2>Food Log</h2>
+
+<ul>
+  <% current_user.logs.each do |log| %>
+    <li>
+      <%= time_ago_in_words(log.created_at) %> ago
+      <ul class="default">
+      <% log.entries.each do |entry| %>
+        <li><%= entry.recipe.name %> - <%= entry.category %></li>
+      <% end %>
+      </ul>
+    </li>
   <% end %>
-<% end %>
+</ul>
