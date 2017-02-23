@@ -28,7 +28,7 @@ RSpec.feature "UsersCanLogFoods", type: :feature do
     end
 
     scenario "when not signed in" do
-      visit new_food_log_path
+      visit new_log_path
 
       expect(page).to have_current_path(new_user_session_path)
     end
