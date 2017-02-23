@@ -54,6 +54,9 @@ group :test do
   gem 'factory_girl_rails', '~> 4.0'
   gem 'capybara'
   gem 'database_cleaner'
+  gem 'poltergeist'
+  gem 'launchy'
+  gem 'selenium-webdriver', '~> 2.0'
 end
 
 group :development do
