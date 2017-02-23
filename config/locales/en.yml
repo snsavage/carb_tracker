@@ -2,6 +2,9 @@ en:
   title: "Carb Tracker"
   nav:
     home: "Home"
+    log:
+      logs: "Food Log"
+      new: "New Log Entry"
     recipes:
       recipes: "Recipes"
       new: "New Recipe"
