@@ -15,15 +15,15 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
 
       expect(page).to have_current_path(new_log_path)
 
-      select "apple", from: "Recipe"
+      select "Apple", from: "Recipe"
       fill_in "Quantity", with: "1"
-      select "snack", from: "Category"
+      select "Snack", from: "Category"
 
       click_button "Create Log"
 
       expect(page).to have_current_path(user_path(user))
-      expect(page).to have_content("apple")
-      expect(page).to have_content("snack")
+      expect(page).to have_content("Apple")
+      expect(page).to have_content("Snack")
       # expect(page).to have_content(Date.now)
     end
 
@@ -45,25 +45,25 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
       visit new_log_path
 
       within "#entries div:first-child" do
-        select "apple", from: "Recipe"
+        select "Apple", from: "Recipe"
         fill_in "Quantity", with: "1"
-        select "snack", from: "Category"
+        select "Snack", from: "Category"
       end
 
       click_link "Add Entry"
 
       within "#entries div:nth-child(2)" do
-        select "apple", from: "Recipe"
+        select "Apple", from: "Recipe"
         fill_in "Quantity", with: "1"
-        select "breakfast", from: "Category"
+        select "Breakfast", from: "Category"
       end
 
       click_button "Create Log"
 
       user.reload
       expect(user.logs.first.entries.count).to eq(2)
-      expect(page).to have_content("apple - snack")
-      expect(page).to have_content("apple - breakfast")
+      expect(page).to have_content("Apple - Snack")
+      expect(page).to have_content("Apple - Breakfast")
     end
   end
 

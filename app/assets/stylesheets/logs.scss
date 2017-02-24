@@ -1,1 +1,23 @@
+.nested-fields {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  input[type=number]{
+    width: 5em;
+  }
+
+  select {
+    margin-bottom: 0.375em;
+  }
+
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid $light-gray;
+}
+
+.add-entry {
+  margin-bottom: 1em;
+}
 

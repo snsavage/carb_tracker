@@ -10,4 +10,8 @@ class Recipe < ApplicationRecord
   def privacy_setting
     public? ? "Public" : "Private"
   end
+
+  def title
+    name.titleize
+  end
 end

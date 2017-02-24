@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222191955) do
+ActiveRecord::Schema.define(version: 20170224172947) do
 
   create_table "entries", force: :cascade do |t|
     t.integer  "log_id"
     t.integer  "recipe_id"
-    t.float    "quantity"
+    t.float    "quantity",   default: 1.0
     t.integer  "category"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "food_logs", force: :cascade do |t|

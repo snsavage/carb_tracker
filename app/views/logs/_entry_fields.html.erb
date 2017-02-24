@@ -1,12 +1,14 @@
 <div class="nested-fields">
   <%= f.label :quantity %>
-  <%= f.number_field :quantity %>
+  <%= f.number_field :quantity, min: 0.00, step: 0.25 %>
 
   <%= f.label :recipe_id, "Recipe" %>
-  <%= f.collection_select :recipe_id, Recipe.all, :id, :name %>
+  <%= f.collection_select :recipe_id, Recipe.all, :id, :title %>
 
   <%= f.label :category %>
   <%= f.collection_select :category, Entry.categories, :first, :first %>
 
-  <%= link_to_remove_association "Remove Entry", f %>
+  <%= link_to_remove_association f do %>
+    <button>Remove Entry</button>
+  <% end %>
 </div>

@@ -8,7 +8,7 @@
       <%= time_ago_in_words(log.created_at) %> ago
       <ul class="default">
         <% log.entries.each do |entry| %>
-          <li><%= entry.recipe.name %> - <%= entry.category %></li>
+          <li><%= entry.recipe.title %> - <%= entry.category %></li>
         <% end %>
         <%= link_to "Edit Log", edit_log_path(log) %>
       </ul>

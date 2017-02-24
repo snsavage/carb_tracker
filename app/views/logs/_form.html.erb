@@ -6,10 +6,11 @@
         <%= render "entry_fields", f: entries %>
       <% end %>
 
-      <div class="links">
-        <%= link_to_add_association "Add Entry", f, :entries,
-          {"data-association-insertion-method": "before"} %>
-    </div>
+      <div class="links add-entry">
+        <%= link_to_add_association f, :entries, {"data-association-insertion-method": "before"}  do %>
+          <button>Add Entry</button>
+        <% end %>
+      </div>
     </div>
   </div>
 
