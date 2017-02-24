@@ -8,6 +8,8 @@ FactoryGirl.define do
     name "apple"
   end
 
+  factory :entry do
+  end
 
   factory :food do
     food_name "apple"

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "UsersCanLogFoods", type: :feature do
+RSpec.feature "UsersCanManageLogFoods", type: :feature do
   feature "user can add an entry to a log" do
     scenario "when signed in" do
       user = create(:user)
@@ -64,6 +64,30 @@ RSpec.feature "UsersCanLogFoods", type: :feature do
       expect(user.logs.first.entries.count).to eq(2)
       expect(page).to have_content("apple - snack")
       expect(page).to have_content("apple - breakfast")
+    end
+  end
+
+  feature "users can remove entries from their logs", js: true do
+    scenario "when signed in" do
+      user = create(:user)
+      recipe = create(:recipe)
+      food = create(:food)
+      recipe.foods << food
+      recipe.save
+
+      user.logs.create.recipes << recipe
+      user.logs.first.recipes << recipe
+      user.save
+
+      expect(user.logs.first.entries.count).to eq(2)
+      login_as(user, :scope => :user)
+
+      visit edit_log_path(user.logs.first)
+
+      click_link "Remove Entry", match: :first
+      click_button "Update Log"
+
+      expect(user.logs.first.entries.count).to eq(1)
     end
   end
 end
