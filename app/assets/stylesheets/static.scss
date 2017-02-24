@@ -1,3 +1,41 @@
-// Place all the styles related to the Static controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.hero {
+  $large-screen: 50em !default;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(25, 25, 25, 0.10), rgba(50, 50, 50, 0.45)),
+    url("https://source.unsplash.com/1920x1080/daily?food,healthy");
+  background-position: right;
+  background-size: none;
+  display: flex;
+  justify-content: center;
+  min-height: 25em;
+  padding: 2em;
+
+  @include media($large-screen) {
+    background-position: left;
+    background-size: cover;
+    justify-content: flex-center;
+  }
+
+  .hero-content {
+    max-width: 50em;
+    text-align: center;
+
+    @include
+    media($large-screen) {
+      text-align: left;
+    }
+  }
+
+  .hero-logo
+  {
+    margin:
+    auto;
+  }
+}
+
+body main {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
