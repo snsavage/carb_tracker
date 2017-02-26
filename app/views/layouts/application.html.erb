@@ -8,7 +8,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body <%= "data-no-turbolink" if request.post? %>>
     <%= render 'refills/centered_navigation' %>
     <%= render 'refills/flashes' %>
 

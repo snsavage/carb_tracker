@@ -3,7 +3,7 @@ class Recipe < ApplicationRecord
 
   attr_accessor :search, :line_delimited
 
-  has_many :ingredients
+  has_many :ingredients, inverse_of: :recipe
   has_many :foods, through: :ingredients
 
   has_many :entries
@@ -12,13 +12,9 @@ class Recipe < ApplicationRecord
   validates :name, presence: true
   validates :public, inclusion: { in: [true, false] }
 
-  validate :at_least_one_food
+  validates :ingredients, presence: true
 
-  def at_least_one_food
-    if foods.blank?
-      errors.add(:foods, "at least one must be selected")
-    end
-  end
+  accepts_nested_attributes_for :ingredients, allow_destroy: true
 
   def privacy_setting
     public? ? "Public" : "Private"

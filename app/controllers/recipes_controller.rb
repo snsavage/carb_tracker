@@ -10,8 +10,6 @@ class RecipesController < ApplicationController
 
   def new
     @recipe = Recipe.new
-    @foods = Food.all
-    @search_foods = []
   end
 
   def create
@@ -23,12 +21,10 @@ class RecipesController < ApplicationController
       if api.errors?
         flash[:error] = api.messages
         @foods = Food.all
-        @search_foods = []
       else
-        @search_foods = Food.find_or_create_from_api(api.foods)
-        @recipe.foods << @search_foods
+        @foods = Food.find_or_create_from_api(api.foods)
+        @recipe.foods << @foods
         flash[:success] = t ".search.success"
-        @foods = Food.all - @search_foods
       end
 
       render :new
@@ -37,7 +33,6 @@ class RecipesController < ApplicationController
       @recipe = Recipe.create(recipe_params)
       if @recipe.invalid?
         @foods = Food.all
-        @search_foods = []
         render :new
       else
         redirect_to recipe_path(@recipe)
@@ -47,6 +42,10 @@ class RecipesController < ApplicationController
 
   private
   def recipe_params
-    params.require(:recipe).permit(:name, :public, food_ids: [])
+    params.require(:recipe).permit(
+      :name, :public, ingredients_attributes: [
+        :id, :quantity, :food_id, :_destroy
+      ]
+    )
   end
 end

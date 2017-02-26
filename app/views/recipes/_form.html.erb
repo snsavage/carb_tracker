@@ -2,51 +2,36 @@
 
   <%= render partial: "layouts/form_errors", locals: { form_errors: @recipe } %>
 
-  <p>
-    <%= f.label :name, "Recipe Name" %>
-    <%= f.text_field :name %>
-  </p>
+  <%= f.label :name, "Recipe Name" %>
+  <%= f.text_field :name %>
 
-  <p>
-    <%= f.label :public, "Public or Private" %>
-    <%= f.select :public, options_for_select(
-      [["Public", true],["Private", false]], @recipe.public) %>
-  </p>
+  <%= f.label :public, "Public or Private" %>
+  <%= f.select :public, options_for_select(
+    [["Public", true],["Private", false]], @recipe.public) %>
 
-  <%= f.collection_check_boxes :food_ids, @foods, :id, :display do |b| %>
-    <p>
-      <%= b.check_box %>
-      <%= b.label %>
-    </p>
+
+  <%= f.fields_for :ingredients do |ingredient| %>
+    <%= render "ingredient_fields", f: ingredient %>
   <% end %>
 
+  <div class="links add-ingredient">
+    <%= link_to_add_association f, :ingredients do %>
+      <button>Add Ingredient</button>
+    <% end %>
+  </div>
 
   <fieldset>
-    <p>Search Results</p>
-    <%= f.collection_check_boxes :food_ids, @search_foods, :id, :display do |b| %>
-      <p>
-        <%= b.check_box %>
-        <%= b.label %>
-      </p>
-    <% end %>
-
+    <%= f.label :search, "Search for New Foods" %><br>
+    <%= f.text_area :search, rows: 5, cols: 25 %>
     <p>
-      <%= f.label :search, "Search for New Foods" %><br>
-      <%= f.text_area :search, rows: 5, cols: 25 %>
-      <p>
-        Please each food on a separate line.  Example: <br>
-        "1 gala apple"<br>
-        "1/4 cup walnuts"
-      </p>
+    Please each food on a separate line.  Example: <br>
+    "1 gala apple"<br>
+    "1/4 cup walnuts"
     </p>
 
-    <p>
-      <%= f.submit "Search" %>
-    </p>
+    <%= f.submit "Search" %>
   </fieldset>
 
-  <p>
-    <%= f.submit %>
-  </p>
+  <%= f.submit %>
 <% end %>
 
