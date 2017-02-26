@@ -4,6 +4,7 @@
 
 @import "refills/flashes";
 @import "refills/centered-navigation";
+@import "refills/tables";
 
 @import "foods";
 @import "recipes";
@@ -57,6 +58,39 @@ form label {
   padding-left: 0.75em;
 }
 
+tr.total {
+  font-weight: bold;
+}
 
+td.data {
+  text-align: right;
+  width: 10%;
+}
+
+td {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: visible;
+  // max-width: 1px;
+}
+
+table.recipe {
+  th:first-child {
+    width: 40%;
+  }
+
+  th:nth-child(2) {
+    width: 15%;
+  }
+  th:nth-child(3) {
+    width: 15%;
+  }
+  th:nth-child(4) {
+    width: 15%;
+  }
+  th:nth-child(5) {
+    width: 15%;
+  }
+}
 
 

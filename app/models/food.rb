@@ -45,6 +45,15 @@ class Food < ApplicationRecord
     end
   end
 
+  def self.stats
+    pluck(
+      "sum(calories)",
+      "sum(total_carbohydrate)",
+      "sum(protein)",
+      "sum(total_fat)"
+    ).first
+  end
+
   private
   def set_unique_name
     self.unique_name = get_unique_name

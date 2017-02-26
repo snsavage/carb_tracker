@@ -1,10 +1,33 @@
-<h2><%= @recipe.name %></h2>
+<h1><%= @recipe.name %></h1>
 
-<p>Privacy Setting: <%= @recipe.privacy_setting %>
+<p>Privacy Setting: <%= @recipe.privacy_setting %></p>
 
-<ul>
-  <% @recipe.foods.each do |food| %>
-    <li><%= food.display %></li>
-  <% end %>
-</ul>
+<table class="tables recipe">
+  <thead>
+    <tr>
+      <th>Food</th>
+      <th>Calories</th>
+      <th>Carbohydrate</th>
+      <th>Protein</th>
+      <th>Fat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recipe.foods.each do |food| %>
+      <tr>
+        <td><%= food.display %></td>
+        <td class="data"><%= num food.calories %></td>
+        <td class="data"><%= num food.total_carbohydrate %></td>
+        <td class="data"><%= num food.protein %></td>
+        <td class="data"><%= num food.total_fat %></td>
+      </tr>
+    <% end %>
+    <tr class="total">
+      <td>Recipe Total</td>
+      <td class="data"><%= num @stats.calories %></td>
+      <td class="data"><%= num @stats.carbs %></td>
+      <td class="data"><%= num @stats.protein %></td>
+      <td class="data"><%= num @stats.fat %></td>
+  </tbody>
+</table>
 
