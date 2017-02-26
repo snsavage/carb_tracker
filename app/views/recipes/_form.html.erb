@@ -1,4 +1,7 @@
 <%= form_for @recipe do |f| %>
+
+  <%= render partial: "layouts/form_errors", locals: { form_errors: @recipe } %>
+
   <p>
     <%= f.label :name, "Recipe Name" %>
     <%= f.text_field :name %>

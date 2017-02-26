@@ -8,4 +8,7 @@ class Entry < ApplicationRecord
     Dinner: 2,
     Snack: 3
   }
+
+  validates :quantity, numericality: { greater_than_or_equal_to: 0 }
+  validates :recipe, presence: true
 end

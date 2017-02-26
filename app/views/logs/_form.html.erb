@@ -1,5 +1,7 @@
 <%= form_for @log do |f| %>
 
+  <%= render partial: "layouts/form_errors", locals: { form_errors: @log } %>
+
   <div>
     <div id="entries">
       <%= f.fields_for :entries do |entries| %>

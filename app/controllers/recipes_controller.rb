@@ -34,7 +34,13 @@ class RecipesController < ApplicationController
 
     elsif params[:commit] == "Create Recipe"
       @recipe = Recipe.create(recipe_params)
-      redirect_to recipe_path(@recipe)
+      if @recipe.invalid?
+        @foods = Food.all
+        @search_foods = []
+        render :new
+      else
+        redirect_to recipe_path(@recipe)
+      end
     end
   end
 

@@ -45,7 +45,17 @@ form label {
   display: inline;
 }
 
+.field_with_errors input {
+  border-color: rgba(192, 57, 43, 1.0);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 5px rgba(192, 57, 43,1.0);
+}
 
+#error_explanation ul {
+  list-style-type: disc;
+  list-style-position: inside;
+  margin-left: 0;
+  padding-left: 0.75em;
+}
 
 
 

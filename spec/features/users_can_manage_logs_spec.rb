@@ -4,7 +4,7 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
   feature "user can add an entry to a log" do
     scenario "when signed in" do
       user = create(:user)
-      recipe = create(:recipe)
+      recipe = build(:recipe)
       food = create(:food)
       recipe.foods << food
       recipe.save
@@ -35,7 +35,7 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
 
     scenario "user can add multiple entries to a log", js: true do
       user = create(:user)
-      recipe = create(:recipe)
+      recipe = build(:recipe)
       food = create(:food)
       recipe.foods << food
       recipe.save
@@ -70,7 +70,7 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
   feature "users can remove entries from their logs", js: true do
     scenario "when signed in" do
       user = create(:user)
-      recipe = create(:recipe)
+      recipe = build(:recipe)
       food = create(:food)
       recipe.foods << food
       recipe.save

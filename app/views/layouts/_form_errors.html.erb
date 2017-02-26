@@ -1,0 +1,11 @@
+<% if form_errors.errors.any? %>
+  <div id="error_explanation">
+    <h3>Your form couldn't be processed because of the follow errors:</h3>
+    <ul>
+      <% form_errors.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
