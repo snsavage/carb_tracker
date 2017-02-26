@@ -1,5 +1,5 @@
 class Recipe < ApplicationRecord
-  FoodStats = Struct.new(:calories, :carbs, :protein, :fat)
+  include FoodStats
 
   attr_accessor :search, :line_delimited
 
@@ -27,11 +27,5 @@ class Recipe < ApplicationRecord
   def title
     name.titleize
   end
-
-  def stats
-    calories, carbs, protein, fat = self.foods.stats
-    FoodStats.new(calories, carbs, protein, fat)
-  end
-
 end
 
