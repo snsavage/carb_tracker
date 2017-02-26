@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170226042801) do
+ActiveRecord::Schema.define(version: 20170226043816) do
 
   create_table "entries", force: :cascade do |t|
     t.integer  "log_id"
@@ -43,9 +43,18 @@ ActiveRecord::Schema.define(version: 20170226042801) do
     t.string   "unique_name"
   end
 
+  create_table "ingredients", force: :cascade do |t|
+    t.integer  "recipe_id"
+    t.integer  "food_id"
+    t.float    "quantity",   default: 1.0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["food_id", "recipe_id"], name: "index_ingredients_on_food_id_and_recipe_id"
+    t.index ["recipe_id", "food_id"], name: "index_ingredients_on_recipe_id_and_food_id"
+  end
+
   create_table "logs", force: :cascade do |t|
     t.integer  "user_id"
-    t.date     "datetime"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "log_date"
@@ -56,16 +65,6 @@ ActiveRecord::Schema.define(version: 20170226042801) do
     t.boolean  "public",     default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-  end
-
-  create_table "recipes_foods", force: :cascade do |t|
-    t.integer  "recipe_id"
-    t.integer  "food_id"
-    t.float    "quantity",   default: 1.0
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.index ["food_id", "recipe_id"], name: "index_recipes_foods_on_food_id_and_recipe_id"
-    t.index ["recipe_id", "food_id"], name: "index_recipes_foods_on_recipe_id_and_food_id"
   end
 
   create_table "users", force: :cascade do |t|

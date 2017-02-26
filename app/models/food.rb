@@ -1,6 +1,6 @@
 class Food < ApplicationRecord
-  has_many :recipes_foods
-  has_many :recipes, through: :recipes_foods
+  has_many :ingredients
+  has_many :recipes, through: :ingredients
 
   validates :unique_name, uniqueness: true
   validates :food_name, presence: true

@@ -3,8 +3,8 @@ class Recipe < ApplicationRecord
 
   attr_accessor :search, :line_delimited
 
-  has_many :recipes_foods
-  has_many :foods, through: :recipes_foods
+  has_many :ingredients
+  has_many :foods, through: :ingredients
 
   has_many :entries
   has_many :logs, through: :entries

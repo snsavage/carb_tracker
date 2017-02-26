@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Food, type: :model do
-  it { is_expected.to have_many(:recipes_foods) }
-  it { is_expected.to have_many(:recipes).through(:recipes_foods) }
+  it { is_expected.to have_many(:ingredients) }
+  it { is_expected.to have_many(:recipes).through(:ingredients) }
 
   it "has a unique unique_name" do
     food_one = create(:food)
