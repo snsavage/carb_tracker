@@ -29,7 +29,40 @@ class RecipesController < ApplicationController
       @recipe = Recipe.create(recipe_params)
       @foods = Food.all
 
-      render :new and return if @recipe.invalid?
+      if @recipe.invalid?
+        @foods = Food.all
+        render :new and return
+      end
+
+      redirect_to recipe_path(@recipe)
+    end
+  end
+
+  def edit
+    @recipe = Recipe.includes(:ingredients).find(params[:id])
+    @foods = Food.all
+  end
+
+  def update
+    @recipe = Recipe.includes(:ingredients).find(params[:id])
+    @recipe.update(recipe_params)
+
+    if params[:commit] == "Search"
+      api = NutritionIx.new(params[:recipe][:search])
+
+      @recipe.foods << Food.find_or_create_from_api(api.foods)
+      @foods = Food.all
+
+      flash.now[:alert] = api.messages if api.errors?
+      flash[:notice] = t ".search.success" unless api.errors?
+      render :edit
+
+    elsif params[:commit] == "Update Recipe"
+      if @recipe.invalid?
+        @foods = Food.all
+        render :edit and return
+      end
+
       redirect_to recipe_path(@recipe)
     end
   end

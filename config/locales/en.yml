@@ -16,4 +16,7 @@ en:
     create:
       search:
         success: "Your search was successful!"
+    update:
+      search:
+        success: "Your search was successful!"
 

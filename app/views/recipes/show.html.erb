@@ -1,5 +1,7 @@
 <h1><%= @recipe.name %></h1>
 
+<p><%= link_to "Edit Recipe", edit_recipe_path(@recipe) %></p>
+
 <p>Privacy Setting: <%= @recipe.privacy_setting %></p>
 
 
