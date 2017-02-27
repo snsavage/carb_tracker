@@ -4,8 +4,7 @@ class RecipesController < ApplicationController
   end
 
   def show
-    @recipe = Recipe.find(params[:id])
-    @stats = @recipe.stats
+    @recipe = Recipe.includes(ingredients: :food).find(params[:id])
   end
 
   def new
@@ -39,11 +38,10 @@ class RecipesController < ApplicationController
       end
     end
   end
-
-  private
+private
   def recipe_params
     params.require(:recipe).permit(
-      :name, :public, ingredients_attributes: [
+      :name, :public, :serving_size, ingredients_attributes: [
         :id, :quantity, :food_id, :_destroy
       ]
     )

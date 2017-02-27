@@ -11,6 +11,7 @@ class Recipe < ApplicationRecord
 
   validates :name, presence: true
   validates :public, inclusion: { in: [true, false] }
+  validates :serving_size, numericality: { greater_than_or_equal_to: 0 }
 
   validates :ingredients, presence: true
 
@@ -22,6 +23,20 @@ class Recipe < ApplicationRecord
 
   def title
     name.titleize
+  end
+
+  def total_stats
+    @total_stats ||= Recipe.where(id: id).total_stats.first
+  end
+
+  def self.total_stats
+    joins(ingredients: :food).select(
+      "recipes.id,
+      (sum(foods.calories) * ingredients.quantity) / serving_size AS calories,
+      (sum(foods.total_carbohydrate) * ingredients.quantity) / serving_size AS carbs,
+      (sum(foods.protein) * ingredients.quantity) / serving_size AS protein,
+      (sum(foods.total_fat) * ingredients.quantity) / serving_size AS fat"
+    ).group("recipes.id")
   end
 end
 

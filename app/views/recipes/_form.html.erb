@@ -9,6 +9,8 @@
   <%= f.select :public, options_for_select(
     [["Public", true],["Private", false]], @recipe.public) %>
 
+  <%= f.label :serving_size %>
+  <%= f.number_field :serving_size, min: 0.00, step: 0.25 %>
 
   <%= f.fields_for :ingredients do |ingredient| %>
     <%= render "ingredient_fields", f: ingredient %>

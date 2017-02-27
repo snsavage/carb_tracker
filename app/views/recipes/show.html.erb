@@ -2,6 +2,8 @@
 
 <p>Privacy Setting: <%= @recipe.privacy_setting %></p>
 
+
+<h2>Recipe Nutrition per Serving</h2>
 <table class="tables recipe">
   <thead>
     <tr>
@@ -13,21 +15,32 @@
     </tr>
   </thead>
   <tbody>
-    <% @recipe.foods.each do |food| %>
+    <% @recipe.ingredients.stats_with_quantity.each do |food| %>
       <tr>
-        <td><%= food.display %></td>
+        <td><%= food.food_name.titleize %></td>
         <td class="data"><%= num food.calories %></td>
-        <td class="data"><%= num food.total_carbohydrate %></td>
+        <td class="data"><%= num food.carbs %></td>
         <td class="data"><%= num food.protein %></td>
-        <td class="data"><%= num food.total_fat %></td>
+        <td class="data"><%= num food.fat %></td>
       </tr>
     <% end %>
     <tr class="total">
       <td>Recipe Total</td>
-      <td class="data"><%= num @stats.calories %></td>
-      <td class="data"><%= num @stats.carbs %></td>
-      <td class="data"><%= num @stats.protein %></td>
-      <td class="data"><%= num @stats.fat %></td>
+      <td class="data"><%= num @recipe.total_stats.calories %></td>
+      <td class="data"><%= num @recipe.total_stats.carbs %></td>
+      <td class="data"><%= num @recipe.total_stats.protein %></td>
+      <td class="data"><%= num @recipe.total_stats.fat %></td>
   </tbody>
 </table>
+
+
+<h2>Recipe as Provided</h2>
+
+<p>Serving Size: <%= num @recipe.serving_size %></p>
+
+<ul>
+  <% @recipe.ingredients.each do |ingredient| %>
+    <li><%= ingredient.quantity %> - <%= ingredient.food.display.titleize %></li>
+  <% end %>
+</ul>
 
