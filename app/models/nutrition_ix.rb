@@ -34,7 +34,11 @@ class NutritionIx
   end
 
   def messages
-    data[:message] || "Your search was successful!"
+    if search == ""
+      "Please provide a search term"
+    else
+      data[:message] || "Your search was successful!"
+    end
   end
 
   def foods

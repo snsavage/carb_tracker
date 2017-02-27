@@ -9,6 +9,7 @@ class RecipesController < ApplicationController
 
   def new
     @recipe = Recipe.new
+    @foods = Food.all
   end
 
   def create
@@ -17,28 +18,23 @@ class RecipesController < ApplicationController
     if params[:commit] == "Search"
       api = NutritionIx.new(params[:recipe][:search])
 
-      if api.errors?
-        flash[:error] = api.messages
-        @foods = Food.all
-      else
-        @foods = Food.find_or_create_from_api(api.foods)
-        @recipe.foods << @foods
-        flash[:success] = t ".search.success"
-      end
+      @recipe.foods << Food.find_or_create_from_api(api.foods)
+      @foods = Food.all
 
+      flash.now[:alert] = api.messages if api.errors?
+      flash[:notice] = t ".search.success" unless api.errors?
       render :new
 
     elsif params[:commit] == "Create Recipe"
       @recipe = Recipe.create(recipe_params)
-      if @recipe.invalid?
-        @foods = Food.all
-        render :new
-      else
-        redirect_to recipe_path(@recipe)
-      end
+      @foods = Food.all
+
+      render :new and return if @recipe.invalid?
+      redirect_to recipe_path(@recipe)
     end
   end
-private
+
+  private
   def recipe_params
     params.require(:recipe).permit(
       :name, :public, :serving_size, ingredients_attributes: [
