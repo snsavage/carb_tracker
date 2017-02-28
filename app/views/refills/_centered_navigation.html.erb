@@ -12,6 +12,7 @@
           <li id="js-centered-more" class="nav-link more">
             <%= link_to t("nav.log.logs"), user_path(current_user) %>
             <ul class="submenu">
+              <li><%= link_to t("nav.log.today"), today_logs_path %></li>
               <li><%= link_to t("nav.log.new"), new_log_path %></li>
             </ul>
           </li>

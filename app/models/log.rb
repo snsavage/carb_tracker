@@ -9,6 +9,7 @@ class Log < ApplicationRecord
 
   accepts_nested_attributes_for :entries, allow_destroy: true
 
-  validates :entries, presence: true
+  validates :entries, :log_date, presence: true
+  validates :log_date, uniqueness: true
 end
 

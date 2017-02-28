@@ -5,12 +5,11 @@
 <ul>
   <% current_user.logs.each do |log| %>
     <li>
-      <%= time_ago_in_words(log.created_at) %> ago
+      <%= date(log.log_date) %> <%= link_to "Edit Log", edit_log_path(log) %>
       <ul class="default">
         <% log.entries.each do |entry| %>
           <li><%= entry.recipe.title %> - <%= entry.category %></li>
         <% end %>
-        <%= link_to "Edit Log", edit_log_path(log) %>
       </ul>
     </li>
   <% end %>

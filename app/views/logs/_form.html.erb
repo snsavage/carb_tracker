@@ -1,18 +1,25 @@
 <%= form_for @log do |f| %>
-
   <%= render partial: "layouts/form_errors", locals: { form_errors: @log } %>
 
-  <div>
-    <div id="entries">
-      <%= f.fields_for :entries do |entries| %>
-        <%= render "entry_fields", f: entries %>
-      <% end %>
+  <%= f.hidden_field :id, value: "#{@log.id}" %>
 
-      <div class="links add-entry">
-        <%= link_to_add_association f, :entries, {"data-association-insertion-method": "before"}  do %>
-          <button>Add Entry</button>
-        <% end %>
-      </div>
+  <% if action_name == "today" %>
+    <h1>Today's Food Log for <%= date @log.log_date %> </h1>
+    <%= f.hidden_field :id, value: "#{@log.log_date}" %>
+  <% else %>
+    <%= f.label :log_date %>
+    <%= f.date_select :log_date, order: [:month, :day, :year] %>
+  <% end %>
+
+  <div id="entries">
+    <%= f.fields_for :entries do |entries| %>
+      <%= render "entry_fields", f: entries %>
+    <% end %>
+
+    <div class="links add-entry">
+      <%= link_to_add_association f, :entries, {"data-association-insertion-method": "before"}  do %>
+        <button>Add Entry</button>
+      <% end %>
     </div>
   </div>
 

@@ -1,13 +1,19 @@
 class LogsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
 
+  def today
+    @log = Log.find_or_initialize_by(log_date: Time.current.to_date)
+    render :new
+  end
+
   def new
     @log = Log.new
-    @log.entries.build
   end
 
   def create
-    @log = current_user.logs.create(log_params)
+    @log = current_user.logs.find_or_create_by(id: params[:id])
+    @log.update(log_params)
+    @log.save
 
     if @log.valid?
       redirect_to user_path(current_user)
@@ -31,7 +37,9 @@ class LogsController < ApplicationController
   private
   def log_params
     params.require(:log).permit(
-      entries_attributes: [:id, :quantity, :recipe_id, :category, :_destroy]
+      :log_date, entries_attributes: [
+        :id, :quantity, :recipe_id, :category, :_destroy
+      ]
     )
   end
 end

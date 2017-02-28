@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "UsersCanManageLogFoods", type: :feature do
   feature "user can add an entry to a log" do
-    scenario "when signed in" do
+    scenario "when signed in", js: true do
       user = create(:user)
       recipe = build(:recipe)
       food = create(:food)
@@ -14,6 +14,8 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
       visit new_log_path
 
       expect(page).to have_current_path(new_log_path)
+
+      click_button "Add Entry"
 
       select "Apple", from: "Recipe"
       fill_in "Quantity", with: "1"
@@ -43,6 +45,8 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
       login_as(user, :scope => :user)
 
       visit new_log_path
+
+      click_button "Add Entry"
 
       within "#entries div:first-child" do
         select "Apple", from: "Recipe"
@@ -75,7 +79,7 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
       recipe.foods << food
       recipe.save
 
-      user.logs.create.recipes << recipe
+      user.logs.create(log_date: Time.current.to_date).recipes << recipe
       user.logs.first.recipes << recipe
       user.save
 
