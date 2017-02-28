@@ -1,6 +1,14 @@
 class LogsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
 
+  def index
+    @logs = current_user.logs.includes(entries: [:recipe])
+  end
+
+  def show
+    @log = Log.find(params[:id])
+  end
+
   def today
     @log = Log.find_or_initialize_by(log_date: Time.current.to_date)
     render :new
@@ -16,7 +24,7 @@ class LogsController < ApplicationController
     @log.save
 
     if @log.valid?
-      redirect_to user_path(current_user)
+      redirect_to logs_path
     else
       render :new
     end
@@ -31,7 +39,7 @@ class LogsController < ApplicationController
     @log.update(log_params)
     @log.save
 
-    redirect_to user_path(current_user)
+    redirect_to logs_path
   end
 
   private

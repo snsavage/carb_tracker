@@ -23,7 +23,7 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
 
       click_button "Create Log"
 
-      expect(page).to have_current_path(user_path(user))
+      expect(page).to have_current_path(logs_path)
       expect(page).to have_content("Apple")
       expect(page).to have_content("Snack")
       # expect(page).to have_content(Date.now)

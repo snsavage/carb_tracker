@@ -1,13 +1,19 @@
 Rails.application.routes.draw do
   devise_for :users
-  root 'static#index'
   get 'static/index'
+
+  unauthenticated do
+    root :to => 'static#index'
+  end
+
+  authenticated do
+    root :to => 'logs#index'
+  end
 
   post 'foods/search', to: 'foods#search'
 
   resources :recipes
-  resources :users, only: [:show]
-  resources :logs, only: [:new, :create, :edit, :update] do
+  resources :logs do
     get 'today', on: :collection
   end
 

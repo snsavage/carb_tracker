@@ -6,11 +6,11 @@
     <a href="javascript:void(0)" id="js-centered-navigation-mobile-menu" class="centered-navigation-mobile-menu">MENU</a>
     <nav role="navigation">
       <ul id="js-centered-navigation-menu" class="centered-navigation-menu show">
-        <li class="nav-link"><%= link_to t("nav.home"), root_path %></li>
+        <li class="nav-link"><%= link_to t("nav.home"), static_index_path %></li>
 
         <% if user_signed_in? %>
           <li id="js-centered-more" class="nav-link more">
-            <%= link_to t("nav.log.logs"), user_path(current_user) %>
+            <%= link_to t("nav.log.logs"), logs_path %>
             <ul class="submenu">
               <li><%= link_to t("nav.log.today"), today_logs_path %></li>
               <li><%= link_to t("nav.log.new"), new_log_path %></li>
@@ -33,12 +33,16 @@
 
         <% if user_signed_in? %>
           <li id="js-centered-more" class="nav-link more">
-            <%= link_to current_user.email, user_path(current_user) %>
+            <%= link_to current_user.email, logs_path %>
             <ul class="submenu">
+              <li>
+                <%= link_to t("nav.users.account"),
+                  edit_user_registration_path(current_user) %>
+              </li>
               <li>
                 <%= link_to t("nav.users.signout"),
                   destroy_user_session_path, method: "delete" %>
-            </li>
+              </li>
             </ul>
           </li>
         <% else %>
