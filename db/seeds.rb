@@ -20,7 +20,7 @@ Zest from 2 limes
 0.25 cup lime juice
 2 tablespoons Paleo-friendly fish sauce (Red Boat!)
 2 tablespoons coconut aminos
-6 pounds chicken wings and/or drumsticks
+6 pounds chicken wings
 2 tablespoons melted fat of choice
 4 limes, cut into wedges
 RECIPE

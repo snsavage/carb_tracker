@@ -17,7 +17,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @recipe.ingredients.stats_with_quantity.each do |food| %>
+    <% @recipe.per_ingredient_stats.each do |food| %>
       <tr>
         <td><%= food.food_name.titleize %></td>
         <td class="data"><%= num food.calories %></td>

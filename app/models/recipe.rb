@@ -29,6 +29,10 @@ class Recipe < ApplicationRecord
     @total_stats ||= Recipe.where(id: id).total_stats.first
   end
 
+  def per_ingredient_stats
+    @per_ingredient_stats ||= Recipe.where(id: id).per_ingredient_stats
+  end
+
   def self.total_stats
     joins(ingredients: :food).select(
       "recipes.id,
@@ -37,6 +41,16 @@ class Recipe < ApplicationRecord
       (sum(foods.protein) * ingredients.quantity) / serving_size AS protein,
       (sum(foods.total_fat) * ingredients.quantity) / serving_size AS fat"
     ).group("recipes.id")
+  end
+
+  def self.per_ingredient_stats
+    joins(ingredients: :food).select(
+      "foods.food_name,
+      (sum(foods.calories) * ingredients.quantity) / serving_size AS calories,
+      (sum(foods.total_carbohydrate) * ingredients.quantity) / serving_size AS carbs,
+      (sum(foods.protein) * ingredients.quantity) / serving_size AS protein,
+      (sum(foods.total_fat) * ingredients.quantity) / serving_size AS fat"
+    ).group("foods.food_name")
   end
 end
 
