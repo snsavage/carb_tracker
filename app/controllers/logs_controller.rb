@@ -6,8 +6,6 @@ class LogsController < ApplicationController
   end
 
   def show
-    # @log = Log.includes(entries: [:recipe]).find(params[:id])
-    # @log = Log.includes(:recipes).find(params[:id])
     @log = Log.find(params[:id])
   end
 
