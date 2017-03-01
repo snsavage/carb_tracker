@@ -1,6 +1,4 @@
 class Recipe < ApplicationRecord
-  include FoodStats
-
   attr_accessor :search, :line_delimited
 
   has_many :ingredients, inverse_of: :recipe
@@ -8,6 +6,8 @@ class Recipe < ApplicationRecord
 
   has_many :entries
   has_many :logs, through: :entries
+
+  has_many :stats
 
   validates :name, presence: true
   validates :public, inclusion: { in: [true, false] }
@@ -26,31 +26,11 @@ class Recipe < ApplicationRecord
   end
 
   def total_stats
-    @total_stats ||= Recipe.where(id: id).total_stats.first
+    @total_stats ||= stats.per_recipe.first
   end
 
   def per_ingredient_stats
-    @per_ingredient_stats ||= Recipe.where(id: id).per_ingredient_stats
-  end
-
-  def self.total_stats
-    joins(ingredients: :food).select(
-      "recipes.id,
-      (sum(foods.calories) * ingredients.quantity) / serving_size AS calories,
-      (sum(foods.total_carbohydrate) * ingredients.quantity) / serving_size AS carbs,
-      (sum(foods.protein) * ingredients.quantity) / serving_size AS protein,
-      (sum(foods.total_fat) * ingredients.quantity) / serving_size AS fat"
-    ).group("recipes.id")
-  end
-
-  def self.per_ingredient_stats
-    joins(ingredients: :food).select(
-      "foods.food_name,
-      (sum(foods.calories) * ingredients.quantity) / serving_size AS calories,
-      (sum(foods.total_carbohydrate) * ingredients.quantity) / serving_size AS carbs,
-      (sum(foods.protein) * ingredients.quantity) / serving_size AS protein,
-      (sum(foods.total_fat) * ingredients.quantity) / serving_size AS fat"
-    ).group("foods.food_name")
+    @per_ingredient_stats ||= stats
   end
 
 end

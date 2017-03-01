@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301151204) do
+ActiveRecord::Schema.define(version: 20170301154243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 20170301151204) do
       SELECT recipes.id AS recipe_id,
       ingredients.id AS ingredient_id,
       foods.id AS food_id,
+      foods.food_name AS name,
       ((foods.calories * ingredients.quantity) / recipes.serving_size) AS calories,
       ((foods.total_carbohydrate * ingredients.quantity) / recipes.serving_size) AS carbs,
       ((foods.protein * ingredients.quantity) / recipes.serving_size) AS protein,
@@ -106,7 +107,7 @@ ActiveRecord::Schema.define(version: 20170301151204) do
      FROM ((foods
        JOIN ingredients ON ((foods.id = ingredients.food_id)))
        JOIN recipes ON ((ingredients.recipe_id = recipes.id)))
-    GROUP BY recipes.id, ingredients.id, foods.id
+    GROUP BY recipes.id, ingredients.id, foods.id, foods.food_name
     ORDER BY recipes.id;
   SQL
 

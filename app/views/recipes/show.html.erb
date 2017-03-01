@@ -19,7 +19,7 @@
   <tbody>
     <% @recipe.per_ingredient_stats.each do |food| %>
       <tr>
-        <td><%= food.food_name.titleize %></td>
+        <td><%= food.name.titleize %></td>
         <td class="data"><%= num food.calories %></td>
         <td class="data"><%= num food.carbs %></td>
         <td class="data"><%= num food.protein %></td>
@@ -28,10 +28,10 @@
     <% end %>
     <tr class="total">
       <td>Recipe Total</td>
-      <td class="data"><%= num @recipe.total_stats.calories %></td>
-      <td class="data"><%= num @recipe.total_stats.carbs %></td>
-      <td class="data"><%= num @recipe.total_stats.protein %></td>
-      <td class="data"><%= num @recipe.total_stats.fat %></td>
+      <td class="data"><%= num @recipe.total_stats.total_calories %></td>
+      <td class="data"><%= num @recipe.total_stats.total_carbs %></td>
+      <td class="data"><%= num @recipe.total_stats.total_protein %></td>
+      <td class="data"><%= num @recipe.total_stats.total_fat %></td>
   </tbody>
 </table>
 
