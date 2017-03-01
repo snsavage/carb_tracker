@@ -16,7 +16,7 @@
   <tbody>
     <% @log.per_recipe_stats.each do |recipe| %>
       <tr>
-        <td><%= recipe.name %></td>
+        <td><%= recipe.recipe_name %></td>
         <td class="data"><%= num recipe.calories %></td>
         <td class="data"><%= num recipe.carbs %></td>
         <td class="data"><%= num recipe.protein %></td>
@@ -25,10 +25,10 @@
     <% end %>
     <tr class="total">
       <td>Day's Total</td>
-      <td class="data"><%= num @log.total_stats.calories %></td>
-      <td class="data"><%= num @log.total_stats.carbs %></td>
-      <td class="data"><%= num @log.total_stats.protein %></td>
-      <td class="data"><%= num @log.total_stats.fat %></td>
+      <td class="data"><%= num @log.total_stats.total_calories %></td>
+      <td class="data"><%= num @log.total_stats.total_carbs %></td>
+      <td class="data"><%= num @log.total_stats.total_protein %></td>
+      <td class="data"><%= num @log.total_stats.total_fat %></td>
   </tbody>
 </table>
 
