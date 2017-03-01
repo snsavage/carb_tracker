@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228184738) do
+ActiveRecord::Schema.define(version: 20170301151204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "ar_internal_metadata", primary_key: "key", id: :string, force: :cascade do |t|
+    t.string   "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "entries", force: :cascade do |t|
     t.integer  "log_id"
@@ -87,5 +93,21 @@ ActiveRecord::Schema.define(version: 20170228184738) do
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
+
+
+  create_view :stats,  sql_definition: <<-SQL
+      SELECT recipes.id AS recipe_id,
+      ingredients.id AS ingredient_id,
+      foods.id AS food_id,
+      ((foods.calories * ingredients.quantity) / recipes.serving_size) AS calories,
+      ((foods.total_carbohydrate * ingredients.quantity) / recipes.serving_size) AS carbs,
+      ((foods.protein * ingredients.quantity) / recipes.serving_size) AS protein,
+      ((foods.total_fat * ingredients.quantity) / recipes.serving_size) AS fat
+     FROM ((foods
+       JOIN ingredients ON ((foods.id = ingredients.food_id)))
+       JOIN recipes ON ((ingredients.recipe_id = recipes.id)))
+    GROUP BY recipes.id, ingredients.id, foods.id
+    ORDER BY recipes.id;
+  SQL
 
 end
