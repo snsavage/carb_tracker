@@ -13,5 +13,6 @@ class Ingredient < ApplicationRecord
       sum(foods.total_fat) * quantity AS fat"
     ).group("foods.food_name")
   end
+
 end
 

@@ -1,0 +1,34 @@
+<h1>Log Date: <%= date(@log.log_date) %></h1>
+
+<p><%= link_to "Edit Log", edit_log_path(@log) %></p>
+
+<h2>Total Nutrition as Logged</h2>
+<table class="tables recipe">
+  <thead>
+    <tr>
+      <th>Recipe</th>
+      <th>Calories</th>
+      <th>Carbohydrate</th>
+      <th>Protein</th>
+      <th>Fat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @log.per_recipe_stats.each do |recipe| %>
+      <tr>
+        <td><%= recipe.name %></td>
+        <td class="data"><%= num recipe.calories %></td>
+        <td class="data"><%= num recipe.carbs %></td>
+        <td class="data"><%= num recipe.protein %></td>
+        <td class="data"><%= num recipe.fat %></td>
+      </tr>
+    <% end %>
+    <tr class="total">
+      <td>Day's Total</td>
+      <td class="data"><%= num @log.total_stats.calories %></td>
+      <td class="data"><%= num @log.total_stats.carbs %></td>
+      <td class="data"><%= num @log.total_stats.protein %></td>
+      <td class="data"><%= num @log.total_stats.fat %></td>
+  </tbody>
+</table>
+

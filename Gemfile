@@ -72,6 +72,8 @@ group :development do
   gem "neat"
   gem "bitters"
   gem "refills"
+
+  gem "table_print"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

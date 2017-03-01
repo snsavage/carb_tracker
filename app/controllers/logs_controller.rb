@@ -6,6 +6,8 @@ class LogsController < ApplicationController
   end
 
   def show
+    # @log = Log.includes(entries: [:recipe]).find(params[:id])
+    # @log = Log.includes(:recipes).find(params[:id])
     @log = Log.find(params[:id])
   end
 
@@ -35,7 +37,7 @@ class LogsController < ApplicationController
   end
 
   def update
-    @log = current_user.logs.find(params[:id])
+    @log = current_user.logs.includes(:entries).find(params[:id])
     @log.update(log_params)
     @log.save
 

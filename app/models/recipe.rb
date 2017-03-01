@@ -52,5 +52,6 @@ class Recipe < ApplicationRecord
       (sum(foods.total_fat) * ingredients.quantity) / serving_size AS fat"
     ).group("foods.food_name")
   end
+
 end
 

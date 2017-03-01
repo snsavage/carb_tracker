@@ -5,7 +5,9 @@
 <ul>
   <% @logs.each do |log| %>
     <li>
-      <%= date(log.log_date) %> <%= link_to "Edit Log", edit_log_path(log) %>
+      <h3><%= date(log.log_date) %></h3>
+      <p><%= link_to "View Log", log_path(log) %></p>
+      <p><%= link_to "Edit Log", edit_log_path(log) %></p>
       <ul class="default">
         <% log.entries.each do |entry| %>
           <li><%= entry.recipe.title %> - <%= entry.category %></li>

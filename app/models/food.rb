@@ -45,13 +45,23 @@ class Food < ApplicationRecord
     end
   end
 
+  # def self.stats
+  #   pluck(
+  #     "sum(calories)",
+  #     "sum(total_carbohydrate)",
+  #     "sum(protein)",
+  #     "sum(total_fat)"
+  #   ).first
+  # end
+
   def self.stats
-    pluck(
-      "sum(calories)",
-      "sum(total_carbohydrate)",
-      "sum(protein)",
-      "sum(total_fat)"
-    ).first
+    select(
+      "foods.id,
+      sum(calories) AS calories,
+      sum(total_carbohydrate) AS carbs,
+      sum(protein) AS protein,
+      sum(total_fat) AS fat"
+    ).group("foods.id")
   end
 
   private
