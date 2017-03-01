@@ -1,4 +1,4 @@
-<%= form_for @log do |f| %>
+<%= form_for [@current_user, @log] do |f| %>
   <%= render partial: "layouts/form_errors", locals: { form_errors: @log } %>
 
   <%= f.hidden_field :id, value: "#{@log.id}" %>

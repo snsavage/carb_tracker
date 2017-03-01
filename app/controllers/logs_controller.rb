@@ -6,16 +6,16 @@ class LogsController < ApplicationController
   end
 
   def show
-    @log = Log.find(params[:id])
+    @log = current_user.logs.find(params[:id])
   end
 
   def today
-    @log = Log.find_or_initialize_by(log_date: Time.current.to_date)
+    @log = current_user.logs.find_or_initialize_by(log_date: Time.current.to_date)
     render :new
   end
 
   def new
-    @log = Log.new
+    @log = current_user.logs.new
   end
 
   def create
@@ -24,7 +24,7 @@ class LogsController < ApplicationController
     @log.save
 
     if @log.valid?
-      redirect_to logs_path
+      redirect_to user_logs_path(current_user)
     else
       render :new
     end
@@ -39,7 +39,7 @@ class LogsController < ApplicationController
     @log.update(log_params)
     @log.save
 
-    redirect_to logs_path
+    redirect_to user_logs_path(current_user)
   end
 
   private

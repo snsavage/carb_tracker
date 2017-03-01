@@ -11,9 +11,9 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
 
       login_as(user, :scope => :user)
 
-      visit new_log_path
+      visit new_user_log_path(user)
 
-      expect(page).to have_current_path(new_log_path)
+      expect(page).to have_current_path(new_user_log_path(user))
 
       click_button "Add Entry"
 
@@ -23,14 +23,15 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
 
       click_button "Create Log"
 
-      expect(page).to have_current_path(logs_path)
+      expect(page).to have_current_path(user_logs_path(user))
       expect(page).to have_content("Apple")
       expect(page).to have_content("Snack")
       # expect(page).to have_content(Date.now)
     end
 
     scenario "when not signed in" do
-      visit new_log_path
+      user = create(:user)
+      visit new_user_log_path(user)
 
       expect(page).to have_current_path(new_user_session_path)
     end
@@ -44,7 +45,7 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
 
       login_as(user, :scope => :user)
 
-      visit new_log_path
+      visit new_user_log_path(user)
 
       click_button "Add Entry"
 
@@ -86,7 +87,7 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
       expect(user.logs.first.entries.count).to eq(2)
       login_as(user, :scope => :user)
 
-      visit edit_log_path(user.logs.first)
+      visit edit_user_log_path(user, user.logs.first)
 
       click_link "Remove Entry", match: :first
       click_button "Update Log"

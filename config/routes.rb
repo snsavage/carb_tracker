@@ -10,11 +10,12 @@ Rails.application.routes.draw do
     root :to => 'logs#index'
   end
 
-  post 'foods/search', to: 'foods#search'
-
   resources :recipes
-  resources :logs do
-    get 'today', on: :collection
+
+  resources :users, only: [] do
+    resources :logs do
+      get 'today', on: :collection
+    end
   end
 
 end

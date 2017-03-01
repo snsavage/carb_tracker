@@ -10,10 +10,14 @@
 
         <% if user_signed_in? %>
           <li id="js-centered-more" class="nav-link more">
-            <%= link_to t("nav.log.logs"), logs_path %>
+            <%= link_to t("nav.log.logs"), user_logs_path(current_user) %>
             <ul class="submenu">
-              <li><%= link_to t("nav.log.today"), today_logs_path %></li>
-              <li><%= link_to t("nav.log.new"), new_log_path %></li>
+              <li>
+                <%= link_to t("nav.log.today"), today_user_logs_path(current_user) %>
+              </li>
+              <li>
+                <%= link_to t("nav.log.new"), new_user_log_path(current_user) %>
+              </li>
             </ul>
           </li>
         <% end %>
@@ -33,7 +37,7 @@
 
         <% if user_signed_in? %>
           <li id="js-centered-more" class="nav-link more">
-            <%= link_to current_user.email, logs_path %>
+            <%= link_to current_user.email, user_logs_path(current_user) %>
             <ul class="submenu">
               <li>
                 <%= link_to t("nav.users.account"),

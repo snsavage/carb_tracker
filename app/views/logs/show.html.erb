@@ -1,6 +1,6 @@
 <h1>Log Date: <%= date(@log.log_date) %></h1>
 
-<p><%= link_to "Edit Log", edit_log_path(@log) %></p>
+<p><%= link_to "Edit Log", edit_user_log_path(current_user, @log) %></p>
 
 <h2>Total Nutrition as Logged</h2>
 <table class="tables recipe">

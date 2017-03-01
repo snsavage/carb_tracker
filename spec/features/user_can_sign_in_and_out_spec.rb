@@ -12,7 +12,7 @@ RSpec.feature "UserCanSignInAndOut", type: :feature do
       click_button "Sign up"
 
       new_user = User.last
-      expect(page).to have_current_path(logs_path)
+      expect(page).to have_current_path(user_logs_path(new_user))
     end
 
     scenario "with invalid credentials" do
@@ -36,7 +36,7 @@ RSpec.feature "UserCanSignInAndOut", type: :feature do
       fill_in "Password", with: user.password
       click_button "Log in"
 
-      expect(page).to have_current_path(logs_path)
+      expect(page).to have_current_path(user_logs_path(user))
       expect(page).to have_content(t("devise.sessions.signed_in"))
     end
 
@@ -58,8 +58,8 @@ RSpec.feature "UserCanSignInAndOut", type: :feature do
       user = create(:user)
       login_as(user, :scope => :user)
 
-      visit logs_path
-      expect(page).to have_current_path(logs_path)
+      visit user_logs_path(user)
+      expect(page).to have_current_path(user_logs_path(user))
 
       click_link "Sign Out"
       expect(page).to have_current_path(root_path)
