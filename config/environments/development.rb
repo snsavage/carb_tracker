@@ -57,6 +57,7 @@ Rails.application.configure do
     Bullet.enable = true
     Bullet.alert = true
     Bullet.add_footer = true
-    Bullet.raise = true
+    Bullet.bullet_logger = true
+    # Bullet.raise = true
   end
 end

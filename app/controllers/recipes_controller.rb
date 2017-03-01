@@ -44,7 +44,7 @@ class RecipesController < ApplicationController
   end
 
   def update
-    @recipe = Recipe.includes(:ingredients).find(params[:id])
+    @recipe = Recipe.includes(ingredients: [:food]).find(params[:id])
     @recipe.update(recipe_params)
 
     if params[:commit] == "Search"
