@@ -1,6 +1,6 @@
 class Food < ApplicationRecord
-  belongs_to :user
 
+  belongs_to :user
   has_many :ingredients
   has_many :recipes, through: :ingredients
 
@@ -28,20 +28,16 @@ class Food < ApplicationRecord
 
   before_validation :set_unique_name
 
-  def get_unique_name
-    "#{food_name} - #{serving_qty} - #{serving_unit}"
-  end
-
   def display
     "#{food_name.titleize} - #{serving_qty} - #{serving_unit}"
   end
 
   def food_name=(name)
-    super(name.titleize)
+    super(name.titleize) if name
   end
 
   def serving_unit=(unit)
-    super(unit.titleize)
+    super(unit.titleize) if unit
   end
 
   def self.find_or_create_from_api(foods, user)
@@ -49,7 +45,7 @@ class Food < ApplicationRecord
       new_food = user.foods.create(food)
 
       if new_food.invalid?
-        find_by_unique_name(new_food.get_unique_name)
+        find_by_unique_name(new_food.unique_name)
       else
         new_food
       end
@@ -58,6 +54,6 @@ class Food < ApplicationRecord
 
   private
   def set_unique_name
-    self.unique_name = get_unique_name
+    self.unique_name = "#{food_name} - #{serving_qty} - #{serving_unit}"
   end
 end

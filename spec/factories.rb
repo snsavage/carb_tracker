@@ -28,5 +28,7 @@ FactoryGirl.define do
     potassium 10
     ndb_no 9003
     tag_id 384
+
+    user
   end
 end
