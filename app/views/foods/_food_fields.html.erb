@@ -1,0 +1,24 @@
+<%= f.label :food_name, "Name" %>
+<%= f.text_field :food_name %>
+
+<%= f.label :public, "Public or Private" %>
+<%= f.select :public, options_for_select(
+  [["Public", true],["Private", false]], @food.public) %>
+
+<%= f.label :serving_qty %>
+<%= f.number_field :serving_qty, min: 0.00, step: 0.25 %>
+
+<%= f.label :serving_unit %>
+<%= f.text_field :serving_unit %>
+
+<%= f.label :calories %>
+<%= f.number_field :calories, min: 0, step: 1 %>
+
+<%= f.label :total_fat %>
+<%= f.number_field :total_fat, min: 0, step: 1 %>
+
+<%= f.label :total_carbohydrate %>
+<%= f.number_field :total_carbohydrate, min: 0, step: 1 %>
+
+<%= f.label :protein %>
+<%= f.number_field :protein, min: 0, step: 1 %>

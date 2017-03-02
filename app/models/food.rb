@@ -1,12 +1,14 @@
 class Food < ApplicationRecord
+  belongs_to :user
+
   has_many :ingredients
   has_many :recipes, through: :ingredients
 
   validates :unique_name, uniqueness: true
-  validates :food_name, presence: true
+  validates :food_name, :serving_unit, presence: true
+  validates :public, inclusion: { in: [true, false] }
 
   validates :serving_qty,
-    :serving_weight_grams,
     :calories,
     :total_fat,
     :total_carbohydrate,
@@ -14,6 +16,7 @@ class Food < ApplicationRecord
     numericality: { greater_than_or_equal_to: 0 }
 
   validates :saturated_fat,
+    :serving_weight_grams,
     :cholesterol,
     :sodium,
     :dietary_fiber,
@@ -33,9 +36,17 @@ class Food < ApplicationRecord
     "#{food_name.titleize} - #{serving_qty} - #{serving_unit}"
   end
 
-  def self.find_or_create_from_api(foods)
+  def food_name=(name)
+    super(name.titleize)
+  end
+
+  def serving_unit=(unit)
+    super(unit.titleize)
+  end
+
+  def self.find_or_create_from_api(foods, user)
     foods.collect do |food|
-      new_food = create(food)
+      new_food = user.foods.create(food)
 
       if new_food.invalid?
         find_by_unique_name(new_food.get_unique_name)
@@ -43,25 +54,6 @@ class Food < ApplicationRecord
         new_food
       end
     end
-  end
-
-  # def self.stats
-  #   pluck(
-  #     "sum(calories)",
-  #     "sum(total_carbohydrate)",
-  #     "sum(protein)",
-  #     "sum(total_fat)"
-  #   ).first
-  # end
-
-  def self.stats
-    select(
-      "foods.id,
-      sum(calories) AS calories,
-      sum(total_carbohydrate) AS carbs,
-      sum(protein) AS protein,
-      sum(total_fat) AS fat"
-    ).group("foods.id")
   end
 
   private

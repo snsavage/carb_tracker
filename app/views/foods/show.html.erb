@@ -1,0 +1,11 @@
+<h1><%= @food.display %></h1>
+
+<p><%= link_to "Edit Food", edit_food_path(@food) %>
+<ul>
+  <li>Serving Quantity: <%= num @food.serving_qty %></li>
+  <li>Serving Unit: <%= num @food.serving_unit %></li>
+  <li>Calories: <%= num @food.calories %></li>
+  <li>Total Fat: <%= num @food.total_fat %></li>
+  <li>Total Carbohydrate: <%= num @food.total_carbohydrate %></li>
+  <li>Total Protein: <%= num @food.protein %></li>
+</ul>

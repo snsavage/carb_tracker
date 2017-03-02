@@ -5,4 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :logs
+  has_many :foods
+  # has_many :recipes
 end

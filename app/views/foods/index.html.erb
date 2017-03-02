@@ -1,0 +1,11 @@
+<h1>Foods</h1>
+
+<p><%= link_to "New Food", new_food_path %></p>
+
+<ul>
+  <% @foods.each do |food| %>
+    <li>
+      <%= link_to food.unique_name.titleize, food_path(food) %>
+    </li>
+  <% end %>
+</ul>

@@ -35,6 +35,13 @@
           </ul>
         </li>
 
+        <li id="js-centered-more" class="nav-link more">
+          <%= link_to t("nav.foods.foods"), foods_path %>
+          <ul class="submenu">
+            <li><%= link_to t("nav.foods.new"), new_food_path %></li>
+          </ul>
+        </li>
+
         <% if user_signed_in? %>
           <li id="js-centered-more" class="nav-link more">
             <%= link_to current_user.email, user_logs_path(current_user) %>

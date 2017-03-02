@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :recipes
+  resources :foods
 
   resources :users, only: [] do
     resources :logs do

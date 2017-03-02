@@ -1,6 +1,8 @@
 class Recipe < ApplicationRecord
   attr_accessor :search, :line_delimited
 
+  # belongs_to :user
+
   has_many :ingredients, inverse_of: :recipe
   has_many :foods, through: :ingredients
 

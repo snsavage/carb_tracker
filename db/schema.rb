@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301165834) do
+ActiveRecord::Schema.define(version: 20170301223726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,9 +47,11 @@ ActiveRecord::Schema.define(version: 20170301165834) do
     t.float    "potassium"
     t.integer  "ndb_no"
     t.integer  "tag_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "unique_name"
+    t.integer  "user_id"
+    t.boolean  "public",               default: false
   end
 
   create_table "ingredients", force: :cascade do |t|
@@ -75,6 +77,7 @@ ActiveRecord::Schema.define(version: 20170301165834) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.float    "serving_size", default: 1.0
+    t.integer  "user_id"
   end
 
   create_table "users", force: :cascade do |t|
