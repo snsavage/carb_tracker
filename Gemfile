@@ -59,6 +59,7 @@ group :test do
   gem 'poltergeist'
   gem 'launchy'
   gem 'selenium-webdriver', '~> 2.0'
+  gem 'pundit-matchers', '~> 1.1.0'
 end
 
 group :development do

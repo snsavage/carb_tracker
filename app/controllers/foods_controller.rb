@@ -1,12 +1,16 @@
 class FoodsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
+  before_action :authenticate_user!
+
+  after_action :verify_authorized, except: [:index, :new, :create]
+  after_action :verify_policy_scoped, only: :index
 
   def index
-    @foods = current_user.foods.order(:unique_name)
+    @foods = policy_scope(Food)
   end
 
   def show
     @food = Food.find(params[:id])
+    authorize @food
   end
 
   def new
@@ -24,17 +28,32 @@ class FoodsController < ApplicationController
   end
 
   def edit
-    @food = current_user.foods.find(params[:id])
+    @food = Food.find(params[:id])
+    authorize @food
   end
 
   def update
-    @food = current_user.foods.find(params[:id])
+    @food = Food.find(params[:id])
+    authorize @food
+
     @food.update(food_params)
 
     if @food.save
       redirect_to food_path(@food)
     else
       render :edit
+    end
+  end
+
+  def destroy
+    @food = Food.find(params[:id])
+    authorize @food
+
+    if @food.destroy
+      redirect_to foods_path, notice: "#{@food.unique_name} was deleted."
+    else
+      redirect_to food_path(@food),
+        alert: "#{food.unique_name} could not be deleted."
     end
   end
 
