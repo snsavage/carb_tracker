@@ -1,12 +1,15 @@
 class Food < ApplicationRecord
 
-  belongs_to :user
+  belongs_to :user, optional: true
   has_many :ingredients
   has_many :recipes, through: :ingredients
 
-  validates :unique_name, uniqueness: true
+  validates_uniqueness_of :unique_name,
+    scope: :user_id, conditions: -> { from_user }
+
+  validates_uniqueness_of :unique_name, conditions: -> { from_api }
+
   validates :food_name, :serving_unit, presence: true
-  validates :public, inclusion: { in: [true, false] }
 
   validates :serving_qty,
     :calories,
@@ -26,10 +29,20 @@ class Food < ApplicationRecord
     :tag_id,
     numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
+  validate :user_foods_have_user_id, :api_food_does_not_have_user_id
+
   before_validation :set_unique_name
 
-  def display
-    "#{food_name.titleize} - #{serving_qty} - #{serving_unit}"
+  def user_foods_have_user_id
+    if ndb_no.blank? && user_id.blank?
+      errors.add(:user_id, "created foods must have user_id")
+    end
+  end
+
+  def api_food_does_not_have_user_id
+    if user_id.present? && ndb_no.present?
+      errors.add(:user_id, "cannot create api foods")
+    end
   end
 
   def food_name=(name)
@@ -40,9 +53,21 @@ class Food < ApplicationRecord
     super(unit.titleize) if unit
   end
 
-  def self.find_or_create_from_api(foods, user)
+  def from_api?
+    ndb_no.present?
+  end
+
+  def self.from_api
+    where.not(ndb_no: nil)
+  end
+
+  def self.from_user
+    where(ndb_no: nil)
+  end
+
+  def self.find_or_create_from_api(foods)
     foods.collect do |food|
-      new_food = user.foods.create(food)
+      new_food = Food.create(food)
 
       if new_food.invalid?
         find_by_unique_name(new_food.unique_name)

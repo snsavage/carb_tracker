@@ -3,7 +3,7 @@
   <%= f.number_field :quantity, min: 0.00, step: 0.25 %>
 
   <%= f.label :food_id, "Food" %>
-  <%= f.collection_select :food_id, @foods, :id, :display %>
+  <%= f.collection_select :food_id, @foods, :id, :unique_name %>
 
   <%= link_to_remove_association f do %>
     <button>Remove Ingredient</button>

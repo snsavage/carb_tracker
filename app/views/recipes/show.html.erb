@@ -42,7 +42,7 @@
 
 <ul>
   <% @recipe.ingredients.each do |ingredient| %>
-    <li><%= ingredient.quantity %> - <%= ingredient.food.display.titleize %></li>
+    <li><%= ingredient.quantity %> - <%= ingredient.food.unique_name %></li>
   <% end %>
 </ul>
 

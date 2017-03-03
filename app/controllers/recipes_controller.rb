@@ -18,7 +18,7 @@ class RecipesController < ApplicationController
     if params[:commit] == "Search"
       api = NutritionIx.new(params[:recipe][:search])
 
-      @recipe.foods << Food.find_or_create_from_api(api.foods, current_user)
+      @recipe.foods << Food.find_or_create_from_api(api.foods)
       @foods = Food.all
 
       flash.now[:alert] = api.messages if api.errors?
@@ -48,7 +48,7 @@ class RecipesController < ApplicationController
     @recipe.update(recipe_params)
 
     if params[:commit] == "Search"
-      api = NutritionIx.new(params[:recipe][:search], current_user)
+      api = NutritionIx.new(params[:recipe][:search])
 
       @recipe.foods << Food.find_or_create_from_api(api.foods)
       @foods = Food.all

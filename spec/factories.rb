@@ -12,23 +12,20 @@ FactoryGirl.define do
   end
 
   factory :food do
-    food_name "apple"
+    sequence(:food_name) { |n| "apple #{n}" }
     serving_qty 1
     serving_unit "medium (3\" dia)"
-    serving_weight_grams 182
     calories 10
     total_fat 10
-    saturated_fat 10
-    cholesterol 10
-    sodium 10
     total_carbohydrate 10
-    dietary_fiber 10
-    sugars 10
     protein 10
-    potassium 10
-    ndb_no 9003
-    tag_id 384
 
-    user
+    factory :user_food do
+      user
+    end
+
+    factory :api_food do
+      ndb_no 1003
+    end
   end
 end

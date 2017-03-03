@@ -5,7 +5,7 @@
 <ul>
   <% @foods.each do |food| %>
     <li>
-      <%= link_to food.unique_name.titleize, food_path(food) %>
+      <%= link_to food.unique_name, food_path(food) %>
     </li>
   <% end %>
 </ul>

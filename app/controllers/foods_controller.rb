@@ -2,7 +2,7 @@ class FoodsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
 
   def index
-    @foods = Food.all.order(:unique_name)
+    @foods = current_user.foods.order(:unique_name)
   end
 
   def show
@@ -47,7 +47,7 @@ class FoodsController < ApplicationController
       :calories,
       :total_fat,
       :total_carbohydrate,
-      :protein,
+      :protein
     )
   end
 end
