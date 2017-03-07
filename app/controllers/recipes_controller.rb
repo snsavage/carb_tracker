@@ -5,16 +5,17 @@ class RecipesController < ApplicationController
   after_action :verify_policy_scoped, only: :index
 
   def index
-    @recipes = Recipe.all
+    @recipes = policy_scope(Recipe)
   end
 
   def show
     @recipe = Recipe.includes(ingredients: :food).find(params[:id])
+    authorize @recipe
   end
 
   def new
     @recipe = Recipe.new
-    @foods = Food.all
+    @foods = policy_scope(Food)
   end
 
   def create
@@ -24,7 +25,7 @@ class RecipesController < ApplicationController
       api = NutritionIx.new(params[:recipe][:search])
 
       @recipe.foods << Food.find_or_create_from_api(api.foods)
-      @foods = Food.all
+      @foods = policy_scope(Food)
 
       flash.now[:alert] = api.messages if api.errors?
       flash[:notice] = t ".search.success" unless api.errors?
@@ -32,10 +33,10 @@ class RecipesController < ApplicationController
 
     elsif params[:commit] == "Create Recipe"
       @recipe = Recipe.create(recipe_params)
-      @foods = Food.all
+      @foods = policy_scope(Food)
 
       if @recipe.invalid?
-        @foods = Food.all
+        @foods = policy_scope(Food)
         render :new and return
       end
 
@@ -45,7 +46,8 @@ class RecipesController < ApplicationController
 
   def edit
     @recipe = Recipe.includes(:ingredients).find(params[:id])
-    @foods = Food.all
+    @foods = policy_scope(Food)
+    authorize @recipe
   end
 
   def update
@@ -56,7 +58,7 @@ class RecipesController < ApplicationController
       api = NutritionIx.new(params[:recipe][:search])
 
       @recipe.foods << Food.find_or_create_from_api(api.foods)
-      @foods = Food.all
+      @foods = policy_scope(Food)
 
       flash.now[:alert] = api.messages if api.errors?
       flash[:notice] = t ".search.success" unless api.errors?
@@ -64,7 +66,7 @@ class RecipesController < ApplicationController
 
     elsif params[:commit] == "Update Recipe"
       if @recipe.invalid?
-        @foods = Food.all
+        @foods = policy_scope(Food)
         render :edit and return
       end
 
