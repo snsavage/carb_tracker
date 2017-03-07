@@ -7,36 +7,35 @@ RSpec.feature "UserCanManageFoods", type: :feature do
     scenario "user can their view foods, but not other users' foods" do
       login_as(user, scope: :user)
 
-      food_one = create(:food, user_id: user.id)
-      food_two = create(:food, user_id: user.id)
+      create_list(:user_food, 2, user: user)
 
-      other_food = create(:user_food)
+      food_from_other_user = create(:user_food)
 
       visit foods_path
-      expect(page).to have_content(food_one.unique_name)
-      expect(page).to have_content(food_two.unique_name)
-      expect(page).not_to have_content(other_food.unique_name)
+      expect(page).to have_content(user.foods.first.unique_name)
+      expect(page).to have_content(user.foods.last.unique_name)
+      expect(page).not_to have_content(food_from_other_user.unique_name)
     end
 
     scenario "user can view their foods and foods from NutritionIx" do
       login_as(user, scope: :user)
 
-      food_one = create(:food, user_id: user.id)
+      create(:user_food, user: user)
       from_api = create(:api_food)
 
-      other_food = create(:user_food)
+      food_from_other_user= create(:user_food)
 
       visit foods_path
-      expect(page).to have_content(food_one.unique_name)
+      expect(page).to have_content(user.foods.first.unique_name)
       expect(page).to have_content(from_api.unique_name)
-      expect(page).not_to have_content(other_food.unique_name)
+      expect(page).not_to have_content(food_from_other_user.unique_name)
     end
   end
 
   feature "FoodsController#show" do
     scenario "user can view their own foods" do
       login_as(user, scope: :user)
-      food = create(:food, user_id: user.id)
+      food = create(:user_food, user: user)
 
       visit food_path(food)
       expect(page).to have_content(food.unique_name)
@@ -66,7 +65,7 @@ RSpec.feature "UserCanManageFoods", type: :feature do
   feature "FoodsController#destroy" do
     scenario "user can delete their own foods" do
       login_as(user, scope: :user)
-      food = create(:food, user_id: user.id)
+      food = create(:user_food, user: user)
 
       visit food_path(food)
       expect { click_link "Destroy Food" }.to change { Food.count }.by(-1)
@@ -77,7 +76,7 @@ RSpec.feature "UserCanManageFoods", type: :feature do
   feature "FoodController#new" do
     scenario "with the valid attributes" do
       login_as(user, scope: :user)
-      food = build(:food)
+      food = build(:user_food, user: user)
 
       visit new_food_path
 
@@ -98,7 +97,7 @@ RSpec.feature "UserCanManageFoods", type: :feature do
   feature "FoodController#edit" do
     scenario "with valid attributes" do
       login_as(user, scope: :user)
-      food = create(:food, user_id: user.id)
+      food = create(:user_food, user: user)
 
       visit edit_food_path(food)
 

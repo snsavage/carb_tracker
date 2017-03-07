@@ -21,7 +21,7 @@ RSpec.describe Food, type: :model do
       end
 
       it "without a user or ndb_no the food is invalid" do
-        food = build(:food)
+        food = build(:user_food, user: nil)
         expect(food).to be_invalid
       end
     end
@@ -36,13 +36,13 @@ RSpec.describe Food, type: :model do
     context "user created foods are unique per user" do
       it "users can create foods with different unique_names" do
         food = create(:user_food)
-        second_food = create(:food, user_id: food.user_id)
+        second_food = create(:user_food, user: food.user)
         expect(second_food).to be_valid
       end
 
       it "users cannot create two foods with the same unique_name" do
         food = create(:user_food)
-        dup_food = build(:food, food_name: food.food_name, user_id: food.user_id)
+        dup_food = build(:user_food, food_name: food.food_name, user: food.user)
         expect(dup_food).not_to be_valid
       end
 
@@ -51,7 +51,7 @@ RSpec.describe Food, type: :model do
         second_user = create(:user)
 
         dup_food = build(
-          :food, food_name: food.food_name, user_id: second_user.id
+          :user_food, food_name: food.food_name, user: second_user
         )
 
         expect(dup_food).to be_valid
@@ -145,14 +145,14 @@ RSpec.describe Food, type: :model do
 
   describe "#food_name=" do
     it "titleizes food_name" do
-      food = build(:food, food_name: "apple_and_chocolate")
+      food = build(:user_food, food_name: "apple_and_chocolate")
       expect(food.food_name).to eq("Apple And Chocolate")
     end
   end
 
   describe "#serving_unit=" do
     it "titleizes food_name" do
-      food = build(:food, serving_unit: "apple_and_chocolate")
+      food = build(:user_food, serving_unit: "apple_and_chocolate")
       expect(food.serving_unit).to eq("Apple And Chocolate")
     end
   end
@@ -176,7 +176,7 @@ RSpec.describe Food, type: :model do
 
     context "when food doesn't have a ndb_no" do
       it "returns false" do
-        expect(build(:food).from_api?).to be false
+        expect(build(:user_food).from_api?).to be false
       end
     end
   end

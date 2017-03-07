@@ -5,13 +5,21 @@ FactoryGirl.define do
   end
 
   factory :recipe do
-    name "apple"
+    sequence(:name) { |n| "apple #{n}" }
+    user
+
+    transient do
+      food_count 5
+    end
+
+    after(:build) do |recipe, evaluator|
+      evaluator.food_count.times do
+        recipe.foods << build(:api_food)
+      end
+    end
   end
 
-  factory :entry do
-  end
-
-  factory :food do
+  factory :api_food, class: :food do
     sequence(:food_name) { |n| "apple #{n}" }
     serving_qty 1
     serving_unit "medium (3\" dia)"
@@ -19,13 +27,12 @@ FactoryGirl.define do
     total_fat 10
     total_carbohydrate 10
     protein 10
+    ndb_no 1003
 
     factory :user_food do
+      ndb_no nil
       user
-    end
-
-    factory :api_food do
-      ndb_no 1003
     end
   end
 end
+

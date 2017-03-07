@@ -4,10 +4,7 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
   feature "user can add an entry to a log" do
     scenario "when signed in", js: true do
       user = create(:user)
-      recipe = build(:recipe)
-      food = create(:food, user_id: user.id)
-      recipe.foods << food
-      recipe.save
+      recipe = create(:recipe, user: user)
 
       login_as(user, :scope => :user)
 
@@ -38,10 +35,7 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
 
     scenario "user can add multiple entries to a log", js: true do
       user = create(:user)
-      recipe = build(:recipe)
-      food = create(:food, user_id: user.id)
-      recipe.foods << food
-      recipe.save
+      recipe = create(:recipe, user: user)
 
       login_as(user, :scope => :user)
 
@@ -67,8 +61,8 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
 
       user.reload
       expect(user.logs.first.entries.count).to eq(2)
-      expect(page).to have_content("Apple - Snack")
-      expect(page).to have_content("Apple - Breakfast")
+      expect(page).to have_content("#{recipe.name.titleize} - Snack")
+      expect(page).to have_content("#{recipe.name.titleize} - Breakfast")
     end
   end
 
@@ -76,7 +70,7 @@ RSpec.feature "UsersCanManageLogFoods", type: :feature do
     scenario "when signed in" do
       user = create(:user)
       recipe = build(:recipe)
-      food = create(:food, user_id: user.id)
+      food = create(:api_food)
       recipe.foods << food
       recipe.save
 

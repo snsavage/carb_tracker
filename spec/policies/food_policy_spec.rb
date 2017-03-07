@@ -20,7 +20,7 @@ RSpec.describe FoodPolicy do
 
   context "with a user provided food" do
     let(:user) { create(:user) }
-    let(:food) { create(:food, user_id: user.id) }
+    let(:food) { create(:user_food, user: user) }
 
     it { expect(resolved_scope).to include(food) }
     it { is_expected.to permit_action(:show) }

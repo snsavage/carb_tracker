@@ -1,4 +1,9 @@
 class RecipesController < ApplicationController
+  before_action :authenticate_user!
+
+  after_action :verify_authorized, except: [:index, :new, :create]
+  after_action :verify_policy_scoped, only: :index
+
   def index
     @recipes = Recipe.all
   end
