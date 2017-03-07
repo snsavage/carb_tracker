@@ -7,17 +7,6 @@ RSpec.describe FoodPolicy do
     described_class::Scope.new(user, Food.all).resolve
   end
 
-  context "without a user" do
-    let(:user) { nil }
-    let(:food) { nil }
-
-    it { is_expected.to forbid_action(:index) }
-    it { is_expected.to forbid_action(:show) }
-    it { is_expected.to forbid_new_and_create_actions }
-    it { is_expected.to forbid_edit_and_update_actions }
-    it { is_expected.to forbid_action(:destroy) }
-  end
-
   context "with a user provided food" do
     let(:user) { create(:user) }
     let(:food) { create(:user_food, user: user) }
