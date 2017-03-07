@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe NutritionIx, type: :model do
+RSpec.describe NutritionIx, :vcr, type: :model do
   let(:nutrition_ix) {NutritionIx.new("apple", true)}
 
   it "initializes with search and line_delimited" do

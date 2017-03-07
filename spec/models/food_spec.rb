@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Food, type: :model do
+RSpec.describe Food, :vcr, type: :model do
 
   it { is_expected.to belong_to(:user) }
   it { is_expected.to have_many(:ingredients) }

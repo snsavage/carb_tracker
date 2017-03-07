@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "UsersCanManageLogFoods", type: :feature do
+RSpec.feature "UsersCanManageLogFoods", :vcr, type: :feature do
   feature "user can add an entry to a log" do
     scenario "when signed in", js: true do
       user = create(:user)
