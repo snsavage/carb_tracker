@@ -22,15 +22,8 @@ class FoodPolicy < ApplicationPolicy
   end
 
   private
-  def user?
-    !!user
-  end
-
-  def record_belongs_to_user?
-    user? && record.user_id == user.id
-  end
-
   def record_not_used_in_recipe?
     !Ingredient.exists?(food_id: record.id)
   end
 end
+
