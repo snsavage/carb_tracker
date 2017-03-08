@@ -1,5 +1,5 @@
-User.create(email: "snsavage@gmail.com", password: "password")
-User.create(email: "example@example.com", password: "password")
+user_1 = User.create(email: "snsavage@gmail.com", password: "password")
+user_2 = User.create(email: "example@example.com", password: "password")
 
 kalua_pig = <<-RECIPE
 3 slices of bacon
@@ -25,15 +25,25 @@ Zest from 2 limes
 4 limes, cut into wedges
 RECIPE
 
-recipe_1 = Recipe.create(name: "Kalua Pig", serving_size: 8)
+recipe_1 = Recipe.create(
+  name: "Kalua Pig", serving_size: 8, public: true, user_id: user_1.id
+)
 foods_1 = NutritionIx.new(kalua_pig).foods
 recipe_1.foods << Food.find_or_create_from_api(foods_1)
 recipe_1.save
 
-recipe_2 = Recipe.create(name: "Chile Lime Chicken Wings", serving_size: 8)
+recipe_2 = Recipe.create(
+  name: "Chile Lime Chicken Wings", serving_size: 8, user_id: user_2.id
+)
 foods_2 = NutritionIx.new(chile_lime_chicken_wings).foods
 recipe_2.foods << Food.find_or_create_from_api(foods_2)
 recipe_2.save
 
+recipe_3 = Recipe.create(
+  name: "Kaula Pig v2", serving_size: 8, public: true, user_id: user_2.id
+)
+foods_3 = NutritionIx.new(kalua_pig).foods
+recipe_3.foods << Food.find_or_create_from_api(foods_3)
+recipe_3.save
 
 

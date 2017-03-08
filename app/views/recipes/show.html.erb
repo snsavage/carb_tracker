@@ -1,6 +1,12 @@
-<h1><%= @recipe.name %></h1>
+<h1><%= @recipe.title %></h1>
 
-<p><%= link_to "Edit Recipe", edit_recipe_path(@recipe) %></p>
+<p>
+<%= link_to "Edit Recipe", edit_recipe_path(@recipe) if policy(@recipe).edit? %>
+</p>
+<p>
+<%= link_to "Destroy Recipe", recipe_path(@recipe), method: :delete,
+  data: { confirm: "Are you sure?" } if policy(@recipe).destroy? %>
+</p>
 
 <p>Privacy Setting: <%= @recipe.privacy_setting %></p>
 

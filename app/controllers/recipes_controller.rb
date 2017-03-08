@@ -20,6 +20,7 @@ class RecipesController < ApplicationController
 
   def create
     @recipe = Recipe.new(recipe_params)
+    @recipe.user = current_user
 
     if params[:commit] == "Search"
       api = NutritionIx.new(params[:recipe][:search])
@@ -32,7 +33,7 @@ class RecipesController < ApplicationController
       render :new
 
     elsif params[:commit] == "Create Recipe"
-      @recipe = Recipe.create(recipe_params)
+      @recipe.save
       @foods = policy_scope(Food)
 
       if @recipe.invalid?
@@ -46,12 +47,15 @@ class RecipesController < ApplicationController
 
   def edit
     @recipe = Recipe.includes(:ingredients).find(params[:id])
-    @foods = policy_scope(Food)
     authorize @recipe
+
+    @foods = policy_scope(Food)
   end
 
   def update
     @recipe = Recipe.includes(ingredients: [:food]).find(params[:id])
+    authorize @recipe
+
     @recipe.update(recipe_params)
 
     if params[:commit] == "Search"
@@ -74,10 +78,22 @@ class RecipesController < ApplicationController
     end
   end
 
+  def destroy
+    @recipe = Recipe.find(params[:id])
+    authorize @recipe
+
+    if @recipe.destroy
+      redirect_to recipes_path, notice: "#{@recipe.title} was deleted."
+    else
+      redirect_to recipe_path(@recipe),
+        alert: "#{@recipe.title} could not be deleted."
+    end
+  end
+
   private
   def recipe_params
     params.require(:recipe).permit(
-      :name, :public, :serving_size, ingredients_attributes: [
+      :name, :public, :serving_size, :user_id, ingredients_attributes: [
         :id, :quantity, :food_id, :_destroy
       ]
     )
