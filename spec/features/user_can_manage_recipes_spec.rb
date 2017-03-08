@@ -131,7 +131,7 @@ RSpec.feature "UserCanManageRecipes", type: :feature do
 
     scenario "users can remove ingredients from recipes", :vcr, js: true do
       login_as(user, scope: :user)
-      recipe = create(:recipe, user: user)
+      recipe = create(:recipe, user: user, food_count: 2)
 
       visit edit_recipe_path(recipe)
 

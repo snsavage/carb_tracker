@@ -1,16 +1,22 @@
 class LogsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
+  before_action :authenticate_user!
+
+  after_action :verify_authorized, except: [:index, :new, :create]
+  after_action :verify_policy_scoped, only: :index
 
   def index
-    @logs = current_user.logs.includes(entries: [:recipe])
+    @logs = policy_scope(Log)
   end
 
   def show
-    @log = current_user.logs.find(params[:id])
+    @log = Log.find(params[:id])
+    authorize @log
   end
 
   def today
     @log = current_user.logs.find_or_initialize_by(log_date: Time.current.to_date)
+    authorize @log
+
     render :new
   end
 
@@ -32,14 +38,29 @@ class LogsController < ApplicationController
 
   def edit
     @log = current_user.logs.find(params[:id])
+    authorize @log
   end
 
   def update
     @log = current_user.logs.includes(:entries).find(params[:id])
+    authorize @log
+
     @log.update(log_params)
     @log.save
 
     redirect_to user_logs_path(current_user)
+  end
+
+  def destroy
+    @log = Log.find(params[:id])
+    authorize @log
+
+    if @log.destroy
+      redirect_to user_logs_path, notice: "Your log was deleted."
+    else
+      redirect_to user_log_paht(@log),
+        alert: "Your log could not be deleted."
+    end
   end
 
   private

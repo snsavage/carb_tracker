@@ -25,7 +25,7 @@ RSpec.describe RecipePolicy do
     it { is_expected.to forbid_edit_and_update_actions }
     it { is_expected.to forbid_action(:destroy) }
 
-    it "excludes food from resolved scope" do
+    it "excludes recipe from resolved scope" do
       expect(resolved_scope).not_to include(recipe)
     end
   end

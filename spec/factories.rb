@@ -4,12 +4,27 @@ FactoryGirl.define do
     password "password"
   end
 
+  factory :log do
+    log_date Date.current
+    user
+
+    transient do
+      recipe_count 1
+    end
+
+    after(:build) do |log, evaluator|
+      evaluator.recipe_count.times do
+        log.recipes << build(:recipe)
+      end
+    end
+  end
+
   factory :recipe do
     sequence(:name) { |n| "apple #{n}" }
     user
 
     transient do
-      food_count 5
+      food_count 1
     end
 
     after(:build) do |recipe, evaluator|
