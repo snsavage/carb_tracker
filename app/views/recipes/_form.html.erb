@@ -25,6 +25,13 @@
   <fieldset>
     <%= f.label :search, "Search for New Foods" %><br>
     <%= f.text_area :search, rows: 5, cols: 25 %>
+
+    <p>
+    Powered by <%= link_to "Nutritionix API",
+      "http://www.nutritionix.com/api",
+      target: "_blank" %>
+    </p>
+
     <p>
     Please each food on a separate line.  Example: <br>
     "1 gala apple"<br>
