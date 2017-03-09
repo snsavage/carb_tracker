@@ -20,7 +20,6 @@ class RecipesController < ApplicationController
 
   def create
     @recipe = Recipe.new(recipe_params)
-    @recipe.user = current_user
 
     if params[:commit] == "Search"
       api = NutritionIx.new(params[:recipe][:search])
@@ -34,7 +33,6 @@ class RecipesController < ApplicationController
 
     elsif params[:commit] == "Create Recipe"
       @recipe.save
-      @foods = policy_scope(Food)
 
       if @recipe.invalid?
         @foods = policy_scope(Food)
@@ -93,9 +91,10 @@ class RecipesController < ApplicationController
   private
   def recipe_params
     params.require(:recipe).permit(
-      :name, :public, :serving_size, :user_id, ingredients_attributes: [
-        :id, :quantity, :food_id, :_destroy
-      ]
-    )
+      :name, :public, :serving_size, :user_id,
+      ingredients_attributes: [:id, :quantity, :food_id, :_destroy],
+      foods_attributes: [:food_name, :serving_qty, :serving_unit, :calories,
+                         :total_fat, :total_carbohydrate, :protein]
+    ).merge(user_id: current_user.id)
   end
 end

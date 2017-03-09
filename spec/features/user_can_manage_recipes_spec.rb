@@ -44,8 +44,46 @@ RSpec.feature "UserCanManageRecipes", type: :feature do
   end
 
   feature "RecipesController#new" do
+    scenario "extra ingredient doesn't show after form error", :vcr, js: true do
+      login_as(user, scope: :user)
+
+      visit new_recipe_path
+
+      fill_in "Recipe Name", with: "New Recipe"
+
+      click_button "Add Food"
+      click_button "Create Recipe"
+
+      expect(page).not_to have_content("Remove Ingredient")
+    end
+
+    scenario "create a new food when creating a recipe", :vcr, js: true do
+      login_as(user, scope: :user)
+
+      visit new_recipe_path
+
+      fill_in "Recipe Name", with: "New Recipe"
+
+      click_button "Add Food"
+
+      fill_in "Name", with: "Banana"
+      fill_in "Serving qty", with: 1.0
+      fill_in "Serving unit", with: "Medium"
+      fill_in "Calories", with: 100
+      fill_in "Total fat", with: 100
+      fill_in "Total carbohydrate", with: 100
+      fill_in "Protein", with: 100
+
+      expect{
+        click_button "Create Recipe"
+      }.to change { Recipe.count }.by(1)
+
+      expect(Recipe.last.foods.count).to eq(1)
+      expect(page).to have_current_path(recipe_path(Recipe.last))
+    end
+
     scenario "Users can create recipes by searching for foods", :vcr do
-      login_as(user, scrope: :user)
+      login_as(user, scope: :user)
 
       visit new_recipe_path
 

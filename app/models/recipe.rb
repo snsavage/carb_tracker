@@ -18,6 +18,7 @@ class Recipe < ApplicationRecord
   validates :ingredients, presence: true
 
   accepts_nested_attributes_for :ingredients, allow_destroy: true
+  accepts_nested_attributes_for :foods, allow_destroy: true
 
   def privacy_setting
     public? ? "Public" : "Private"
@@ -35,5 +36,13 @@ class Recipe < ApplicationRecord
     @per_ingredient_stats ||= stats
   end
 
+  def foods_attributes=(foods)
+    self.foods << foods.values.collect do |attributes|
+      food = Food.new(attributes)
+      food.user = self.user
+
+      food
+    end
+  end
 end
 
