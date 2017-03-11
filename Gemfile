@@ -40,6 +40,7 @@ gem 'devise'
 gem 'pundit'
 gem 'cocoon'
 gem 'scenic'
+gem 'omniauth-facebook'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
