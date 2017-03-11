@@ -12,19 +12,19 @@
   <%= f.label :serving_size %>
   <%= f.number_field :serving_size, min: 0.00, step: 0.25 %>
 
-  <% if action_name == "new" || action_name == "create" %>
-    <%= f.fields_for :foods do |food| %>
+  <%= f.fields_for :foods do |food| %>
+    <% if food.object.invalid? %>
       <div class="nested-fields">
         <%= render "food_fields", f: food %>
       </div>
     <% end %>
-
-    <div class="links add-foods">
-      <%= link_to_add_association f, :foods, partial: "food_fields" do %>
-        <button>Add Food</button>
-      <% end %>
-    </div>
   <% end %>
+
+  <div class="links add-foods">
+    <%= link_to_add_association f, :foods, partial: "food_fields" do %>
+      <button>Add Food</button>
+    <% end %>
+  </div>
 
   <%= f.fields_for :ingredients do |ingredient| %>
     <% if ingredient.object.food.valid? %>

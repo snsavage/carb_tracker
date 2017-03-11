@@ -3,6 +3,8 @@ class Ingredient < ApplicationRecord
   belongs_to :food
 
   validates :quantity, numericality: { greater_than_or_equal_to: 0 }
+  validates :recipe, presence: true
+  validates :food, presence: true
 
   def self.stats_with_quantity
     joins(:food).select(

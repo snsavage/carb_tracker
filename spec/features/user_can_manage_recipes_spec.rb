@@ -44,6 +44,30 @@ RSpec.feature "UserCanManageRecipes", type: :feature do
   end
 
   feature "RecipesController#new" do
+    scenario "new foods will errors can be fixed and saved", :vcr, js: true do
+      login_as(user, scope: :user)
+      food = build(:user_food, user: user)
+
+      visit new_recipe_path
+      fill_in "Recipe Name", with: "New Recipe"
+
+      click_button "Add Food"
+      fill_in "Name", with: food.food_name
+
+      click_button "Create Recipe"
+
+      fill_in "Serving qty", with: food.serving_qty
+      fill_in "Serving unit", with: food.serving_unit
+      fill_in "Calories", with: food.calories
+      fill_in "Total fat", with: food.total_fat
+      fill_in "Total carbohydrate", with: food.total_carbohydrate
+      fill_in "Protein", with: food.protein
+
+      expect {
+        click_button "Create Recipe"
+      }.to change { Food.count }.by(1)
+    end
+
     scenario "extra ingredient doesn't show after form error", :vcr, js: true do
       login_as(user, scope: :user)
 

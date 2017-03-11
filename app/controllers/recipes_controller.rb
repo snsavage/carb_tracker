@@ -15,7 +15,7 @@ class RecipesController < ApplicationController
 
   def new
     @recipe = Recipe.new
-    @foods = policy_scope(Food)
+    @foods_for_select = policy_scope(Food)
   end
 
   def create
@@ -25,7 +25,7 @@ class RecipesController < ApplicationController
       api = NutritionIx.new(params[:recipe][:search])
 
       @recipe.foods << Food.find_or_create_from_api(api.foods)
-      @foods = policy_scope(Food)
+      @foods_for_select = policy_scope(Food)
 
       flash.now[:alert] = api.messages if api.errors?
       flash[:notice] = t ".search.success" unless api.errors?
@@ -35,7 +35,8 @@ class RecipesController < ApplicationController
       @recipe.save
 
       if @recipe.invalid?
-        @foods = policy_scope(Food)
+        @foods_for_select = policy_scope(Food)
+
         render :new and return
       end
 
@@ -47,7 +48,7 @@ class RecipesController < ApplicationController
     @recipe = Recipe.includes(:ingredients).find(params[:id])
     authorize @recipe
 
-    @foods = policy_scope(Food)
+    @foods_for_select = policy_scope(Food)
   end
 
   def update
@@ -60,7 +61,7 @@ class RecipesController < ApplicationController
       api = NutritionIx.new(params[:recipe][:search])
 
       @recipe.foods << Food.find_or_create_from_api(api.foods)
-      @foods = policy_scope(Food)
+      @foods_for_select = policy_scope(Food)
 
       flash.now[:alert] = api.messages if api.errors?
       flash[:notice] = t ".search.success" unless api.errors?
@@ -68,7 +69,7 @@ class RecipesController < ApplicationController
 
     elsif params[:commit] == "Update Recipe"
       if @recipe.invalid?
-        @foods = policy_scope(Food)
+        @foods_for_select = policy_scope(Food)
         render :edit and return
       end
 
@@ -90,11 +91,36 @@ class RecipesController < ApplicationController
 
   private
   def recipe_params
+    filter_empty_attributes(params[:recipe][:ingredients_attributes], :food_id)
+
     params.require(:recipe).permit(
-      :name, :public, :serving_size, :user_id,
-      ingredients_attributes: [:id, :quantity, :food_id, :_destroy],
-      foods_attributes: [:food_name, :serving_qty, :serving_unit, :calories,
-                         :total_fat, :total_carbohydrate, :protein]
+      :name,
+      :public,
+      :serving_size,
+      :user_id,
+      ingredients_attributes: [
+        :id,
+        :quantity,
+        :food_id,
+        :_destroy
+      ],
+      foods_attributes: [
+        :food_name,
+        :serving_qty,
+        :serving_unit,
+        :calories,
+        :total_fat,
+        :total_carbohydrate,
+        :protein
+      ]
     ).merge(user_id: current_user.id)
+  end
+
+  def filter_empty_attributes(attributes_to_filter, attribute_to_test)
+    if attributes_to_filter
+      attributes_to_filter.delete_if do |key, value|
+        value[attribute_to_test].empty?
+      end
+    end
   end
 end
