@@ -5,10 +5,10 @@
 @import "refills/flashes";
 @import "refills/centered-navigation";
 @import "refills/tables";
+@import "refills/footer-2";
 
 @import "foods";
 @import "recipes";
-@import "static";
 @import "users";
 @import "logs";
 
@@ -18,27 +18,39 @@
 
 body {
   -webkit-font-smoothing: antialiased;
-  @include outer-container;
+  margin: 0;
+  padding: 0;
 
   header {
-    @include section-bottom-margin
+    @include section-bottom-margin;
   }
 
   main {
+    @include outer-container;
     @include span-columns(10);
     @include shift(1);
-    @include section-bottom-margin
+    @include section-bottom-margin;
   }
 
   .flash {
+    @include outer-container;
     @include span-columns(8);
     @include shift(2);
-    @include section-bottom-margin
+    @include section-bottom-margin;
   }
 
   section {
     @include span-columns(10);
-    @include section-bottom-margin
+    @include section-bottom-margin;
+  }
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+
+  main {
+    @include outer-container;
   }
 }
 
@@ -115,3 +127,8 @@ table.log {
   }
 }
 
+.footer-2 {
+  li {
+    color: white;
+  }
+}

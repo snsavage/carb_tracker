@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CarbTracker</title>
+    <title>Carb Tracker</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag params[:controller] if params[:controller] == 'static' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body <%= "data-no-turbolink" if request.post? %>>
-    <%= render 'refills/centered_navigation' %>
-    <%= render 'refills/flashes' %>
+    <div class="wrapper-for-content-outside-of-footer">
+      <%= render 'refills/centered_navigation' %>
+      <%= render 'refills/flashes' %>
 
-    <main><%= yield %></main>
+      <main><%= yield %></main>
 
-    <%= render 'layouts/debug' %>
+      <%= render 'layouts/debug' %>
+    </div>
+
+    <%= render 'refills/footer_2' %>
   </body>
 </html>

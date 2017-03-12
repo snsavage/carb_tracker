@@ -1,3 +1,20 @@
+@import "bourbon/bourbon";
+@import "neat/neat";
+@import "base/base";
+
+body {
+  header {
+    margin: 0;
+  }
+
+  main {
+    @include outer-container;
+    @include span-columns(12);
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
 .hero {
   $large-screen: 50em !default;
   align-items: center;
@@ -17,7 +34,7 @@
   }
 
   .hero-content {
-    max-width: 50em;
+    max-width: 100%;
     text-align: center;
 
     @include
@@ -31,11 +48,5 @@
     margin:
     auto;
   }
-}
-
-body main {
-  width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
 }
 

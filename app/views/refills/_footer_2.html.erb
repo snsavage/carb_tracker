@@ -1,0 +1,20 @@
+<footer class="footer-2" role="contentinfo">
+  <main>
+    <ul>
+      <li>Carb Tracker</li>
+      <li><%= link_to "Home", root_path %></li>
+      <% if user_signed_in? %>
+        <li><%= link_to "Food Log", user_logs_path(current_user) %></li>
+        <li><%= link_to "Recipes", recipes_path %></li>
+        <li><%= link_to "Foods", foods_path %></li>
+      <% end %>
+    </ul>
+
+    <div class="footer-secondary-links">
+      <ul>
+        <li>Made in PA, U.S.A.</li>
+        <li>&copy 2016 <%= link_to "Scott Savage", "https://www.savage.com" %></li>
+      </ul>
+    </div>
+  </main>
+</footer>
