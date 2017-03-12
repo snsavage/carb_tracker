@@ -215,10 +215,11 @@ form {
 
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
 
-  .log-details {
-    @include span-columns(4);
-  }
+.chart {
+  margin-bottom: 1em;
 }
 
 

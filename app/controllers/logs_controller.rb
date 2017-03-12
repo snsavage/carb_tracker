@@ -5,7 +5,7 @@ class LogsController < ApplicationController
   after_action :verify_policy_scoped, only: :index
 
   def index
-    @logs = policy_scope(Log)
+    @logs = policy_scope(Log).order(log_date: :desc)
   end
 
   def show

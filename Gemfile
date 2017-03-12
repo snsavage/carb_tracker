@@ -42,6 +42,7 @@ gem 'pundit'
 gem 'cocoon'
 gem 'scenic'
 gem 'omniauth-facebook'
+gem 'chartkick'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

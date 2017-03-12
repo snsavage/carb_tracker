@@ -18,5 +18,11 @@ class Log < ApplicationRecord
   def per_recipe_stats
     @per_recipe_stats ||= logs_stats
   end
+
+  def self.daily_carb_data(user)
+    where(user_id: user.id).order(log_date: :asc).limit(14).map do |log|
+      [log.log_date.strftime('%B %e, %Y'), log.total_stats.total_carbs]
+    end
+  end
 end
 
