@@ -46,9 +46,6 @@ body {
 }
 
 footer {
-  position: absolute;
-  bottom: 0;
-
   main {
     @include outer-container;
   }
@@ -130,5 +127,37 @@ table.log {
 .footer-2 {
   li {
     color: white;
+  }
+}
+
+fieldset {
+  border: 1px solid $light-gray;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+form {
+  .food-fields {
+    @include row();
+
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+
+    .food-details {
+      @include span-columns(6);
+    }
+
+    .food-nutrition {
+      @include span-columns(6);
+    }
+  }
+
+  .remove-food {
+    @include row();
+    @include span-columns(12);
+
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    border-bottom: 1px solid $light-gray;
   }
 }

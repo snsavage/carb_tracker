@@ -2,43 +2,36 @@
 
   <%= render partial: "layouts/form_errors", locals: { form_errors: @recipe } %>
 
-  <%= f.label :name, "Recipe Name" %>
-  <%= f.text_field :name %>
+  <fieldset>
+    <legend>Recipe Details</legend>
+    <%= f.label :name, "Recipe Name" %>
+    <%= f.text_field :name %>
 
-  <%= f.label :public, "Public or Private" %>
-  <%= f.select :public, options_for_select(
-    [["Public", true],["Private", false]], @recipe.public) %>
+    <%= f.label :public, "Public or Private" %>
+    <%= f.select :public, options_for_select(
+      [["Public", true],["Private", false]], @recipe.public) %>
 
-  <%= f.label :serving_size %>
-  <%= f.number_field :serving_size, min: 0.00, step: 0.25 %>
-
-  <%= f.fields_for :foods do |food| %>
-    <% if food.object.invalid? %>
-      <div class="nested-fields">
-        <%= render "food_fields", f: food %>
-      </div>
-    <% end %>
-  <% end %>
-
-  <div class="links add-foods">
-    <%= link_to_add_association f, :foods, partial: "food_fields" do %>
-      <button>Add Food</button>
-    <% end %>
-  </div>
-
-  <%= f.fields_for :ingredients do |ingredient| %>
-    <% if ingredient.object.food.valid? %>
-      <%= render "ingredient_fields", f: ingredient %>
-    <% end %>
-  <% end %>
-
-  <div class="links add-ingredient">
-    <%= link_to_add_association f, :ingredients do %>
-      <button>Add Ingredient</button>
-    <% end %>
-  </div>
+    <%= f.label :serving_size %>
+    <%= f.number_field :serving_size, min: 0.00, step: 0.25 %>
+  </fieldset>
 
   <fieldset>
+    <legend>Ingreidents</legend>
+    <%= f.fields_for :ingredients do |ingredient| %>
+      <% if ingredient.object.food.valid? %>
+        <%= render "ingredient_fields", f: ingredient %>
+      <% end %>
+    <% end %>
+
+    <div class="links add-ingredient">
+      <%= link_to_add_association f, :ingredients do %>
+        <button>Add Ingredient</button>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Search for Foods Using NutritionIx</legend>
     <%= f.label :search, "Search for New Foods" %><br>
     <%= f.text_area :search, rows: 5, cols: 25 %>
 
@@ -55,6 +48,21 @@
     </p>
 
     <%= f.submit "Search" %>
+  </fieldset>
+
+  <fieldset>
+    <legend>Create New Foods</legend>
+    <%= f.fields_for :foods do |food| %>
+      <% if food.object.invalid? %>
+        <%= render "food_fields", f: food %>
+      <% end %>
+    <% end %>
+
+    <div class="links add-foods">
+      <%= link_to_add_association f, :foods, partial: "food_fields" do %>
+        <button>Add Food</button>
+      <% end %>
+    </div>
   </fieldset>
 
   <%= f.submit %>

@@ -1,7 +1,10 @@
-<div class="nested-fields">
+<div class="food-fields">
   <%= render "foods/food_fields", f: f %>
+</div>
 
+<div class="remove-food">
   <%= link_to_remove_association f do %>
     <button>Remove Food</button>
   <% end %>
 </div>
+

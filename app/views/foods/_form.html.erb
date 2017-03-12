@@ -1,7 +1,9 @@
 <%= form_for @food do |f| %>
   <%= render partial: "layouts/form_errors", locals: { form_errors: @food } %>
 
-  <%= render "food_fields", f: f %>
+  <div class="food-fields">
+    <%= render "food_fields", f: f %>
+  </div>
 
   <%= f.submit %>
 <% end %>
