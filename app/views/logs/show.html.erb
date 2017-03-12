@@ -24,7 +24,7 @@
   <tbody>
     <% @log.per_recipe_stats.each do |recipe| %>
       <tr>
-        <td><%= recipe.recipe_name %></td>
+        <td><%= recipe.title %> - <%= recipe.category %></td>
         <td class="data"><%= num recipe.calories %></td>
         <td class="data"><%= num recipe.carbs %></td>
         <td class="data"><%= num recipe.protein %></td>

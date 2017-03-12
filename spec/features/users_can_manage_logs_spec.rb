@@ -20,10 +20,8 @@ RSpec.feature "UsersCanManageLogFoods", :vcr, type: :feature do
 
       click_button "Create Log"
 
-      expect(page).to have_current_path(user_logs_path(user))
       expect(page).to have_content("Apple")
       expect(page).to have_content("Snack")
-      # expect(page).to have_content(Date.now)
     end
 
     scenario "when not signed in" do
@@ -61,8 +59,8 @@ RSpec.feature "UsersCanManageLogFoods", :vcr, type: :feature do
 
       user.reload
       expect(user.logs.first.entries.count).to eq(2)
-      expect(page).to have_content("#{recipe.name.titleize} - Snack")
-      expect(page).to have_content("#{recipe.name.titleize} - Breakfast")
+      expect(page).to have_content("#{recipe.title} - Snack")
+      expect(page).to have_content("#{recipe.title} - Breakfast")
     end
   end
 

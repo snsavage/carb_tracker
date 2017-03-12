@@ -1,6 +1,17 @@
 class LogsStat < ApplicationRecord
   belongs_to :log
 
+  enum category: {
+    Breakfast: 0,
+    Lunch: 1,
+    Dinner: 2,
+    Snack: 3
+  }
+
+  def title
+    recipe_name.titleize
+  end
+
   def self.per_log
     select(
       "log_id,

@@ -30,7 +30,7 @@ class LogsController < ApplicationController
     @log.save
 
     if @log.valid?
-      redirect_to user_logs_path(current_user)
+      redirect_to user_log_path(current_user, @log)
     else
       render :new
     end
@@ -46,9 +46,11 @@ class LogsController < ApplicationController
     authorize @log
 
     @log.update(log_params)
-    @log.save
-
-    redirect_to user_logs_path(current_user)
+    if @log.save
+      redirect_to user_log_path(current_user, @log)
+    else
+      render :edit
+    end
   end
 
   def destroy
