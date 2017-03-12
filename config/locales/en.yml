@@ -4,7 +4,8 @@ en:
     home: "Home"
     log:
       logs: "Food Log"
-      new: "New Log Entry"
+      today: "Log Entry for Today"
+      new: "Other Log Entries"
     recipes:
       recipes: "Recipes"
       new: "New Recipe"
