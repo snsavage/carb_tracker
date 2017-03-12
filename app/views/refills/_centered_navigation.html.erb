@@ -6,7 +6,7 @@
     <a href="javascript:void(0)" id="js-centered-navigation-mobile-menu" class="centered-navigation-mobile-menu">MENU</a>
     <nav role="navigation">
       <ul id="js-centered-navigation-menu" class="centered-navigation-menu show">
-        <li class="nav-link"><%= link_to t("nav.home"), static_index_path %></li>
+        <li class="nav-link"><%= link_to "Carb Tracker", static_index_path %></li>
 
         <% if user_signed_in? %>
           <li id="js-centered-more" class="nav-link more">
@@ -21,12 +21,6 @@
             </ul>
           </li>
         <% end %>
-
-        <li class="nav-link logo">
-          <%= link_to root_path, class: "logo" do %>
-            <%= image_tag "logo.png", alt: t("title") %>
-          <% end %>
-        </li>
 
         <% if user_signed_in? %>
           <li id="js-centered-more" class="nav-link more">
