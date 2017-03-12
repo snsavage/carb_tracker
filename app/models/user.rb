@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   has_many :logs
   has_many :foods
-  # has_many :recipes
+  has_many :recipes
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
