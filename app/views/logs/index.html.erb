@@ -1,18 +1,26 @@
-<h2>User: <%= current_user.email %></h2>
+<h1>Food Logs</h1>
 
-<h2>Food Logs</h2>
-
-<ul>
-  <% @logs.each do |log| %>
-    <li>
+<% @logs.each do |log| %>
+  <div class="log-index">
+    <div class="log-details">
       <h3><%= date(log.log_date) %></h3>
-      <p><%= link_to "View Log", user_log_path(current_user, log) %></p>
-      <p><%= link_to "Edit Log", edit_user_log_path(current_user, log) %></p>
-      <ul class="default">
-        <% log.entries.each do |entry| %>
-          <li><%= entry.recipe.title %> - <%= entry.category %></li>
-        <% end %>
+    </div>
+
+    <div class="log-details stats">
+      <ul>
+        <li><%= num log.total_stats.total_calories %><span>Calories</span></li>
+        <li><%= num log.total_stats.total_carbs %><span>Carbs</span></li>
+        <li><%= num log.total_stats.total_protein %><span>Protein</span></li>
+        <li><%= num log.total_stats.total_fat %><span>Total Fat</span></li>
       </ul>
-    </li>
-  <% end %>
-</ul>
+    </div>
+
+    <div class="log-details">
+      <p>
+      <%= link_to "View Log", user_log_path(current_user, log) %> | 
+      <%= link_to "Edit Log", edit_user_log_path(current_user, log) %>
+      </p>
+    </div>
+  </div>
+<% end %>
+
