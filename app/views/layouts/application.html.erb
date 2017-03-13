@@ -7,6 +7,7 @@
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= stylesheet_link_tag params[:controller] if params[:controller] == 'static' %>
     <%= javascript_include_tag 'application' %>
+    <%= analytics_init if GoogleAnalytics.valid_tracker? %>
   </head>
 
   <body>
