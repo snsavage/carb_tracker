@@ -1,24 +1,70 @@
-# README
+# Carb Tracker
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[Carb Tracker](https://carbtracker.herokuapp.com/static/index) allows users to
+track their daily nutrition (carbohydrates, protein, and fat) as a way to reach
+health goals.  Nutrition data is provided by the [NutritionIx
+API](https://www.nutritionix.com/business/api).
 
-Things you may want to cover:
+Carb Tracker is built with the [Ruby on Rails](http://rubyonrails.org) web
+development framework.
 
-* Ruby version
+*Carb Tracker was created as a project for the [Flatiron School's Online Web
+Developer
+Program](https://flatironschool.com/programs/online-web-developer-career-course/).*
 
-* System dependencies
+## Setup
+Local development for Carb Tracker can be setup with the following steps.  Please submit a [bug report](https://github.com/snsavage/carb_tracker/issues) if these steps don't work for you.
 
-* Configuration
+You will need the following software:
 
-* Database creation
+* Git
+* Ruby v2.3.1
+* PostgreSQL
 
-* Database initialization
+After closing this GitHub repo, don't forget to run bundle install and run the database migrations.
 
-* How to run the test suite
+```
+	$ git clone https://github.com/snsavage/carb_tracker.git
+	$ bundle install
+	$ rake db:migrate
+	$ rake db:migrate RAILS_ENV=test
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+Carb Tracker uses the ```dotenv``` gem to manage environment variables.  You will need to provide the following variables in a ```.env``` file located in the project root.  
 
-* Deployment instructions
+```
+NUTRITION_IX_ID=<your id here>
+NUTRITION_IX_APP=<your key here>
+FB_APP_ID=<your id here>
+FB_APP_SECRET=<your secret here>
+``` 
+The NutritionIx keys can be obtained [here](https://developer.nutritionix.com/) and the Facebook keys [here](https://developers.facebook.com).
 
-* ...
+## Testing
+Carb Tracker has a test suite built with [rspec](http://rspec.info).  The test suite can be run with the commands:
+
+```
+	$ rspec				 # OR
+	$ bundle exec rspec  # Depending on your system configuration. 
+```
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at
+[https://github.com/snsavage/carb_tracker/issues](https://github.com/snsavage/carb_tracker/issues).
+Please read the [Contributing Guide](./CONTRIBUTING.md).  This project is
+intended to be a safe, welcoming space for collaboration, and contributors are
+expected to adhere to the [Code of Conduct](./CODE_OF_CONDUCT.md).
+
+## Questions?
+Please contact [carbtracker@snsavage.com](mailto: carbtracker@snsavage.com).
+
+## License
+
+Carb Tracker is released on the [MIT License](./LICENSE).
+
+
+
+
+
+
