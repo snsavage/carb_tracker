@@ -1,0 +1,14 @@
+Rails:
+  Enabled: true
+
+AllCops:
+  Include:
+    - Rakefile
+    - config.ru
+    - lib/**/*.rake
+  Exclude:
+    - db/schema.rb
+
+Documentation:
+  Enabled: false
+

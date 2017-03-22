@@ -1,6 +1,6 @@
 module ApplicationHelper
   def num(number)
-    number_with_precision(number , precision: 1)
+    number_with_precision(number, precision: 1)
   end
 
   def date(date)

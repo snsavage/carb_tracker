@@ -22,8 +22,8 @@ class RecipePolicy < ApplicationPolicy
   end
 
   private
+
   def record_not_used_in_entry?
     !Entry.exists?(recipe_id: record.id)
   end
 end
-

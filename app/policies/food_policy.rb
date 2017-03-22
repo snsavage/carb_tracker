@@ -22,8 +22,8 @@ class FoodPolicy < ApplicationPolicy
   end
 
   private
+
   def record_not_used_in_recipe?
     !Ingredient.exists?(food_id: record.id)
   end
 end
-

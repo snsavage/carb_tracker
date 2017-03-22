@@ -21,23 +21,23 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(recipe_params)
 
-    if params[:commit] == "Search"
+    if params[:commit] == 'Search'
       api = NutritionIx.new(params[:recipe][:search])
 
       @recipe.foods << Food.find_or_create_from_api(api.foods)
       @foods_for_select = policy_scope(Food)
 
       flash.now[:alert] = api.messages if api.errors?
-      flash[:notice] = t ".search.success" unless api.errors?
+      flash[:notice] = t '.search.success' unless api.errors?
       render :new
 
-    elsif params[:commit] == "Create Recipe"
+    elsif params[:commit] == 'Create Recipe'
       @recipe.save
 
       if @recipe.invalid?
         @foods_for_select = policy_scope(Food)
-
-        render :new and return
+        render :new
+        return
       end
 
       redirect_to recipe_path(@recipe)
@@ -57,20 +57,21 @@ class RecipesController < ApplicationController
 
     @recipe.update(recipe_params)
 
-    if params[:commit] == "Search"
+    if params[:commit] == 'Search'
       api = NutritionIx.new(params[:recipe][:search])
 
       @recipe.foods << Food.find_or_create_from_api(api.foods)
       @foods_for_select = policy_scope(Food)
 
       flash.now[:alert] = api.messages if api.errors?
-      flash[:notice] = t ".search.success" unless api.errors?
+      flash[:notice] = t '.search.success' unless api.errors?
       render :edit
 
-    elsif params[:commit] == "Update Recipe"
+    elsif params[:commit] == 'Update Recipe'
       if @recipe.invalid?
         @foods_for_select = policy_scope(Food)
-        render :edit and return
+        render :edit
+        return
       end
 
       redirect_to recipe_path(@recipe)
@@ -85,11 +86,12 @@ class RecipesController < ApplicationController
       redirect_to recipes_path, notice: "#{@recipe.title} was deleted."
     else
       redirect_to recipe_path(@recipe),
-        alert: "#{@recipe.title} could not be deleted."
+                  alert: "#{@recipe.title} could not be deleted."
     end
   end
 
   private
+
   def recipe_params
     filter_empty_attributes(params[:recipe][:ingredients_attributes], :food_id)
 
@@ -117,10 +119,10 @@ class RecipesController < ApplicationController
   end
 
   def filter_empty_attributes(attributes_to_filter, attribute_to_test)
-    if attributes_to_filter
-      attributes_to_filter.delete_if do |key, value|
-        value[attribute_to_test].empty?
-      end
+    return unless attributes_to_filter
+
+    attributes_to_filter.delete_if do |_key, value|
+      value[attribute_to_test].empty?
     end
   end
 end

@@ -21,7 +21,7 @@ class Recipe < ApplicationRecord
   accepts_nested_attributes_for :foods, allow_destroy: true
 
   def privacy_setting
-    public? ? "Public" : "Private"
+    public? ? 'Public' : 'Private'
   end
 
   def title
@@ -39,10 +39,9 @@ class Recipe < ApplicationRecord
   def foods_attributes=(foods)
     self.foods << foods.values.collect do |attributes|
       food = Food.new(attributes)
-      food.user = self.user
+      food.user = user
 
       food
     end
   end
 end
-

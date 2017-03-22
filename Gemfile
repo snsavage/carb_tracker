@@ -82,6 +82,8 @@ group :development do
   gem "refills"
 
   gem "table_print"
+
+  gem "rubocop", require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

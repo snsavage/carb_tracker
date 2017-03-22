@@ -14,7 +14,8 @@ class LogsController < ApplicationController
   end
 
   def today
-    @log = current_user.logs.find_or_initialize_by(log_date: Time.current.to_date)
+    @log = current_user
+           .logs.find_or_initialize_by(log_date: Time.current.to_date)
     authorize @log
 
     render :new
@@ -58,14 +59,15 @@ class LogsController < ApplicationController
     authorize @log
 
     if @log.destroy
-      redirect_to user_logs_path, notice: "Your log was deleted."
+      redirect_to user_logs_path, notice: 'Your log was deleted.'
     else
       redirect_to user_log_paht(@log),
-        alert: "Your log could not be deleted."
+                  alert: 'Your log could not be deleted.'
     end
   end
 
   private
+
   def log_params
     params.require(:log).permit(
       :log_date, entries_attributes: [

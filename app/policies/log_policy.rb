@@ -25,4 +25,3 @@ class LogPolicy < ApplicationPolicy
     end
   end
 end
-

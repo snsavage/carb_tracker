@@ -53,11 +53,12 @@ class FoodsController < ApplicationController
       redirect_to foods_path, notice: "#{@food.unique_name} was deleted."
     else
       redirect_to food_path(@food),
-        alert: "#{food.unique_name} could not be deleted."
+                  alert: "#{food.unique_name} could not be deleted."
     end
   end
 
   private
+
   def food_params
     params.require(:food).permit(
       :food_name,
@@ -70,4 +71,3 @@ class FoodsController < ApplicationController
     )
   end
 end
-

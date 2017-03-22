@@ -1,7 +1,8 @@
+# NutritionIx handles interaction with the NutrionIx API.
 class NutritionIx
   include HTTParty
 
-  attr_reader :search, :line_delimited
+  attr_accessor :search, :line_delimited
 
   ALLOWED_KEYS = [
     :food_name,
@@ -20,11 +21,11 @@ class NutritionIx
     :nf_potassium,
     :ndb_no,
     :tag_id
-  ]
+  ].freeze
 
-  base_uri "https://trackapi.nutritionix.com"
+  base_uri 'https://trackapi.nutritionix.com'
 
-  def initialize(search = "", line_delimited = true)
+  def initialize(search = '', line_delimited = true)
     @search = search
     @line_delimited = line_delimited
   end
@@ -34,10 +35,10 @@ class NutritionIx
   end
 
   def messages
-    if search == ""
-      "Please provide a search term"
+    if search == ''
+      'Please provide a search term'
     else
-      data[:message] || "Your search was successful!"
+      data[:message] || 'Your search was successful!'
     end
   end
 
@@ -45,14 +46,6 @@ class NutritionIx
     return [] if errors?
 
     parse_foods
-  end
-
-  def search=(search)
-    @search = search
-  end
-
-  def line_delimited=(line_delimited)
-    @line_delimited = line_delimited
   end
 
   def reload!
@@ -64,6 +57,7 @@ class NutritionIx
   end
 
   private
+
   def parse_foods
     parse = data[:foods].deep_dup
 
@@ -79,7 +73,7 @@ class NutritionIx
 
   def call_api
     response = self.class.post(
-      "/v2/natural/nutrients", headers: headers, body: body
+      '/v2/natural/nutrients', headers: headers, body: body
     ).parsed_response
 
     response.deep_symbolize_keys!
@@ -87,28 +81,30 @@ class NutritionIx
 
   def headers
     {
-      "Content-Type" => "application/json",
-      "x-app-id" => ENV["NUTRITION_IX_ID"],
-      "x-app-key" => ENV["NUTRITION_IX_APP"]
+      'Content-Type' => 'application/json',
+      'x-app-id' => ENV['NUTRITION_IX_ID'],
+      'x-app-key' => ENV['NUTRITION_IX_APP']
     }
   end
 
   def body
     {
-      :query => @search,
-      :line_delimited => @line_delimited
+      query: @search,
+      line_delimited: @line_delimited
     }.to_json
   end
 
-  def self.filter_keys!(hash, allow = [])
-    hash.keep_if do |key, value|
-      allow.include?(key)
+  class << self
+    def filter_keys!(hash, allow = [])
+      hash.keep_if do |key, _value|
+        allow.include?(key)
+      end
     end
-  end
 
-  def self.remove_nf_from_keys!(hash)
-    hash.transform_keys! do |key|
-      key.to_s.start_with?("nf_") ? key.to_s.sub("nf_", "").to_sym : key
+    def remove_nf_from_keys!(hash)
+      hash.transform_keys! do |key|
+        key.to_s.start_with?('nf_') ? key.to_s.sub('nf_', '').to_sym : key
+      end
     end
   end
 end
