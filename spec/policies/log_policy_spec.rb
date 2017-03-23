@@ -7,7 +7,7 @@ RSpec.describe LogPolicy do
     described_class::Scope.new(user, Log.all).resolve
   end
 
-  context "with a user" do
+  context 'with a user' do
     let(:user) { create(:user) }
     let(:log) { create(:log, user: user) }
 
@@ -17,7 +17,7 @@ RSpec.describe LogPolicy do
     it { is_expected.to permit_action(:destroy) }
   end
 
-  context "with another user" do
+  context 'with another user' do
     let(:user) { create(:user) }
     let(:log) { create(:log) }
 
@@ -25,9 +25,8 @@ RSpec.describe LogPolicy do
     it { is_expected.to forbid_edit_and_update_actions }
     it { is_expected.to forbid_action(:destroy) }
 
-    it "excludes log from resolved scope" do
+    it 'excludes log from resolved scope' do
       expect(resolved_scope).not_to include(log)
     end
   end
-
 end

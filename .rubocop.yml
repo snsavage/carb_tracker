@@ -8,7 +8,22 @@ AllCops:
     - lib/**/*.rake
   Exclude:
     - db/schema.rb
+    - config/initializers/**.rb
+    - config/environments/**.rb
+    - db/migrate/**.rb
+    - config/puma.rb
+    - bin/spring
+  DisplayCopNames: true
 
 Documentation:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - "**/*_spec.rb"
+    - "spec/factories.rb"
+
+Style/BlockComments:
+  Exclude:
+    - spec/spec_helper.rb
 

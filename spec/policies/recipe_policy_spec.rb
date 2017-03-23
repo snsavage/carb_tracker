@@ -7,7 +7,7 @@ RSpec.describe RecipePolicy do
     described_class::Scope.new(user, Recipe.all).resolve
   end
 
-  context "with a user" do
+  context 'with a user' do
     let(:user) { create(:user) }
     let(:recipe) { create(:recipe, user: user) }
 
@@ -17,7 +17,7 @@ RSpec.describe RecipePolicy do
     it { is_expected.to permit_action(:destroy) }
   end
 
-  context "with another user" do
+  context 'with another user' do
     let(:user) { create(:user) }
     let(:recipe) { create(:recipe) }
 
@@ -25,12 +25,12 @@ RSpec.describe RecipePolicy do
     it { is_expected.to forbid_edit_and_update_actions }
     it { is_expected.to forbid_action(:destroy) }
 
-    it "excludes recipe from resolved scope" do
+    it 'excludes recipe from resolved scope' do
       expect(resolved_scope).not_to include(recipe)
     end
   end
 
-  context "with public recipes" do
+  context 'with public recipes' do
     let(:user) { create(:user) }
     let(:recipe) { create(:recipe, public: true) }
 
@@ -40,4 +40,3 @@ RSpec.describe RecipePolicy do
     it { is_expected.to forbid_action(:destroy) }
   end
 end
-

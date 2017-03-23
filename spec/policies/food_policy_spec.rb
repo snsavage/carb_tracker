@@ -7,7 +7,7 @@ RSpec.describe FoodPolicy do
     described_class::Scope.new(user, Food.all).resolve
   end
 
-  context "with a user provided food" do
+  context 'with a user provided food' do
     let(:user) { create(:user) }
     let(:food) { create(:user_food, user: user) }
 
@@ -17,7 +17,7 @@ RSpec.describe FoodPolicy do
     it { is_expected.to permit_action(:destroy) }
   end
 
-  context "with another user" do
+  context 'with another user' do
     let(:user) { create(:user) }
     let(:food) { create(:user_food) }
 
@@ -25,12 +25,12 @@ RSpec.describe FoodPolicy do
     it { is_expected.to forbid_edit_and_update_actions }
     it { is_expected.to forbid_action(:destroy) }
 
-    it "excludes food from resolved scope" do
+    it 'excludes food from resolved scope' do
       expect(resolved_scope).not_to include(food)
     end
   end
 
-  context "with a food from the api" do
+  context 'with a food from the api' do
     let(:user) { create(:user) }
     let(:food) { create(:api_food) }
 

@@ -1,14 +1,15 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users,
+             controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   get 'static/index'
 
   unauthenticated do
-    root :to => 'static#index'
+    root to: 'static#index'
   end
 
   authenticated do
-    root :to => 'logs#index'
+    root to: 'logs#index'
   end
 
   resources :recipes
@@ -19,5 +20,4 @@ Rails.application.routes.draw do
       get 'today', on: :collection
     end
   end
-
 end

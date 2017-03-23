@@ -8,4 +8,3 @@ FactoryGirl.factories.map(&:name).each do |factory_name|
     end
   end
 end
-
