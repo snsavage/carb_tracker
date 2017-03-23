@@ -150,6 +150,7 @@ RSpec.feature 'UserCanManageRecipes', type: :feature do
 
       expect(page).to have_content('New Recipe')
       expect(page).to have_content('Please provide a search term')
+      expect(page).not_to have_content('Your form couldn\'t be processed')
     end
 
     scenario 'search with no results shows proper errors to user', :vcr do
