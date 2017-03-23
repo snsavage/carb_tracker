@@ -20,27 +20,15 @@ class RecipesController < ApplicationController
 
   def create
     @recipe = Recipe.new(recipe_params)
+    food_search = FoodSearch.new(@recipe, params)
 
-    if params[:commit] == 'Search'
-      api = NutritionIx.new(params[:recipe][:search])
-
-      @recipe.foods << Food.find_or_create_from_api(api.foods)
-      @foods_for_select = policy_scope(Food)
-
-      flash.now[:alert] = api.messages if api.errors?
-      flash[:notice] = t '.search.success' unless api.errors?
-      render :new
-
-    elsif params[:commit] == 'Create Recipe'
-      @recipe.save
-
-      if @recipe.invalid?
-        @foods_for_select = policy_scope(Food)
-        render :new
-        return
-      end
-
+    # Check for food search first to prevent validation errors.
+    if !food_search.search? && @recipe.save
       redirect_to recipe_path(@recipe)
+    else
+      @foods_for_select = policy_scope(Food)
+      flash.now[:notice] = food_search.messages if food_search.messages?
+      render :new
     end
   end
 
@@ -57,24 +45,14 @@ class RecipesController < ApplicationController
 
     @recipe.update(recipe_params)
 
-    if params[:commit] == 'Search'
-      api = NutritionIx.new(params[:recipe][:search])
+    food_search = FoodSearch.new(@recipe, params)
 
-      @recipe.foods << Food.find_or_create_from_api(api.foods)
-      @foods_for_select = policy_scope(Food)
-
-      flash.now[:alert] = api.messages if api.errors?
-      flash[:notice] = t '.search.success' unless api.errors?
-      render :edit
-
-    elsif params[:commit] == 'Update Recipe'
-      if @recipe.invalid?
-        @foods_for_select = policy_scope(Food)
-        render :edit
-        return
-      end
-
+    if !food_search.search? && @recipe.valid?
       redirect_to recipe_path(@recipe)
+    else
+      @foods_for_select = policy_scope(Food)
+      flash.now[:notice] = food_search.messages if food_search.messages?
+      render :edit
     end
   end
 
