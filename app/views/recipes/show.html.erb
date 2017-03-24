@@ -1,18 +1,18 @@
 <h1><%= @recipe.title %></h1>
 
 <p>
-<%= link_to "Edit Recipe", edit_recipe_path(@recipe) if policy(@recipe).edit? %>
+<%= link_to 'Edit Recipe', edit_recipe_path(@recipe) if policy(@recipe).edit? %>
 </p>
 <p>
-<%= link_to "Destroy Recipe", recipe_path(@recipe), method: :delete,
-  data: { confirm: "Are you sure?" } if policy(@recipe).destroy? %>
+<%= link_to 'Destroy Recipe', recipe_path(@recipe), method: :delete,
+  data: { confirm: 'Are you sure?' } if policy(@recipe).destroy? %>
 </p>
 
 <p>Privacy Setting: <%= @recipe.privacy_setting %></p>
 
 
 <h2>Recipe Nutrition per Serving</h2>
-<table class="tables recipe">
+<table class='tables recipe'>
   <thead>
     <tr>
       <th>Food</th>
@@ -23,21 +23,13 @@
     </tr>
   </thead>
   <tbody>
-    <% @recipe.per_ingredient_stats.each do |food| %>
-      <tr>
-        <td><%= food.name.titleize %></td>
-        <td class="data"><%= num food.calories %></td>
-        <td class="data"><%= num food.carbs %></td>
-        <td class="data"><%= num food.protein %></td>
-        <td class="data"><%= num food.fat %></td>
-      </tr>
-    <% end %>
-    <tr class="total">
+    <%= render partial: 'stats', collection: @recipe.per_ingredient_stats %>
+    <tr class='total'>
       <td>Recipe Total</td>
-      <td class="data"><%= num @recipe.total_stats.total_calories %></td>
-      <td class="data"><%= num @recipe.total_stats.total_carbs %></td>
-      <td class="data"><%= num @recipe.total_stats.total_protein %></td>
-      <td class="data"><%= num @recipe.total_stats.total_fat %></td>
+      <td class='data'><%= num @recipe.total_stats.total_calories %></td>
+      <td class='data'><%= num @recipe.total_stats.total_carbs %></td>
+      <td class='data'><%= num @recipe.total_stats.total_protein %></td>
+      <td class='data'><%= num @recipe.total_stats.total_fat %></td>
   </tbody>
 </table>
 
