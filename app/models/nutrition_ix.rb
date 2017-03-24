@@ -2,8 +2,6 @@
 class NutritionIx
   include HTTParty
 
-  attr_accessor :search, :line_delimited
-
   ALLOWED_KEYS = [
     :food_name,
     :serving_qty,
@@ -23,15 +21,12 @@ class NutritionIx
     :tag_id
   ].freeze
 
-  base_uri 'https://trackapi.nutritionix.com'
+  attr_accessor :search, :line_delimited
 
   def initialize(search = '', line_delimited = true)
+    self.class.base_uri 'https://trackapi.nutritionix.com'
     @search = search
     @line_delimited = line_delimited
-  end
-
-  def errors?
-    data[:message] ? true : false
   end
 
   def messages
@@ -48,12 +43,16 @@ class NutritionIx
     parse_foods
   end
 
+  def data
+    @data ||= call_api
+  end
+
   def reload!
     @data = call_api
   end
 
-  def data
-    @data ||= call_api
+  def errors?
+    data[:message] ? true : false
   end
 
   private
