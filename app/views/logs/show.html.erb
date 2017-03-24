@@ -1,17 +1,17 @@
 <h1>Log Date: <%= date(@log.log_date) %></h1>
 
 <p>
-<%= link_to "Edit Log", edit_user_log_path(current_user, @log) \
+<%= link_to 'Edit Log', edit_user_log_path(current_user, @log) \
   if policy(@log).edit? %>
 </p>
 
 <p>
-<%= link_to "Destroy Log", user_log_path(current_user, @log), method: :delete,
-  data: { confirm: "Are you sure?" } if policy(@log).destroy? %>
+<%= link_to 'Destroy Log', user_log_path(current_user, @log), method: :delete,
+  data: { confirm: 'Are you sure?' } if policy(@log).destroy? %>
 </p>
 
 <h2>Total Nutrition as Logged</h2>
-<table class="tables recipe">
+<table class='tables recipe'>
   <thead>
     <tr>
       <th>Recipe</th>
@@ -22,21 +22,13 @@
     </tr>
   </thead>
   <tbody>
-    <% @log.per_recipe_stats.each do |recipe| %>
-      <tr>
-        <td><%= recipe.title %> - <%= recipe.category %></td>
-        <td class="data"><%= num recipe.calories %></td>
-        <td class="data"><%= num recipe.carbs %></td>
-        <td class="data"><%= num recipe.protein %></td>
-        <td class="data"><%= num recipe.fat %></td>
-      </tr>
-    <% end %>
-    <tr class="total">
+    <%= render partial: 'stats', collection: @log.per_recipe_stats %>
+    <tr class='total'>
       <td>Day's Total</td>
-      <td class="data"><%= num @log.total_stats.total_calories %></td>
-      <td class="data"><%= num @log.total_stats.total_carbs %></td>
-      <td class="data"><%= num @log.total_stats.total_protein %></td>
-      <td class="data"><%= num @log.total_stats.total_fat %></td>
+      <td class='data'><%= num @log.total_stats.total_calories %></td>
+      <td class='data'><%= num @log.total_stats.total_carbs %></td>
+      <td class='data'><%= num @log.total_stats.total_protein %></td>
+      <td class='data'><%= num @log.total_stats.total_fat %></td>
   </tbody>
 </table>
 

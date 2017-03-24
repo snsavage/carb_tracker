@@ -1,8 +1,8 @@
 <h1><%= @food.unique_name %></h1>
 
-<p><%= link_to "Edit Food", edit_food_path(@food) if policy(@food).edit? %>
-<p><%= link_to "Destroy Food", food_path(@food), method: :delete,
-  data: { confirm: "Are you sure?" } if policy(@food).destroy? %></p>
+<p><%= link_to 'Edit Food', edit_food_path(@food) if policy(@food).edit? %>
+<p><%= link_to 'Destroy Food', food_path(@food), method: :delete,
+  data: { confirm: 'Are you sure?' } if policy(@food).destroy? %></p>
 
 <ul>
   <li>Serving Quantity: <%= num @food.serving_qty %></li>
