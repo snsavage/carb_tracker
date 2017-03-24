@@ -4,27 +4,5 @@
   <%= column_chart Log.daily_carb_data(current_user) %>
 </div>
 
-<% @logs.each do |log| %>
-  <div class="log-index">
-    <div>
-      <h3><%= date(log.log_date) %></h3>
-    </div>
-
-    <div class="stats">
-      <ul>
-        <li><%= num log.total_stats.total_calories %><span>Calories</span></li>
-        <li><%= num log.total_stats.total_carbs %><span>Carbs</span></li>
-        <li><%= num log.total_stats.total_protein %><span>Protein</span></li>
-        <li><%= num log.total_stats.total_fat %><span>Total Fat</span></li>
-      </ul>
-    </div>
-
-    <div>
-      <p>
-      <%= link_to "View Log", user_log_path(current_user, log) %> | 
-      <%= link_to "Edit Log", edit_user_log_path(current_user, log) %>
-      </p>
-    </div>
-  </div>
-<% end %>
+<%= render partial: 'logs', collection: @logs %>
 
