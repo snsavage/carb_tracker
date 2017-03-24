@@ -12,14 +12,14 @@
 
   <body>
     <div class="wrapper-for-content-outside-of-footer">
-      <%= render 'refills/centered_navigation' %>
-      <%= render 'refills/flashes' %>
+      <%= render 'layouts/navigation' %>
+      <%= render 'layouts/flashes' %>
 
       <main><%= yield %></main>
 
       <%= render 'layouts/debug' %>
     </div>
 
-    <%= render 'refills/footer_2' %>
+    <%= render 'layouts/footer' %>
   </body>
 </html>
