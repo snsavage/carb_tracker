@@ -1,4 +1,4 @@
-<h1><%= @food.unique_name %></h1>
+<h1><%= @food.title %></h1>
 
 <p><%= link_to 'Edit Food', edit_food_path(@food) if policy(@food).edit? %>
 <p><%= link_to 'Destroy Food', food_path(@food), method: :delete,

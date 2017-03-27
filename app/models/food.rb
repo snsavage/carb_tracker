@@ -58,6 +58,10 @@ class Food < ApplicationRecord
     super(unit.titleize) if unit
   end
 
+  def title
+    unique_name.titleize
+  end
+
   def from_api?
     ndb_no.present?
   end
