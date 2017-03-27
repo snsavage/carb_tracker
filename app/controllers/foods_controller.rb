@@ -5,7 +5,7 @@ class FoodsController < ApplicationController
   after_action :verify_policy_scoped, only: :index
 
   def index
-    @foods = policy_scope(Food)
+    @foods = policy_scope(Food).order(unique_name: :asc)
   end
 
   def show

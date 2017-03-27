@@ -5,7 +5,7 @@ class RecipesController < ApplicationController
   after_action :verify_policy_scoped, only: :index
 
   def index
-    @recipes = policy_scope(Recipe)
+    @recipes = policy_scope(Recipe).order(name: :asc)
   end
 
   def show

@@ -1,1 +1,5 @@
-<%= render partial: 'recipes', collection: @recipes %>
+<h1>Recipes</h1>
+
+<p><%= link_to 'Create a New Recipe', new_recipe_path %></p>
+
+<%= render partial: 'recipes', collection: @recipes || 'No logs are available' %>

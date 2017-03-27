@@ -6,6 +6,7 @@ class LogsController < ApplicationController
 
   def index
     @logs = policy_scope(Log).order(log_date: :desc)
+    @log_data = policy_scope(Log).daily_carb_data(current_user)
   end
 
   def show

@@ -1,5 +1,5 @@
 <h1>Foods</h1>
 
-<p><%= link_to 'New Food', new_food_path %></p>
+<p><%= link_to 'Create a New Food', new_food_path %></p>
 
-<%= render partial: 'foods', collection: @foods %>
+<%= render partial: 'foods', collection: @foods || 'No foods are available.' %>
