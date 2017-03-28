@@ -26,7 +26,7 @@ class FoodSearch
 
     api = NutritionIx.new(@query)
     @recipe.foods << Food.find_or_create_from_api(api.foods)
-    @messages = api.errors? ? api.messages : I18n.t('.search.success')
+    @messages = api.errors? ? api.messages : I18n.t('recipes.search.success')
 
     api
   end

@@ -14,10 +14,6 @@ en:
       signup: "Sign Up"
       signout: "Sign Out"
   recipes:
-    create:
-      search:
-        success: "Your search was successful!"
-    update:
-      search:
-        success: "Your search was successful!"
+    search:
+      success: "Your search was successful!"
 
