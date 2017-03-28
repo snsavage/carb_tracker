@@ -3,7 +3,9 @@
 [Carb Tracker](https://carbtracker.herokuapp.com/static/index) allows users to
 track their daily nutrition (carbohydrates, protein, and fat) as a way to reach
 health goals.  Nutrition data is provided by the [NutritionIx
-API](https://www.nutritionix.com/business/api).
+API](https://www.nutritionix.com/business/api).  More information about the
+project is available at: [Creating Carb Tracker with Ruby on
+Rails](https://www.snsavage.com/blog/2017/creatingcarbtrackerwithrubyonrails.html).
 
 Carb Tracker is built with the [Ruby on Rails](http://rubyonrails.org) web
 development framework.
@@ -24,28 +26,31 @@ You will need the following software:
 After closing this GitHub repo, don't forget to run bundle install and run the database migrations.
 
 ```
-	$ git clone https://github.com/snsavage/carb_tracker.git
-	$ bundle install
-	$ rake db:migrate
-	$ rake db:migrate RAILS_ENV=test
+$ git clone https://github.com/snsavage/carb_tracker.git
+$ bundle install
+$ rake db:migrate
+$ rake db:migrate RAILS_ENV=test
 ```
 
-Carb Tracker uses the ```dotenv``` gem to manage environment variables.  You will need to provide the following variables in a ```.env``` file located in the project root.  
+Carb Tracker uses the ```dotenv``` gem to manage environment variables.  You will need to provide the following variables in a ```.env``` file located in the project root.
 
 ```
 NUTRITION_IX_ID=<your id here>
 NUTRITION_IX_APP=<your key here>
 FB_APP_ID=<your id here>
 FB_APP_SECRET=<your secret here>
-``` 
+```
+
 The NutritionIx keys can be obtained [here](https://developer.nutritionix.com/) and the Facebook keys [here](https://developers.facebook.com).
+
+Seed data is available by running ```rake db:seed```.
 
 ## Testing
 Carb Tracker has a test suite built with [rspec](http://rspec.info).  The test suite can be run with the commands:
 
 ```
-	$ rspec				 # OR
-	$ bundle exec rspec  # Depending on your system configuration. 
+$ rspec              # OR
+$ bundle exec rspec  # Depending on your system configuration. 
 ```
 
 ## Contributing
@@ -57,14 +62,9 @@ intended to be a safe, welcoming space for collaboration, and contributors are
 expected to adhere to the [Code of Conduct](./CODE_OF_CONDUCT.md).
 
 ## Questions?
-Please contact [carbtracker@snsavage.com](mailto: carbtracker@snsavage.com).
+Please contact [carbtracker@snsavage.com](mailto:carbtracker@snsavage.com).
 
 ## License
 
 Carb Tracker is released on the [MIT License](./LICENSE).
-
-
-
-
-
 

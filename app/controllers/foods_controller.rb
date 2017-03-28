@@ -1,11 +1,16 @@
 class FoodsController < ApplicationController
   before_action :authenticate_user!
 
-  after_action :verify_authorized, except: [:index, :new, :create]
+  after_action :verify_authorized, except: [:index, :desc, :new, :create]
   after_action :verify_policy_scoped, only: :index
 
   def index
     @foods = policy_scope(Food).order(unique_name: :asc)
+  end
+
+  def desc
+    @foods = policy_scope(Food).order(unique_name: :desc)
+    render :index
   end
 
   def show
