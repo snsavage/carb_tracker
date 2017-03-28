@@ -20,6 +20,7 @@ body {
   -webkit-font-smoothing: antialiased;
   margin: 0;
   padding: 0;
+  overflow: auto;
 
   header {
     @include section-bottom-margin;
@@ -45,9 +46,19 @@ body {
   }
 }
 
-footer {
+.wrapper-for-content-outside-of-footer {
+  overflow: auto;
+}
+
+.footer-2 {
+  display: block;
+
   main {
-    @include outer-container;
+    margin-bottom: 0;
+
+    li {
+      color: white;
+    }
   }
 }
 
@@ -121,12 +132,6 @@ table.log {
   }
   th:nth-child(6) {
     width: 10%;
-  }
-}
-
-.footer-2 {
-  li {
-    color: white;
   }
 }
 
