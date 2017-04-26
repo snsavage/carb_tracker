@@ -4,6 +4,48 @@ RSpec.feature 'UserCanManageFoods', type: :feature do
   let(:user) { create(:user) }
 
   feature 'FoodsController#index' do
+    scenario 'foods are sorting ascending by default' do
+      login_as(user, scope: :user)
+
+      create_list(:user_food, 2, user: user)
+
+      visit foods_path
+
+      foods_from_page = [all('.food').first.text, all('.food').last.text]
+      foods_from_db = Food.order(unique_name: :asc).map(&:unique_name)
+
+      expect(foods_from_page).to eq(foods_from_db)
+    end
+
+    scenario 'user can sort foods descending by unique_name' do
+      login_as(user, scope: :user)
+
+      create_list(:user_food, 2, user: user)
+
+      visit foods_path
+      click_link "Descending"
+
+      foods_from_page = [all('.food').first.text, all('.food').last.text]
+      foods_from_db = Food.order(unique_name: :desc).map(&:unique_name)
+
+      expect(foods_from_page).to eq(foods_from_db)
+    end
+
+    scenario 'user can switch foods sort order' do
+      login_as(user, scope: :user)
+
+      create_list(:user_food, 2, user: user)
+
+      visit foods_path
+      click_link "Descending"
+      click_link "Ascending"
+
+      foods_from_page = [all('.food').first.text, all('.food').last.text]
+      foods_from_db = Food.order(unique_name: :asc).map(&:unique_name)
+
+      expect(foods_from_page).to eq(foods_from_db)
+    end
+
     scenario 'user can their view foods, but not other users foods' do
       login_as(user, scope: :user)
 
@@ -12,9 +54,9 @@ RSpec.feature 'UserCanManageFoods', type: :feature do
       food_from_other_user = create(:user_food)
 
       visit foods_path
-      expect(page).to have_content(user.foods.first.title)
-      expect(page).to have_content(user.foods.last.title)
-      expect(page).not_to have_content(food_from_other_user.title)
+      expect(page).to have_content(user.foods.first.unique_name)
+      expect(page).to have_content(user.foods.last.unique_name)
+      expect(page).not_to have_content(food_from_other_user.unique_name)
     end
 
     scenario 'user can view their foods and foods from NutritionIx' do
@@ -26,9 +68,9 @@ RSpec.feature 'UserCanManageFoods', type: :feature do
       food_from_other_user = create(:user_food)
 
       visit foods_path
-      expect(page).to have_content(user.foods.first.title)
-      expect(page).to have_content(from_api.title)
-      expect(page).not_to have_content(food_from_other_user.title)
+      expect(page).to have_content(user.foods.first.unique_name)
+      expect(page).to have_content(from_api.unique_name)
+      expect(page).not_to have_content(food_from_other_user.unique_name)
     end
   end
 
@@ -38,7 +80,7 @@ RSpec.feature 'UserCanManageFoods', type: :feature do
       food = create(:user_food, user: user)
 
       visit food_path(food)
-      expect(page).to have_content(food.title)
+      expect(page).to have_content(food.unique_name)
       expect(page).to have_content('Edit Food')
       expect(page).to have_content('Destroy Food')
     end
@@ -48,7 +90,7 @@ RSpec.feature 'UserCanManageFoods', type: :feature do
       food = create(:api_food)
 
       visit food_path(food)
-      expect(page).to have_content(food.title)
+      expect(page).to have_content(food.unique_name)
       expect(page).not_to have_content('Edit Food')
       expect(page).not_to have_content('Destroy Food')
     end
