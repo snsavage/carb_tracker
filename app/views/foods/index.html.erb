@@ -3,8 +3,9 @@
 <p><%= link_to 'Create a New Food', new_food_path %></p>
 
 <p>
-Sort Foods: <%= link_to 'Ascending', foods_path %> |
-<%= link_to 'Descending', desc_foods_path %>
+  Sort Foods: 
+  <%= link_to 'Ascending', foods_path(sort: "asc") %> |
+  <%= link_to 'Descending', foods_path(sort: "desc") %>
 </p>
 
 <%= render partial: 'foods', collection: @foods || 'No foods are available.' %>

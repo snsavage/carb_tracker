@@ -5,12 +5,12 @@ class FoodsController < ApplicationController
   after_action :verify_policy_scoped, only: :index
 
   def index
-    @foods = policy_scope(Food).order(unique_name: :asc)
-  end
-
-  def desc
-    @foods = policy_scope(Food).order(unique_name: :desc)
-    render :index
+    case params[:sort]
+    when "desc"
+      @foods = policy_scope(Food).order(unique_name: :desc)
+    else
+      @foods = policy_scope(Food).order(unique_name: :asc)
+    end
   end
 
   def show

@@ -12,10 +12,7 @@ Rails.application.routes.draw do
 
   resources :static, only: [:index]
   resources :recipes
-
-  resources :foods do
-    get 'desc', on: :collection
-  end
+  resources :foods
 
   resources :users, only: [] do
     resources :logs do
