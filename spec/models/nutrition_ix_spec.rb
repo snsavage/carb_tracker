@@ -69,7 +69,7 @@ RSpec.describe NutritionIx, :vcr, type: :model do
 
     context 'with two line delimited foods' do
       it 'returns two foods' do
-        nutrition_ix.search = '1 apple \n 1 banana'
+        nutrition_ix.search = "1 apple \n 1 banana"
         nutrition_ix.reload!
 
         expect(nutrition_ix.foods.count).to eq(2)
