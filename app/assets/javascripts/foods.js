@@ -1,15 +1,17 @@
 $(function () {
   $('.foods-sort').on('click', function(event) {
-    const url = event.target.pathname + event.target.search;
+    var url = event.target.pathname + event.target.search;
 
     function indexList($id, data) {
-      const foods = data.map((e) => {
-        return `
-          <div class="food">
-          <a href="/foods/${e.id}">${e.unique_name}</a>
-          </div>
-          `
-      }).join("");
+      var foods = $.map(data, function(e) {
+        var result = "";
+
+        result = "<div class='food'>";
+        result += "<a href='/foods/" + e.id + "' >" + e.unique_name + "</a>";
+        result += "</div>";
+
+        return result;
+      });
 
       $id.html(foods);
     }
