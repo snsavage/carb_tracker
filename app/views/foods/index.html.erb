@@ -4,8 +4,10 @@
 
 <p>
   Sort Foods: 
-  <%= link_to 'Ascending', foods_path(sort: "asc") %> |
-  <%= link_to 'Descending', foods_path(sort: "desc") %>
+  <%= link_to 'Ascending', foods_path(sort: "asc"), class: "foods-sort" %> |
+  <%= link_to 'Descending', foods_path(sort: "desc"), class: "foods-sort" %>
 </p>
 
-<%= render partial: 'foods', collection: @foods || 'No foods are available.' %>
+<div id="foods-index">
+  <%= render partial: 'foods', collection: @foods || 'No foods are available.' %>
+</div>

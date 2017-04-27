@@ -44,7 +44,7 @@ RSpec.feature 'UserCanManageRecipes', type: :feature do
   end
 
   feature 'RecipesController#new' do
-    scenario 'new foods will errors can be fixed and saved', :vcr, js: true do
+    scenario 'new foods with errors can be fixed and saved', :vcr, js: true do
       login_as(user, scope: :user)
       food = build(:user_food, user: user)
 

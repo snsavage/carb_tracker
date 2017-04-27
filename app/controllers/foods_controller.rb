@@ -11,6 +11,11 @@ class FoodsController < ApplicationController
     else
       @foods = policy_scope(Food).order(unique_name: :asc)
     end
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @foods }
+    end
   end
 
   def show

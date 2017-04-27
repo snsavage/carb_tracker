@@ -44,6 +44,7 @@ gem 'scenic'
 gem 'omniauth-facebook'
 gem 'chartkick'
 gem 'google-analytics-rails', '1.1.0'
+gem 'active_model_serializers', '~> 0.10.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -61,6 +62,7 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'poltergeist'
+  # gem 'capybara-webkit'
   gem 'launchy'
   gem 'selenium-webdriver', '~> 2.0'
   gem 'pundit-matchers', '~> 1.1.0'
