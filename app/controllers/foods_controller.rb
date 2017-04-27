@@ -1,8 +1,19 @@
 class FoodsController < ApplicationController
   before_action :authenticate_user!
 
-  after_action :verify_authorized, except: [:index, :desc, :new, :create]
-  after_action :verify_policy_scoped, only: :index
+  after_action :verify_authorized, except: [:index, :search, :new, :create]
+  after_action :verify_policy_scoped, only: [:index]
+
+  def search
+    api = NutritionIx.new(params[:query])
+    foods = Food.find_or_create_from_api(api.foods)
+
+    unless api.errors?
+      render json: foods, status: 200
+    else
+      render json: {error: I18n.t('food.search.error')}, status: 400
+    end
+  end
 
   def index
     case params[:sort]

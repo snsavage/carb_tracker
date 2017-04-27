@@ -12,7 +12,10 @@ Rails.application.routes.draw do
 
   resources :static, only: [:index]
   resources :recipes
-  resources :foods
+  resources :foods do
+    get 'search', on: :collection
+  end
+
 
   resources :users, only: [] do
     resources :logs do

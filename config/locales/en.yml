@@ -16,4 +16,7 @@ en:
   recipes:
     search:
       success: "Your search was successful!"
+  food:
+    search:
+      error: "Please provide a valid search term."
 

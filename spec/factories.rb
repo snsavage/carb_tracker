@@ -37,7 +37,7 @@ FactoryGirl.define do
   factory :api_food, class: :food do
     sequence(:food_name) { |n| "apple #{n}" }
     serving_qty 1
-    serving_unit 'medium (3\" dia)'
+    serving_unit "medium (3\" dia)"
     calories 10
     total_fat 10
     total_carbohydrate 10
