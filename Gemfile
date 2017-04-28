@@ -45,6 +45,7 @@ gem 'omniauth-facebook'
 gem 'chartkick'
 gem 'google-analytics-rails', '1.1.0'
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'handlebars_assets'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

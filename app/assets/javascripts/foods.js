@@ -35,15 +35,8 @@ $(function () {
     var url = event.target.pathname + event.target.search;
 
     function indexList($id, data) {
-      var foods = $.map(data, function(e) {
-        var result = "";
-
-        result = "<div class='food'>";
-        result += "<a href='/foods/" + e.id + "' >" + e.unique_name + "</a>";
-        result += "</div>";
-
-        return result;
-      });
+      var template = HandlebarsTemplates['foods/index'];
+      var foods = template(data);
 
       $id.html(foods);
     }

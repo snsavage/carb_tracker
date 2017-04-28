@@ -112,6 +112,11 @@ GEM
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     google-analytics-rails (1.1.0)
+    handlebars_assets (0.23.1)
+      execjs (~> 2.0)
+      multi_json (~> 1.0)
+      sprockets (>= 2.0.0)
+      tilt (>= 1.2)
     hashdiff (0.3.2)
     hashie (3.4.6)
     httparty (0.13.7)
@@ -325,6 +330,7 @@ DEPENDENCIES
   dotenv-rails
   factory_girl_rails (~> 4.0)
   google-analytics-rails (= 1.1.0)
+  handlebars_assets
   httparty
   jbuilder (~> 2.5)
   jquery-rails
