@@ -13,21 +13,12 @@ $(function () {
         $searchBox.val("");
       })
       .fail(function(data) {
-        var error = data.responseJSON['error'];
+        var template = HandlebarsTemplates['foods/foods_search_flash'];
+        var error = template(data.responseJSON);
 
-        result = '<div class="foods-search-flash flash-notice">';
-        result += '<span>' + error + '</span>';
-        result += '</div>';
-
-        $('#foods-search-form').prepend(result);
+        $('#foods-search-form').prepend(error);
       });
-    // Call the api
-    // On success add to ingredients list
-    // Remove search terms
-    // On failure add message
-
   });
-
 });
 
 $(function () {
