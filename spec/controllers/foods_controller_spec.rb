@@ -12,7 +12,7 @@ RSpec.describe FoodsController, :vcr, type: :controller do
         get :search, params: {query: "1 apple"}
 
         parsed_response = JSON.parse(response.body)
-        expect(parsed_response.length).to eq(1)
+        expect(parsed_response["foods"].length).to eq(1)
       end
 
       it 'should return multiple foods' do

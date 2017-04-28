@@ -9,7 +9,13 @@ class FoodsController < ApplicationController
     foods = Food.find_or_create_from_api(api.foods)
 
     unless api.errors?
-      render json: foods, status: 200
+      serializer = ActiveModelSerializers::SerializableResource
+      foods_for_select = policy_scope(Food).order(unique_name: :asc)
+
+      render json: {
+        foods: serializer.new(foods).as_json,
+        select: serializer.new(foods_for_select).as_json
+      }, status: 200
     else
       render json: {error: I18n.t('food.search.error')}, status: 400
     end

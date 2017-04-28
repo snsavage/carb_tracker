@@ -15,8 +15,8 @@
     <%= f.number_field :serving_size, min: 0.00, step: 0.25 %>
   </fieldset>
 
-  <fieldset>
-    <legend>Ingreidents</legend>
+  <fieldset id="ingredients">
+    <legend>Ingredients</legend>
     <%= f.fields_for :ingredients do |ingredient| %>
       <% if ingredient.object.food.valid? %>
         <%= render 'ingredient_fields', f: ingredient %>
