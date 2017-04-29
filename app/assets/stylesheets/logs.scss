@@ -21,12 +21,21 @@
   margin-bottom: 1em;
 }
 
-#log-history {
+#log-show-nav {
   display: flex;
   border-bottom: 1px solid $light-gray;
   margin-bottom: 1em;
   justify-content: space-between;
 
-  p {
+  #log-show-manage, #log-history {
+    display: flex;
+  }
+
+  #log-show-manage p {
+    margin-right: 1em;
+  }
+
+  #log-history p {
+    margin-left: 1em;
   }
 }
