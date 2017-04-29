@@ -21,3 +21,12 @@
   margin-bottom: 1em;
 }
 
+#log-history {
+  display: flex;
+  border-bottom: 1px solid $light-gray;
+  margin-bottom: 1em;
+  justify-content: space-between;
+
+  p {
+  }
+}

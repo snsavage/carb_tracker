@@ -1,5 +1,22 @@
 <h1>Log Date: <%= date(@log.log_date) %></h1>
 
+<div id="log-history">
+  <p id="prev-log">
+  <% if @log.prev(current_user) %>
+    <%= link_to "Previous Log", 
+      user_log_path(current_user, 
+      @log.prev(current_user)) %>
+  <% end %>
+  </p>
+  <p id="next-log">
+  <% if @log.next(current_user) %>
+    <%= link_to "Next Log", 
+      user_log_path(current_user, 
+      @log.next(current_user)) %>
+  <% end %>
+  </p>
+</div>
+
 <p>
 <%= link_to 'Edit Log', edit_user_log_path(current_user, @log) \
   if policy(@log).edit? %>

@@ -12,6 +12,11 @@ class LogsController < ApplicationController
   def show
     @log = Log.find(params[:id])
     authorize @log
+
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @log, user: current_user }
+    end
   end
 
   def today
