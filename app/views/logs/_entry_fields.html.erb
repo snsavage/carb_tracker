@@ -3,7 +3,7 @@
   <%= f.number_field :quantity, min: 0.00, step: 0.25 %>
 
   <%= f.label :recipe_id, 'Recipe' %>
-  <%= f.collection_select :recipe_id, Recipe.all, :id, :title, prompt: true %>
+  <%= f.collection_select :recipe_id, @recipes, :id, :title, prompt: true %>
 
   <%= f.label :category %>
   <%= f.collection_select :category, Entry.categories, :first, :first %>

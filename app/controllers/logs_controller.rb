@@ -29,6 +29,7 @@ class LogsController < ApplicationController
 
   def new
     @log = current_user.logs.new
+    @recipes = policy_scope(Recipe)
   end
 
   def create
@@ -45,6 +46,7 @@ class LogsController < ApplicationController
 
   def edit
     @log = current_user.logs.find(params[:id])
+    @recipes = policy_scope(Recipe)
     authorize @log
   end
 
