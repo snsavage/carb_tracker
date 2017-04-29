@@ -11,6 +11,14 @@ class Log < ApplicationRecord
   validates :entries, :log_date, presence: true
   validates :log_date, uniqueness: true
 
+  def total_stats_for_chart
+    {
+      "Carbs": total_stats.total_carbs,
+      "Protein": total_stats.total_protein,
+      "Fat": total_stats.total_fat,
+    }
+  end
+
   def total_stats
     @total_stats ||= logs_stats.per_log.first
   end

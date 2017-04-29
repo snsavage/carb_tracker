@@ -27,6 +27,8 @@
   data: { confirm: 'Are you sure?' } if policy(@log).destroy? %>
 </p>
 
+<%= pie_chart @log.total_stats_for_chart %>
+
 <h2>Total Nutrition as Logged</h2>
 <table class='tables recipe'>
   <thead>
