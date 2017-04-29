@@ -33,7 +33,7 @@ class RecipesController < ApplicationController
   end
 
   def edit
-    @recipe = Recipe.includes(:ingredients).find(params[:id])
+    @recipe = Recipe.includes(:ingredients, :foods).find(params[:id])
     authorize @recipe
 
     @foods_for_select = policy_scope(Food)
