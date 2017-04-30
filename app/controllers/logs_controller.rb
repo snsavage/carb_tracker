@@ -11,6 +11,7 @@ class LogsController < ApplicationController
 
   def show
     @log = Log.find(params[:id])
+    @recipes = policy_scope(Recipe)
     authorize @log
 
     respond_to do |format|
@@ -22,6 +23,7 @@ class LogsController < ApplicationController
   def today
     @log = current_user
            .logs.find_or_initialize_by(log_date: Time.current.to_date)
+    @recipes = policy_scope(Recipe)
     authorize @log
 
     render :new
@@ -56,8 +58,12 @@ class LogsController < ApplicationController
 
     @log.update(log_params)
     if @log.save
-      redirect_to user_log_path(current_user, @log)
+      respond_to do |format|
+        format.html { redirect_to user_log_path(current_user, @log) }
+        format.json { render json: @log, user: current_user }
+      end
     else
+      @recipes = policy_scope(Recipe)
       render :edit
     end
   end

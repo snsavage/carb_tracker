@@ -1,0 +1,17 @@
+<!-- number_with_precision(number, precision: 1) -->
+{{#each per_recipe_stats}}
+<tr>
+  <td>{{title recipe_name}} - {{ category }}</td>
+  <td class='data'>{{num calories}}</td>
+  <td class='data'>{{num carbs}}</td>
+  <td class='data'>{{num protein}}</td>
+  <td class='data'>{{num fat}}</td>
+</tr>
+{{/each}}
+<tr class='total'>
+  <td>Day's Total</td>
+  <td class='data'>{{num total_stats.total_calories}}</td>
+  <td class='data'>{{num total_stats.total_carbs}}</td>
+  <td class='data'>{{num total_stats.total_protein}}</td>
+  <td class='data'>{{num total_stats.total_fat}}</td>
+</tr>

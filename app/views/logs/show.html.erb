@@ -1,4 +1,4 @@
-<h1>Log Date: <%= date(@log.log_date) %></h1>
+<h1 id="log-show-date">Log Date: <%= date(@log.log_date) %></h1>
 
 <div id="log-show-nav">
   <div id="log-show-manage">
@@ -31,27 +31,51 @@
   </div>
 </div>
 
-<%= pie_chart @log.total_stats_for_chart %>
+<div id="log-show-chart">
+  <h2>Macronutrients</h2>
+  <%= pie_chart @log.total_stats_for_chart %>
+</div>
 
-<h2>Total Nutrition as Logged</h2>
-<table class='tables recipe'>
-  <thead>
-    <tr>
-      <th>Recipe</th>
-      <th>Calories</th>
-      <th>Carbohydrate</th>
-      <th>Protein</th>
-      <th>Fat</th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= render partial: 'stats', collection: @log.per_recipe_stats %>
-    <tr class='total'>
-      <td>Day's Total</td>
-      <td class='data'><%= num @log.total_stats.total_calories %></td>
-      <td class='data'><%= num @log.total_stats.total_carbs %></td>
-      <td class='data'><%= num @log.total_stats.total_protein %></td>
-      <td class='data'><%= num @log.total_stats.total_fat %></td>
-  </tbody>
-</table>
+<div id="log-show-form">
+  <h2>Add a New Log Entry</h2>
+  <%= form_for [@current_user, @log] do |f| %>
+    <div class='inline-fields'>
+      <%= f.fields_for :entries, @log.entries.build do |entries| %>
+        <%= entries.label :quantity %>
+        <%= entries.number_field :quantity, min: 0.00, step: 0.25 %>
 
+        <%= entries.label :recipe_id, 'Recipe' %>
+        <%= entries.collection_select :recipe_id, @recipes, :id, :title, prompt: true %>
+
+        <%= entries.label :category %>
+        <%= entries.collection_select :category, Entry.categories, :first, :first %>
+      <% end %>
+      <%= f.submit "Add Entry" %>
+    </div>
+  <% end %>
+</div>
+
+<div id="log-show-data">
+  <h2>Total Nutrition as Logged</h2>
+  <table class='tables recipe'>
+    <thead>
+      <tr>
+        <th>Recipe</th>
+        <th>Calories</th>
+        <th>Carbohydrate</th>
+        <th>Protein</th>
+        <th>Fat</th>
+      </tr>
+    </thead>
+    <tbody id="log-show-stats-table-body">
+      <%= render partial: 'stats', collection: @log.per_recipe_stats %>
+      <tr class='total'>
+        <td>Day's Total</td>
+        <td class='data'><%= num @log.total_stats.total_calories %></td>
+        <td class='data'><%= num @log.total_stats.total_carbs %></td>
+        <td class='data'><%= num @log.total_stats.total_protein %></td>
+        <td class='data'><%= num @log.total_stats.total_fat %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

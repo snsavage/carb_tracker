@@ -23,8 +23,6 @@
 
 #log-show-nav {
   display: flex;
-  border-bottom: 1px solid $light-gray;
-  margin-bottom: 1em;
   justify-content: space-between;
 
   #log-show-manage, #log-history {
@@ -39,3 +37,16 @@
     margin-left: 1em;
   }
 }
+
+#log-show-nav, #log-show-chart, #log-show-form {
+  border-bottom: 1px solid $light-gray;
+  margin-bottom: 2em;
+  padding-bottom: 2em;
+}
+
+#log-show-form div.inline-fields {
+  border: none;
+  padding: 0em 0.75em;
+  margin-bottom: 0;
+}
+

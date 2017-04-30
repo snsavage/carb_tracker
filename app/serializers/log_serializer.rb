@@ -1,5 +1,11 @@
 class LogSerializer < ActiveModel::Serializer
-  attributes :id, :log_date, :per_recipe_stats, :total_stats, :next, :prev
+  attributes :id,
+             :user_id,
+             :log_date,
+             :per_recipe_stats,
+             :total_stats,
+             :next,
+             :prev
 
   def next
     @object.next(@instance_options[:user])
