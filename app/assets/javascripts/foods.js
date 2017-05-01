@@ -50,14 +50,29 @@ $(function () {
   $('.foods-sort').on('click', function(event) {
     var url = event.target.pathname + event.target.search;
 
-    function indexList($id, data) {
-      var template = HandlebarsTemplates['foods/index'];
-      var foods = template(data);
+    event.preventDefault();
+    event.stopPropagation();
 
+    function indexList($id, data) {
+      var template = HandlebarsTemplates['foods/index']
+
+      function Food(food) {
+        this.id = food.id;
+        this.name = food.unique_name;
+      };
+
+      Object.defineProperty(Food.prototype, "showLink", {
+        get: function() { return "/foods/" + this.id; }
+      });
+
+      var foods = $.map(data, function(element) {
+        return new Food(element);
+      });
+
+      var foods = template(foods);
       $id.html(foods);
     }
 
-    event.preventDefault();
 
     $.getJSON(url)
       .done(function(data) {
