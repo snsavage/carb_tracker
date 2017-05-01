@@ -29,6 +29,67 @@ Handlebars.registerHelper('title', function(string) {
 });
 
 $(function() {
+  $('#log-history').on('click', function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    $('section.flash').empty();
+
+    var url = event.target.pathname;
+    var request = $.getJSON(url);
+
+    request.done(function(data) {
+      var log = new Log(data);
+      var template = HandlebarsTemplates['logs/stats'];
+      var chart = Chartkick.charts["chart-1"];
+      var chart_data = {
+        Carbs: data.total_stats.total_carbs,
+        Protein: data.total_stats.total_protein,
+        Fat: data.total_stats.total_fat
+      };
+
+      function historyLink(data) {
+        var historyTemplate = HandlebarsTemplates['logs/history'];
+        var result = "";
+
+        if (data.prev !== null) {
+          result += historyTemplate({
+            direction: "prev",
+            userId: data.user_id,
+            logId: data.prev,
+            linkText: "Previous"
+          });
+        }
+
+        if (data.next !== null) {
+          result += historyTemplate({
+            direction: "next",
+            userId: data.user_id,
+            logId: data.next,
+            linkText: "Next"
+          });
+        }
+
+        return result;
+      }
+
+      $('#log-show-date').text("Log Date: " + log.date());
+      $('#log-history').html(historyLink(log));
+      chart.updateData(chart_data);
+      $('#log-show-stats-table-body').html(template(data));
+    });
+
+    request.fail(function(data) {
+      var message = {error: "Your request couldn't be processed!"};
+      var template = HandlebarsTemplates['flashes'];
+      var $flashes = $('section.flash');
+
+      $flashes.html(template(message));
+    });
+  })
+});
+
+$(function() {
   $('#log-show-form form').on('submit', function(event) {
     event.preventDefault();
     event.stopPropagation();
