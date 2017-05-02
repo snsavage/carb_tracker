@@ -73,9 +73,19 @@ $(function() {
         return result;
       }
 
+      function formID(data) {
+        return "edit_log_" + data.id;
+      }
+
+      function formAction(data) {
+        return "/users/" + data.user_id + "/logs/" + data.id;
+      }
+
       $('#log-show-date').text("Log Date: " + log.date());
       $('#log-history').html(historyLink(log));
       chart.updateData(chart_data);
+      $('#log-show-form form').attr('id', formID(data));
+      $('#log-show-form form').attr('action', formAction(data));
       $('#log-show-stats-table-body').html(template(data));
     });
 
