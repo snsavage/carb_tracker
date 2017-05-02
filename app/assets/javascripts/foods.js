@@ -27,14 +27,34 @@ $(function () {
     $.getJSON(url, {query: $searchBox.val()})
       .done(function(data) {
         var template = HandlebarsTemplates['recipes/ingredient_fields'];
-        var id = tempID();
-        var ingredient_fields = template(data);
 
-        function tempID () {
-          return Math.floor(Math.random() * 9000000000) + 1000000000;
+        function Ingredient(ingredient) {
+          this.id = ingredient.id,
+          this.name = ingredient.unique_name,
+          this.idCache = null
         }
 
-        $('#ingredients legend').after(ingredient_fields);
+        Object.defineProperty(Ingredient.prototype, "tempId", {
+          get: function() {
+            if (this.idCache) {
+              return this.idCache;
+            } else {
+              this.idCache = Math.floor(Math.random() * 9000000000) + 1000000000;
+              return this.idCache;
+            }
+          }
+        });
+
+        var parsedIngredients = $.map(data.foods, function(element) {
+          return new Ingredient(element);
+        });
+
+        var dataWithParsedIngredients = {
+          foods: parsedIngredients,
+          select: data.select
+        }
+
+        $('#ingredients legend').after(template(dataWithParsedIngredients));
         $searchBox.val("");
       })
       .fail(function(data) {

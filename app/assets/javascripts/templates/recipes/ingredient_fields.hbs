@@ -1,22 +1,22 @@
 {{#each foods}}
   <div class="nested-fields inline-fields">
-    <label for="recipe_ingredients_attributes_{{ id }}_quantity">Quantity</label>
+    <label for="recipe_ingredients_attributes_{{ tempId }}_quantity">Quantity</label>
     <input min="0.0" 
            step="0.25" 
            type="number" 
            value="1.0" 
-           name="recipe[ingredients_attributes][{{ id }}][quantity]" 
-           id="recipe_ingredients_attributes_{{ id }}_quantity">
+           name="recipe[ingredients_attributes][{{ tempId }}][quantity]" 
+           id="recipe_ingredients_attributes_{{ tempId }}_quantity">
 
-    <label for="recipe_ingredients_attributes_{{ id }}_food_id">Food</label>
-    <select name="recipe[ingredients_attributes][{{ id }}][food_id]"
-            id="recipe_ingredients_attributes_{{ id }}_food_id">
+    <label for="recipe_ingredients_attributes_{{ tempId }}_food_id">Food</label>
+    <select name="recipe[ingredients_attributes][{{ tempId }}][food_id]"
+            id="recipe_ingredients_attributes_{{ tempId }}_food_id">
       {{select_list ../select}}
     </select>
 
     <input type="hidden" 
-           name="recipe[ingredients_attributes][{{ id }}][_destroy]" 
-           id="recipe_ingredients_attributes_{{ id }}__destroy" value="false">
+           name="recipe[ingredients_attributes][{{ tempId }}][_destroy]" 
+           id="recipe_ingredients_attributes_{{ tempId }}__destroy" value="false">
 
     <a class="remove_fields dynamic" href="#">
       <button>Remove Ingredient</button>
