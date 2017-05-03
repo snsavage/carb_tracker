@@ -13,8 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require handlebars.runtime
+//= require handlebars_helpers
 //= require_tree ./templates
-//= require_tree .
+//= require foods.js
+//= require logs.js
 //= require cocoon
 //= require Chart.bundle
 //= require chartkick

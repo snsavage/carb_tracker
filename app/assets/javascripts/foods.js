@@ -1,17 +1,34 @@
-Handlebars.registerHelper('select_list', function(select_options) {
-  var food = this;
-  var template = HandlebarsTemplates['recipes/foods_select'];
+function Food(food) {
+  this.id = food.id;
+  this.name = food.unique_name;
+  this.tempIdCache = null
+};
 
-  var list = $.map(select_options, function(e) {
-    if (food.id === e.id){
-      e.selected = "selected";
-      return e;
+var FoodHelpers = {
+  rand: function() {
+    return Math.floor(Math.random() * 9000000000) + 1000000000;
+  },
+
+  parse: function(data) {
+    return $.map(data, function(element) {
+      return new Food(element);
+    });
+  }
+}
+
+Object.defineProperty(Food.prototype, "showLink", {
+  get: function() { return "/foods/" + this.id; }
+});
+
+Object.defineProperty(Food.prototype, "tempId", {
+  get: function() {
+    if (this.tempIdCache) {
+      return this.tempIdCache;
     } else {
-      return e;
+      this.tempIdCache = FoodHelpers.rand();
+      return this.tempIdCache;
     }
-  });
-
-  return new Handlebars.SafeString(template(list));
+  }
 });
 
 $(function () {
@@ -28,33 +45,12 @@ $(function () {
       .done(function(data) {
         var template = HandlebarsTemplates['recipes/ingredient_fields'];
 
-        function Ingredient(ingredient) {
-          this.id = ingredient.id,
-          this.name = ingredient.unique_name,
-          this.idCache = null
-        }
-
-        Object.defineProperty(Ingredient.prototype, "tempId", {
-          get: function() {
-            if (this.idCache) {
-              return this.idCache;
-            } else {
-              this.idCache = Math.floor(Math.random() * 9000000000) + 1000000000;
-              return this.idCache;
-            }
-          }
-        });
-
-        var parsedIngredients = $.map(data.foods, function(element) {
-          return new Ingredient(element);
-        });
-
-        var dataWithParsedIngredients = {
-          foods: parsedIngredients,
+        var parsedData = {
+          foods: FoodHelpers.parse(data.foods),
           select: data.select
         }
 
-        $('#ingredients legend').after(template(dataWithParsedIngredients));
+        $('#ingredients legend').after(template(parsedData));
         $searchBox.val("");
       })
       .fail(function(data) {
@@ -73,31 +69,12 @@ $(function () {
     event.preventDefault();
     event.stopPropagation();
 
-    function indexList($id, data) {
-      var template = HandlebarsTemplates['foods/index']
+    var request = $.getJSON(url);
 
-      function Food(food) {
-        this.id = food.id;
-        this.name = food.unique_name;
-      };
-
-      Object.defineProperty(Food.prototype, "showLink", {
-        get: function() { return "/foods/" + this.id; }
-      });
-
-      var foods = $.map(data, function(element) {
-        return new Food(element);
-      });
-
-      var foods = template(foods);
-      $id.html(foods);
-    }
-
-
-    $.getJSON(url)
-      .done(function(data) {
-        indexList($('#foods-index'), data);
-      });
+    request.done(function(data) {
+      var template = HandlebarsTemplates['foods/index'];
+      $('#foods-index').html(template(FoodHelpers.parse(data)));
+    });
   });
 });
 
