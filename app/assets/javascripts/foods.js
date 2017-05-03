@@ -63,18 +63,16 @@ $(function () {
 });
 
 $(function () {
-  $('.foods-sort').on('click', function(event) {
+  $(document).on('click', '.foods-sort', function(event) {
     var url = event.target.pathname + event.target.search;
 
     event.preventDefault();
-    event.stopPropagation();
 
-    var request = $.getJSON(url);
-
-    request.done(function(data) {
-      var template = HandlebarsTemplates['foods/index'];
-      $('#foods-index').html(template(FoodHelpers.parse(data)));
-    });
+    $.getJSON(url)
+      .done(function(data) {
+        var template = HandlebarsTemplates['foods/index'];
+        $('#foods-index').html(template(FoodHelpers.parse(data)));
+      });
   });
 });
 

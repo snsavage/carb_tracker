@@ -73,4 +73,48 @@ describe("foods.js", function() {
       });
     });
   });
+
+  describe("foods index clicking on sort links", function() {
+    beforeEach(function() {
+      links = affix('p');
+      links.affix('a.foods-sort[href="/foods?sort=asc"]');
+      links.affix('a.foods-sort[href="/foods?sort=desc"]');
+      foods = affix('div#foods-index');
+
+      data = [{
+        "id": 90,
+        "unique_name": "Apple - 1.0 - Medium (3\" Dia)"
+      }, {
+        "id": 91,
+        "unique_name": "Banana - 1.0 - Medium (7\" To 7 7/8\" Long)"
+      }];
+
+      this.server = sinon.fakeServer.create();
+      this.server.fakeHTTPMethods = true;
+    });
+
+    it("clicking 'ascending' link sort foods ascending", function() {
+      $('.foods-sort')[0].click();
+      this.server.respond(JSON.stringify([data[0], data[1]]));
+      expect($('#foods-index').children().length).toBe(2);
+      expect($.map($('#foods-index a'), function(e) { return e.text; }))
+        .toEqual([data[0].unique_name, data[1].unique_name]);
+    });
+
+    it("clicking 'descending' link sort foods descending", function() {
+      $('.foods-sort')[1].click();
+      this.server.respond(JSON.stringify([data[1], data[0]]));
+      expect($('#foods-index').children().length).toBe(2);
+      expect($.map($('#foods-index a'), function(e) { return e.text; }))
+        .toEqual([data[1].unique_name, data[0].unique_name]);
+    });
+
+    afterEach(function() {
+      this.server.restore;
+    });
+  });
+
+  xdescribe("food search for recipe new and edit", function() {
+  });
 });
+
