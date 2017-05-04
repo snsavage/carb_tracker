@@ -3,10 +3,9 @@ Handlebars.registerHelper('select_list', function(select_options, id) {
 
   var list = $.map(select_options, function(e) {
     if (id === e.id){
-      e.selected = "selected";
-      return e;
+      return {id: e.id, unique_name: e.unique_name, selected: "selected"}
     } else {
-      return e;
+      return {id: e.id, unique_name: e.unique_name}
     }
   });
 
