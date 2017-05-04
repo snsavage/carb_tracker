@@ -20,123 +20,109 @@ Log.prototype.date = function() {
   return date.toLocaleString('en-US', options);
 }
 
-Handlebars.registerHelper('num', function(number) {
-  return number.toFixed(1).toLocaleString();
-});
+var LogHelpers = {
+  historyLink: function(data) {
+    var historyTemplate = HandlebarsTemplates['logs/history'];
+    var result = "";
 
-Handlebars.registerHelper('title', function(string) {
-  return string.titleize();
-});
+    if (data.prev !== null) {
+      result += historyTemplate({
+        direction: "prev",
+        userId: data.user_id,
+        logId: data.prev,
+        linkText: "Previous"
+      });
+    }
 
-$(function() {
-  $('#log-history').on('click', function(event) {
-    event.preventDefault();
-    event.stopPropagation();
+    if (data.next !== null) {
+      result += historyTemplate({
+        direction: "next",
+        userId: data.user_id,
+        logId: data.next,
+        linkText: "Next"
+      });
+    }
 
-    $('section.flash').empty();
+    return result;
+  },
 
-    var url = event.target.pathname;
-    var request = $.getJSON(url);
+  formID: function (data) {
+    return "edit_log_" + data.id;
+  },
 
-    request.done(function(data) {
-      var log = new Log(data);
-      var template = HandlebarsTemplates['logs/stats'];
-      var chart = Chartkick.charts["chart-1"];
-      var chart_data = {
-        Carbs: data.total_stats.total_carbs,
-        Protein: data.total_stats.total_protein,
-        Fat: data.total_stats.total_fat
-      };
+  formAction: function(data) {
+    return "/users/" + data.user_id + "/logs/" + data.id;
+  },
 
-      function historyLink(data) {
-        var historyTemplate = HandlebarsTemplates['logs/history'];
-        var result = "";
+  chartData: function(data) {
+    return {
+      Carbs: data.total_stats.total_carbs,
+      Protein: data.total_stats.total_protein,
+      Fat: data.total_stats.total_fat
+    }
+  }
+}
 
-        if (data.prev !== null) {
-          result += historyTemplate({
-            direction: "prev",
-            userId: data.user_id,
-            logId: data.prev,
-            linkText: "Previous"
-          });
-        }
+window.init = function() {
+  $(function() {
+    $('#log-history').on('click', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
 
-        if (data.next !== null) {
-          result += historyTemplate({
-            direction: "next",
-            userId: data.user_id,
-            logId: data.next,
-            linkText: "Next"
-          });
-        }
+      $('section.flash').empty();
 
-        return result;
-      }
+      $.getJSON(event.target.pathname)
+        .done(function(data) {
+          var log = new Log(data);
+          var template = HandlebarsTemplates['logs/stats'];
+          var chart = Chartkick.charts["chart-1"];
 
-      function formID(data) {
-        return "edit_log_" + data.id;
-      }
+          $('#log-show-date').text("Log Date: " + log.date());
+          $('#log-history').html(LogHelpers.historyLink(log));
+          chart.updateData(LogHelpers.chartData(data));
+          $('#log-show-form form').attr('id', LogHelpers.formID(data));
+          $('#log-show-form form').attr('action', LogHelpers.formAction(data));
+          $('#log-show-stats-table-body').html(template(data));
+        })
+        .fail(function(data) {
+          var message = {error: "Your request couldn't be processed!"};
+          var template = HandlebarsTemplates['flashes'];
+          var $flashes = $('section.flash');
 
-      function formAction(data) {
-        return "/users/" + data.user_id + "/logs/" + data.id;
-      }
+          $flashes.html(template(message));
+        });
+    })
 
-      $('#log-show-date').text("Log Date: " + log.date());
-      $('#log-history').html(historyLink(log));
-      chart.updateData(chart_data);
-      $('#log-show-form form').attr('id', formID(data));
-      $('#log-show-form form').attr('action', formAction(data));
-      $('#log-show-stats-table-body').html(template(data));
-    });
+    $('#log-show-form form').on('submit', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
 
-    request.fail(function(data) {
-      var message = {error: "Your request couldn't be processed!"};
-      var template = HandlebarsTemplates['flashes'];
-      var $flashes = $('section.flash');
+      $('section.flash').empty();
 
-      $flashes.html(template(message));
-    });
-  })
-});
+      $.ajax({
+        type: "PATCH",
+        url: $(this).attr('action') + '.json',
+        data: $(this).serialize(),
+        dataType: 'json'
+      })
+      .done(function(data) {
+        var log = new Log(data);
+        var template = HandlebarsTemplates['logs/stats'];
+        var chart = Chartkick.charts["chart-1"];
 
-$(function() {
-  $('#log-show-form form').on('submit', function(event) {
-    event.preventDefault();
-    event.stopPropagation();
+        $('#log-show-date').text("Log Date: " + log.date());
+        chart.updateData(LogHelpers.chartData(data));
+        $('#log-show-stats-table-body').html(template(data));
+      })
+      .fail(function(data) {
+        var message = {error: "Your request couldn't be processed!"};
+        var template = HandlebarsTemplates['flashes'];
+        var $flashes = $('section.flash');
 
-    $('section.flash').empty();
-
-    var $form = $(this);
-    var values = $form.serialize();
-    var url = $form.attr('action') + '.json';
-    var post = $.ajax({
-      type: "PATCH",
-      url: url,
-      data: values,
-      dataType: 'json'
-    });
-
-    post.done(function(data) {
-      var log = new Log(data);
-      var template = HandlebarsTemplates['logs/stats'];
-      var chart = Chartkick.charts["chart-1"];
-      var chart_data = {
-        Carbs: data.total_stats.total_carbs,
-        Protein: data.total_stats.total_protein,
-        Fat: data.total_stats.total_fat
-      };
-
-      $('#log-show-date').text("Log Date: " + log.date());
-      chart.updateData(chart_data);
-      $('#log-show-stats-table-body').html(template(data));
-    });
-
-    post.fail(function(data) {
-      var message = {error: "Your request couldn't be processed!"};
-      var template = HandlebarsTemplates['flashes'];
-      var $flashes = $('section.flash');
-
-      $flashes.html(template(message));
+        $flashes.html(template(message));
+      });
     });
   });
-});
+};
+
+init();

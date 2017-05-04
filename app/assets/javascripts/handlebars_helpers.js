@@ -13,4 +13,11 @@ Handlebars.registerHelper('select_list', function(select_options, id) {
   return new Handlebars.SafeString(template(list));
 });
 
+Handlebars.registerHelper('num', function(number) {
+  return number.toFixed(1).toLocaleString();
+});
+
+Handlebars.registerHelper('title', function(string) {
+  return string.titleize();
+});
 
