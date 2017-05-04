@@ -7,6 +7,10 @@ API](https://www.nutritionix.com/business/api).  More information about the
 project is available at: [Creating Carb Tracker with Ruby on
 Rails](https://www.snsavage.com/blog/2017/creatingcarbtrackerwithrubyonrails.html).
 
+**Update:** This project was recently updated with several JavaScript based
+front-end user interactions.  More information can be found
+[here](https://www.snsavage.com/blog/2017/adding-javascript-and-jquery-user-interactions-to-carb-tracker.html).
+
 Carb Tracker is built with the [Ruby on Rails](http://rubyonrails.org) web
 development framework.
 
@@ -50,7 +54,13 @@ Carb Tracker has a test suite built with [rspec](http://rspec.info).  The test s
 
 ```
 $ rspec              # OR
-$ bundle exec rspec  # Depending on your system configuration. 
+$ bundle exec rspec  # Depending on your system configuration.
+```
+
+Additional front-end testing is done with Jasmine.  These tests can be accessed at:
+
+```
+http://localhost:3000/specs
 ```
 
 ## Contributing
