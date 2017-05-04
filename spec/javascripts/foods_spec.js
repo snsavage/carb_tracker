@@ -81,6 +81,8 @@ describe("foods.js", function() {
       links.affix('a.foods-sort[href="/foods?sort=desc"]');
       foods = affix('div#foods-index');
 
+      init();
+
       data = [{
         "id": 90,
         "unique_name": "Apple - 1.0 - Medium (3\" Dia)"
@@ -114,7 +116,21 @@ describe("foods.js", function() {
     });
   });
 
-  xdescribe("food search for recipe new and edit", function() {
+  describe("food search for recipe new and edit", function() {
+    var searchForm;
+
+    beforeEach(function() {
+      searchForm = affix('#foods-search-form input[type=submit]');
+
+      init();
+    });
+
+    it("searching without search terms flashes search error", function() {
+      $(searchForm).click();
+
+      expect(searchForm).toHandle('click');
+      expect($.getJSON).toHaveBeenCalledWith("/foods/search", {query: ""});
+    });
   });
 });
 

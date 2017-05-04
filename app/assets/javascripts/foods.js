@@ -13,6 +13,10 @@ var FoodHelpers = {
     return $.map(data, function(element) {
       return new Food(element);
     });
+  },
+
+  parseWithSelect: function(data) {
+    return {foods: FoodHelpers.parse(data.foods), select: data.select};
   }
 }
 
@@ -31,48 +35,35 @@ Object.defineProperty(Food.prototype, "tempId", {
   }
 });
 
-$(function () {
-  $('#foods-search-form input[type=submit]').on('click', function(event) {
-    var $searchBox = $('#foods-search-form #recipe_search');
-    var url = "/foods/search";
+window.init = function() {
+  $(function () {
+    $('#foods-search-form input[type=submit]').on('click', function(event) {
+      event.preventDefault();
+      $('.foods-search-flash').remove();
 
-    $('#foods-search-form .foods-search-flash').remove();
+      $.getJSON("/foods/search", {query: $('#recipe_search').val()})
+        .done(function(data) {
+          var template = HandlebarsTemplates['recipes/ingredient_fields'];
+          $('#ingredients legend')
+            .after(template(FoodHelpers.parseWithSelect(data)));
+          $('#recipe_search').val("");
+        })
+        .fail(function(data) {
+          var template = HandlebarsTemplates['foods/foods_search_flash'];
+          $('#foods-search-form').prepend(template(data.responseJSON));
+        });
+    });
 
-    event.preventDefault();
-    event.stopPropagation();
+    $('.foods-sort').on('click', function(event) {
+      event.preventDefault();
 
-    $.getJSON(url, {query: $searchBox.val()})
-      .done(function(data) {
-        var template = HandlebarsTemplates['recipes/ingredient_fields'];
-
-        var parsedData = {
-          foods: FoodHelpers.parse(data.foods),
-          select: data.select
-        }
-
-        $('#ingredients legend').after(template(parsedData));
-        $searchBox.val("");
-      })
-      .fail(function(data) {
-        var template = HandlebarsTemplates['foods/foods_search_flash'];
-        var error = template(data.responseJSON);
-
-        $('#foods-search-form').prepend(error);
-      });
+      $.getJSON(event.target.pathname + event.target.search)
+        .done(function(data) {
+          var template = HandlebarsTemplates['foods/index'];
+          $('#foods-index').html(template(FoodHelpers.parse(data)));
+        });
+    });
   });
-});
+};
 
-$(function () {
-  $(document).on('click', '.foods-sort', function(event) {
-    var url = event.target.pathname + event.target.search;
-
-    event.preventDefault();
-
-    $.getJSON(url)
-      .done(function(data) {
-        var template = HandlebarsTemplates['foods/index'];
-        $('#foods-index').html(template(FoodHelpers.parse(data)));
-      });
-  });
-});
-
+init();
