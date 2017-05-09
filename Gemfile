@@ -72,6 +72,7 @@ group :test do
   gem 'pundit-matchers', '~> 1.1.0'
   gem 'webmock'
   gem 'vcr'
+  gem 'simplecov', :require => false
 end
 
 group :development do
