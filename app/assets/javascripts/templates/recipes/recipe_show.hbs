@@ -1,0 +1,38 @@
+<div class="recipes-index-stats">
+  <h1>{{title title}}</h1>
+  <p>
+  <a href="/recipes/{{id}}">View Recipe</a> | 
+  <a href="/recipes/{{id}}/edit">Edit Recipe</a>
+  </p>
+
+  <h2>Recipe Nutrition per Serving</h2>
+  <table class="tables recipe">
+    <thead>
+      <tr>
+        <th>Food</th>
+        <th>Calories</th>
+        <th>Carbohydrate</th>
+        <th>Protein</th>
+        <th>Fat</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each per_ingredient_stats}}
+        <tr>
+          <td>{{title name}}</td>
+          <td class='data'>{{num calories}}</td>
+          <td class='data'>{{num carbs}}</td>
+          <td class='data'>{{num protein}}</td>
+          <td class='data'>{{num fat}}</td>
+        </tr>
+      {{/each}}
+      <tr class="total">
+        <td>Recipe Total</td>
+        <td class="data">{{num total_stats.total_calories}}</td>
+        <td class="data">{{num total_stats.total_carbs}}</td>
+        <td class="data">{{num total_stats.total_protein}}</td>
+        <td class="data">{{num total_stats.total_fat}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

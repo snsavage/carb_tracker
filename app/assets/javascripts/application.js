@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require handlebars.runtime
+//= require titleize
 //= require handlebars_helpers
 //= require_tree ./templates
 //= require foods.js
@@ -20,5 +21,4 @@
 //= require cocoon
 //= require Chart.bundle
 //= require chartkick
-//= require titleize
 

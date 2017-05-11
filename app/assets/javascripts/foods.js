@@ -37,6 +37,30 @@ Object.defineProperty(Food.prototype, "tempId", {
 
 window.init = function() {
   $(function () {
+    $('#recipes-index div a').on('click', function(event) {
+      $link = $(this);
+      $parent = $link.parent();
+
+      event.preventDefault();
+
+      if($link.parent().data().expand === "expanded") {
+        $($link.siblings()[0]).hide();
+        $parent.data("expand", "collapsed");
+      } else if ($link.parent().data().expand === "collapsed") {
+        $($link.siblings()[0]).show();
+        $parent.data("expand", "expanded");
+      } else {
+        $.getJSON($link.attr('href'))
+          .done(function(data) {
+            var template = HandlebarsTemplates['recipes/recipe_show'];
+            $parent.append(template(data));
+            $parent.data("expand", "expanded");
+          });
+      }
+    });
+  })
+
+  $(function () {
     $('#foods-search-form input[type=submit]').on('click', function(event) {
       event.preventDefault();
       $('.foods-search-flash').remove();

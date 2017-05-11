@@ -1,3 +1,11 @@
 // Place all the styles related to the Recipes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.recipes-index-stats {
+  border-top: 1px solid $light-gray;
+  border-bottom: 1px solid $light-gray;
+
+  margin: 0.5em 0.5em 2em;
+  padding: 1em 0;
+}

@@ -11,6 +11,11 @@ class RecipesController < ApplicationController
   def show
     @recipe = Recipe.includes(ingredients: :food).find(params[:id])
     authorize @recipe
+
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @recipe }
+    end
   end
 
   def new
