@@ -95,7 +95,7 @@ describe("foods.js", function() {
       this.server.fakeHTTPMethods = true;
     });
 
-    it("clicking 'ascending' link sort foods ascending", function() {
+    xit("clicking 'ascending' link sort foods ascending", function() {
       $('.foods-sort')[0].click();
       this.server.respond(JSON.stringify([data[0], data[1]]));
       expect($('#foods-index').children().length).toBe(2);
@@ -103,7 +103,7 @@ describe("foods.js", function() {
         .toEqual([data[0].unique_name, data[1].unique_name]);
     });
 
-    it("clicking 'descending' link sort foods descending", function() {
+    xit("clicking 'descending' link sort foods descending", function() {
       $('.foods-sort')[1].click();
       this.server.respond(JSON.stringify([data[1], data[0]]));
       expect($('#foods-index').children().length).toBe(2);
