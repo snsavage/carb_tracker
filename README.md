@@ -27,7 +27,7 @@ You will need the following software:
 * Ruby v2.3.1
 * PostgreSQL
 
-After closing this GitHub repo, don't forget to run bundle install and run the database migrations.
+After cloning this GitHub repo, don't forget to run bundle install and run the database migrations.
 
 ```
 $ git clone https://github.com/snsavage/carb_tracker.git
@@ -72,6 +72,7 @@ intended to be a safe, welcoming space for collaboration, and contributors are
 expected to adhere to the [Code of Conduct](./CODE_OF_CONDUCT.md).
 
 ## Questions?
+
 Please contact [carbtracker@snsavage.com](mailto:carbtracker@snsavage.com).
 
 ## License
